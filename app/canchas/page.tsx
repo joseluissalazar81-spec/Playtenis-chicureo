@@ -146,14 +146,14 @@ export default function CanchasPage() {
           <div className="max-w-xl mx-auto text-center">
             <div className="bg-white rounded-2xl shadow-lg p-10">
               <div className="text-6xl mb-4">🎾</div>
-              <h2 className="text-2xl font-bold text-tennis-green-dark mb-2">
+              <h2 className="text-2xl font-bold text-[#2D2D2D] mb-2">
                 ¡Reserva Confirmada!
               </h2>
               <p className="text-gray-600 mb-6">
                 Tu reserva ha sido recibida. Recibirás un correo de confirmación
                 en <strong>{email}</strong>.
               </p>
-              <div className="bg-tennis-green-pale rounded-xl p-4 text-left text-sm space-y-2 mb-6">
+              <div className="bg-orange-50 rounded-xl p-4 text-left text-sm space-y-2 mb-6">
                 <p>
                   <strong>Cancha:</strong> {selectedCourtData?.name}
                 </p>
@@ -185,7 +185,7 @@ export default function CanchasPage() {
             {/* Court Selection */}
             <div className="lg:col-span-2">
               <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-                <h2 className="text-xl font-bold text-tennis-green-dark">
+                <h2 className="text-xl font-bold text-[#2D2D2D]">
                   Selecciona una Cancha
                 </h2>
                 <div className="flex gap-2 flex-wrap">
@@ -196,7 +196,7 @@ export default function CanchasPage() {
                         onClick={() => setFilterType(t)}
                         className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
                           filterType === t
-                            ? "bg-tennis-green text-white"
+                            ? "bg-[#E8450A] text-white"
                             : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                         }`}
                       >
@@ -214,16 +214,16 @@ export default function CanchasPage() {
                     onClick={() => setSelectedCourt(court.id)}
                     className={`text-left p-4 rounded-xl border-2 transition-all duration-200 ${
                       selectedCourt === court.id
-                        ? "border-tennis-green bg-tennis-green-pale shadow-md"
-                        : "border-gray-200 bg-white hover:border-tennis-green-light hover:shadow-sm"
+                        ? "border-[#E8450A] bg-orange-50 shadow-md"
+                        : "border-gray-200 bg-white hover:border-[#E8450A]-light hover:shadow-sm"
                     }`}
                   >
                     <div className="flex items-start justify-between mb-2">
-                      <h3 className="font-bold text-tennis-green-dark text-sm">
+                      <h3 className="font-bold text-[#2D2D2D] text-sm">
                         {court.name}
                       </h3>
                       {selectedCourt === court.id && (
-                        <span className="text-tennis-green text-lg">✓</span>
+                        <span className="text-[#E8450A] text-lg">✓</span>
                       )}
                     </div>
                     <div className="flex gap-2 mb-2">
@@ -243,7 +243,7 @@ export default function CanchasPage() {
                     <p className="text-xs text-gray-500 mb-2">
                       {court.description}
                     </p>
-                    <p className="text-sm font-bold text-tennis-green">
+                    <p className="text-sm font-bold text-[#E8450A]">
                       ${court.pricePerHour.toLocaleString("es-CL")}{" "}
                       <span className="font-normal text-gray-500">/ hora</span>
                     </p>
@@ -254,7 +254,7 @@ export default function CanchasPage() {
               {/* Time slots */}
               {selectedCourt && (
                 <div>
-                  <h2 className="text-xl font-bold text-tennis-green-dark mb-4">
+                  <h2 className="text-xl font-bold text-[#2D2D2D] mb-4">
                     Disponibilidad — Horarios
                   </h2>
                   <div className="grid grid-cols-5 sm:grid-cols-8 gap-2">
@@ -271,8 +271,8 @@ export default function CanchasPage() {
                             blocked
                               ? "bg-gray-100 text-gray-400 cursor-not-allowed line-through"
                               : time === slot
-                              ? "bg-tennis-green text-white shadow-md"
-                              : "bg-white border border-gray-200 text-gray-700 hover:border-tennis-green hover:text-tennis-green"
+                              ? "bg-[#E8450A] text-white shadow-md"
+                              : "bg-white border border-gray-200 text-gray-700 hover:border-[#E8450A] hover:text-[#E8450A]"
                           }`}
                         >
                           {slot}
@@ -290,7 +290,7 @@ export default function CanchasPage() {
             {/* Booking Form */}
             <div className="lg:col-span-1">
               <div className="bg-white rounded-2xl shadow-md p-6 sticky top-24">
-                <h2 className="text-xl font-bold text-tennis-green-dark mb-5">
+                <h2 className="text-xl font-bold text-[#2D2D2D] mb-5">
                   Confirmar Reserva
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -361,7 +361,7 @@ export default function CanchasPage() {
                   </div>
 
                   {/* Summary */}
-                  <div className="bg-tennis-green-pale rounded-xl p-4 text-sm space-y-1">
+                  <div className="bg-orange-50 rounded-xl p-4 text-sm space-y-1">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Cancha:</span>
                       <span className="font-medium">
@@ -378,9 +378,9 @@ export default function CanchasPage() {
                         {duration} hora{duration > 1 ? "s" : ""}
                       </span>
                     </div>
-                    <div className="border-t border-tennis-green/20 mt-2 pt-2 flex justify-between font-bold">
+                    <div className="border-t border-[#E8450A]/20 mt-2 pt-2 flex justify-between font-bold">
                       <span>Total:</span>
-                      <span className="text-tennis-green">
+                      <span className="text-[#E8450A]">
                         {selectedCourtData
                           ? `$${totalPrice.toLocaleString("es-CL")} CLP`
                           : "—"}
@@ -391,7 +391,7 @@ export default function CanchasPage() {
                   <button
                     type="submit"
                     disabled={!selectedCourt || !date || !time}
-                    className="w-full bg-tennis-green text-white py-3 rounded-xl font-bold hover:bg-tennis-green-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-[#E8450A] text-white py-3 rounded-xl font-bold hover:bg-[#2D2D2D] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Confirmar Reserva
                   </button>

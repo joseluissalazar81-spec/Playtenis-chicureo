@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const features = [
   {
@@ -83,7 +84,7 @@ export default function HomePage() {
         className="relative min-h-[90vh] flex items-center justify-center overflow-hidden"
         style={{
           background:
-            "linear-gradient(135deg, #1b4332 0%, #2d6a4f 50%, #40916c 100%)",
+            "linear-gradient(135deg, #1a1a1a 0%, #2D2D2D 50%, #E8450A 100%)",
         }}
       >
         {/* Decorative tennis court lines */}
@@ -98,11 +99,17 @@ export default function HomePage() {
         </div>
 
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <div className="inline-block bg-tennis-yellow text-tennis-green-dark text-sm font-bold px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase">
-            Club de Tenis en Chicureo
+          <div className="flex justify-center mb-6">
+            <Image
+              src="/logo.jpeg"
+              alt="PlayTenis Chicureo"
+              width={120}
+              height={120}
+              className="rounded-full shadow-2xl border-4 border-white/30"
+            />
           </div>
           <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
-            Play<span className="text-tennis-yellow">Tenis</span>
+            Play<span className="text-[#E8450A]">Tenis</span>
             <br />
             <span className="text-3xl md:text-4xl font-light text-white/80">
               Chicureo
@@ -116,7 +123,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/canchas"
-              className="bg-tennis-yellow text-tennis-green-dark px-8 py-4 rounded-xl font-bold text-lg hover:bg-yellow-300 transition-colors shadow-lg hover:shadow-xl"
+              className="bg-[#E8450A] text-[#2D2D2D] px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#b33408] transition-colors shadow-lg hover:shadow-xl"
             >
               Reservar Cancha
             </Link>
@@ -146,7 +153,7 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat) => (
               <div key={stat.label} className="text-center">
-                <div className="text-4xl font-black text-tennis-green mb-1">
+                <div className="text-4xl font-black text-[#E8450A] mb-1">
                   {stat.value}
                 </div>
                 <div className="text-gray-600 text-sm font-medium uppercase tracking-wide">
@@ -163,7 +170,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="text-tennis-green font-semibold text-sm uppercase tracking-wider">
+              <span className="text-[#E8450A] font-semibold text-sm uppercase tracking-wider">
                 Sobre Nosotros
               </span>
               <h2 className="section-title mt-2">
@@ -191,18 +198,18 @@ export default function HomePage() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-tennis-green-pale rounded-2xl p-6 text-center">
+              <div className="bg-orange-50 rounded-2xl p-6 text-center">
                 <div className="text-4xl mb-2">🌿</div>
-                <div className="font-bold text-tennis-green-dark">
+                <div className="font-bold text-[#2D2D2D]">
                   Entorno Natural
                 </div>
                 <p className="text-sm text-gray-600 mt-1">
                   Vistas a la precordillera
                 </p>
               </div>
-              <div className="bg-tennis-yellow/20 rounded-2xl p-6 text-center mt-8">
+              <div className="bg-orange-100 rounded-2xl p-6 text-center mt-8">
                 <div className="text-4xl mb-2">🏅</div>
-                <div className="font-bold text-tennis-green-dark">
+                <div className="font-bold text-[#2D2D2D]">
                   Campeones
                 </div>
                 <p className="text-sm text-gray-600 mt-1">
@@ -211,14 +218,14 @@ export default function HomePage() {
               </div>
               <div className="bg-blue-50 rounded-2xl p-6 text-center">
                 <div className="text-4xl mb-2">👶</div>
-                <div className="font-bold text-tennis-green-dark">
+                <div className="font-bold text-[#2D2D2D]">
                   Escuela Infantil
                 </div>
                 <p className="text-sm text-gray-600 mt-1">Desde 5 años</p>
               </div>
-              <div className="bg-tennis-green-pale rounded-2xl p-6 text-center mt-8">
+              <div className="bg-orange-50 rounded-2xl p-6 text-center mt-8">
                 <div className="text-4xl mb-2">💪</div>
-                <div className="font-bold text-tennis-green-dark">
+                <div className="font-bold text-[#2D2D2D]">
                   Fitness
                 </div>
                 <p className="text-sm text-gray-600 mt-1">
@@ -233,7 +240,7 @@ export default function HomePage() {
       {/* Features */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="text-tennis-green font-semibold text-sm uppercase tracking-wider">
+          <span className="text-[#E8450A] font-semibold text-sm uppercase tracking-wider">
             Por Qué Elegirnos
           </span>
           <h2 className="section-title mt-2">Todo lo que Necesitas</h2>
@@ -245,7 +252,7 @@ export default function HomePage() {
             {features.map((f) => (
               <div key={f.title} className="card text-left">
                 <div className="text-4xl mb-4">{f.icon}</div>
-                <h3 className="font-bold text-tennis-green-dark text-lg mb-2">
+                <h3 className="font-bold text-[#2D2D2D] text-lg mb-2">
                   {f.title}
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
@@ -260,7 +267,7 @@ export default function HomePage() {
       {/* Pricing */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="text-tennis-green font-semibold text-sm uppercase tracking-wider">
+          <span className="text-[#E8450A] font-semibold text-sm uppercase tracking-wider">
             Membersías
           </span>
           <h2 className="section-title mt-2">Planes para Todos</h2>
@@ -274,18 +281,18 @@ export default function HomePage() {
                 key={plan.name}
                 className={`rounded-2xl p-8 relative ${
                   plan.highlight
-                    ? "bg-tennis-green text-white shadow-2xl scale-105"
+                    ? "bg-[#E8450A] text-white shadow-2xl scale-105"
                     : "bg-gray-50 text-gray-800 shadow-md"
                 }`}
               >
                 {plan.highlight && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-tennis-yellow text-tennis-green-dark text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wide">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[#E8450A] text-[#2D2D2D] text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wide">
                     Más Popular
                   </div>
                 )}
                 <h3
                   className={`text-xl font-bold mb-2 ${
-                    plan.highlight ? "text-white" : "text-tennis-green-dark"
+                    plan.highlight ? "text-white" : "text-[#2D2D2D]"
                   }`}
                 >
                   {plan.name}
@@ -305,7 +312,7 @@ export default function HomePage() {
                     <li key={feat} className="flex items-start gap-2 text-sm">
                       <span
                         className={`mt-0.5 ${
-                          plan.highlight ? "text-tennis-yellow" : "text-tennis-green"
+                          plan.highlight ? "text-[#E8450A]" : "text-[#E8450A]"
                         }`}
                       >
                         ✓
@@ -322,8 +329,8 @@ export default function HomePage() {
                   href="/socios"
                   className={`block text-center py-3 rounded-xl font-bold transition-colors ${
                     plan.highlight
-                      ? "bg-tennis-yellow text-tennis-green-dark hover:bg-yellow-300"
-                      : "bg-tennis-green text-white hover:bg-tennis-green-dark"
+                      ? "bg-[#E8450A] text-[#2D2D2D] hover:bg-[#b33408]"
+                      : "bg-[#E8450A] text-white hover:bg-[#2D2D2D]"
                   }`}
                 >
                   Comenzar
@@ -339,7 +346,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="text-tennis-green font-semibold text-sm uppercase tracking-wider">
+              <span className="text-[#E8450A] font-semibold text-sm uppercase tracking-wider">
                 Ubicación y Contacto
               </span>
               <h2 className="section-title mt-2">Encuéntranos en Chicureo</h2>
@@ -352,7 +359,7 @@ export default function HomePage() {
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">📍</span>
                   <div>
-                    <div className="font-semibold text-tennis-green-dark">
+                    <div className="font-semibold text-[#2D2D2D]">
                       Dirección
                     </div>
                     <div className="text-gray-600">
@@ -363,7 +370,7 @@ export default function HomePage() {
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">📞</span>
                   <div>
-                    <div className="font-semibold text-tennis-green-dark">
+                    <div className="font-semibold text-[#2D2D2D]">
                       Teléfono
                     </div>
                     <div className="text-gray-600">+56 2 2345 6789</div>
@@ -372,7 +379,7 @@ export default function HomePage() {
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">✉️</span>
                   <div>
-                    <div className="font-semibold text-tennis-green-dark">
+                    <div className="font-semibold text-[#2D2D2D]">
                       Email
                     </div>
                     <div className="text-gray-600">info@playtenis.cl</div>
@@ -381,7 +388,7 @@ export default function HomePage() {
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">🕐</span>
                   <div>
-                    <div className="font-semibold text-tennis-green-dark">
+                    <div className="font-semibold text-[#2D2D2D]">
                       Horario
                     </div>
                     <div className="text-gray-600">
@@ -391,9 +398,9 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-            <div className="bg-tennis-green-pale rounded-2xl p-8 text-center">
+            <div className="bg-orange-50 rounded-2xl p-8 text-center">
               <div className="text-6xl mb-4">🗻️</div>
-              <h3 className="text-tennis-green-dark font-bold text-xl mb-2">
+              <h3 className="text-[#2D2D2D] font-bold text-xl mb-2">
                 Chicureo, Lo Barnechea
               </h3>
               <p className="text-gray-600 text-sm mb-6">
@@ -424,7 +431,7 @@ export default function HomePage() {
         className="py-20"
         style={{
           background:
-            "linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%)",
+            "linear-gradient(135deg, #1a1a1a 0%, #2D2D2D 100%)",
         }}
       >
         <div className="max-w-3xl mx-auto text-center px-4">
@@ -438,7 +445,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/canchas"
-              className="bg-tennis-yellow text-tennis-green-dark px-8 py-4 rounded-xl font-bold text-lg hover:bg-yellow-300 transition-colors"
+              className="bg-[#E8450A] text-[#2D2D2D] px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#b33408] transition-colors"
             >
               Reservar Cancha
             </Link>

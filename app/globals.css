@@ -20,16 +20,16 @@ body {
 
 @layer components {
   .btn-primary {
-    @apply bg-tennis-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-tennis-green-dark transition-colors duration-200 inline-block;
+    @apply bg-[#E8450A] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#b33408] transition-colors duration-200 inline-block;
   }
   .btn-secondary {
-    @apply border-2 border-tennis-green text-tennis-green px-6 py-3 rounded-lg font-semibold hover:bg-tennis-green hover:text-white transition-colors duration-200 inline-block;
+    @apply border-2 border-[#E8450A] text-[#E8450A] px-6 py-3 rounded-lg font-semibold hover:bg-[#E8450A] hover:text-white transition-colors duration-200 inline-block;
   }
   .card {
     @apply bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition-shadow duration-200;
   }
   .section-title {
-    @apply text-3xl md:text-4xl font-bold text-tennis-green-dark mb-4;
+    @apply text-3xl md:text-4xl font-bold text-[#2D2D2D] mb-4;
   }
   .section-subtitle {
     @apply text-gray-600 text-lg mb-10;

@@ -163,7 +163,7 @@ const socios = [
 
 const planColors: Record<string, string> = {
   Básico: "bg-gray-100 text-gray-700",
-  Premium: "bg-tennis-green-pale text-tennis-green-dark",
+  Premium: "bg-orange-50 text-[#2D2D2D]",
   Familiar: "bg-blue-100 text-blue-700",
 };
 
@@ -228,7 +228,7 @@ export default function SociosPage() {
           {[
             { label: "Total Socios", value: stats.total, icon: "👥", color: "bg-white" },
             { label: "Activos", value: stats.activos, icon: "✅", color: "bg-green-50" },
-            { label: "Plan Premium", value: stats.premium, icon: "⭐", color: "bg-tennis-green-pale" },
+            { label: "Plan Premium", value: stats.premium, icon: "⭐", color: "bg-orange-50" },
             { label: "Plan Familiar", value: stats.familiar, icon: "👨‍👩‍👧‍👦", color: "bg-blue-50" },
           ].map((stat) => (
             <div
@@ -236,7 +236,7 @@ export default function SociosPage() {
               className={`${stat.color} rounded-xl p-4 shadow-sm text-center`}
             >
               <div className="text-2xl mb-1">{stat.icon}</div>
-              <div className="text-3xl font-black text-tennis-green-dark">
+              <div className="text-3xl font-black text-[#2D2D2D]">
                 {stat.value}
               </div>
               <div className="text-xs text-gray-500 font-medium uppercase tracking-wide mt-1">
@@ -262,7 +262,7 @@ export default function SociosPage() {
                 onClick={() => setFilterPlan(p)}
                 className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
                   filterPlan === p
-                    ? "bg-tennis-green text-white"
+                    ? "bg-[#E8450A] text-white"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                 }`}
               >
@@ -277,7 +277,7 @@ export default function SociosPage() {
                 onClick={() => setFilterEstado(e)}
                 className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
                   filterEstado === e
-                    ? "bg-tennis-green-dark text-white"
+                    ? "bg-[#2D2D2D] text-white"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                 }`}
               >
@@ -292,7 +292,7 @@ export default function SociosPage() {
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
               <div className="p-4 border-b border-gray-100 flex items-center justify-between">
-                <h2 className="font-bold text-tennis-green-dark">
+                <h2 className="font-bold text-[#2D2D2D]">
                   Padrón de Socios
                 </h2>
                 <span className="text-sm text-gray-500">
@@ -328,7 +328,7 @@ export default function SociosPage() {
                         }
                         className={`border-b border-gray-50 cursor-pointer transition-colors ${
                           selectedSocio === socio.id
-                            ? "bg-tennis-green-pale"
+                            ? "bg-orange-50"
                             : "hover:bg-gray-50"
                         }`}
                       >
@@ -398,7 +398,7 @@ export default function SociosPage() {
                   >
                     {selectedData.avatar}
                   </div>
-                  <h3 className="font-bold text-tennis-green-dark text-lg">
+                  <h3 className="font-bold text-[#2D2D2D] text-lg">
                     {selectedData.nombre}
                   </h3>
                   <p className="text-gray-500 text-sm">{selectedData.rut}</p>
@@ -447,7 +447,7 @@ export default function SociosPage() {
                   </div>
                 </div>
                 <div className="mt-6 space-y-2">
-                  <button className="w-full bg-tennis-green text-white py-2 rounded-lg text-sm font-semibold hover:bg-tennis-green-dark transition-colors">
+                  <button className="w-full bg-[#E8450A] text-white py-2 rounded-lg text-sm font-semibold hover:bg-[#2D2D2D] transition-colors">
                     Editar Socio
                   </button>
                   <button className="w-full border border-gray-200 text-gray-600 py-2 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors">

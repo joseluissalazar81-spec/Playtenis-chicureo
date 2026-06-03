@@ -134,7 +134,7 @@ const estadoColors: Record<string, string> = {
 
 const categoriaColors: Record<string, string> = {
   Open: "bg-purple-100 text-purple-700",
-  Amateur: "bg-tennis-green-pale text-tennis-green-dark",
+  Amateur: "bg-orange-50 text-[#2D2D2D]",
   Interclub: "bg-yellow-100 text-yellow-700",
   Categorías: "bg-pink-100 text-pink-700",
   Juvenil: "bg-sky-100 text-sky-700",
@@ -187,7 +187,7 @@ export default function TorneosPage() {
             onClick={() => setTab("torneos")}
             className={`px-6 py-2.5 rounded-full font-semibold text-sm transition-colors ${
               tab === "torneos"
-                ? "bg-white text-tennis-green-dark shadow-md"
+                ? "bg-white text-[#2D2D2D] shadow-md"
                 : "bg-white/20 text-white hover:bg-white/30"
             }`}
           >
@@ -197,7 +197,7 @@ export default function TorneosPage() {
             onClick={() => setTab("ranking")}
             className={`px-6 py-2.5 rounded-full font-semibold text-sm transition-colors ${
               tab === "ranking"
-                ? "bg-white text-tennis-green-dark shadow-md"
+                ? "bg-white text-[#2D2D2D] shadow-md"
                 : "bg-white/20 text-white hover:bg-white/30"
             }`}
           >
@@ -219,7 +219,7 @@ export default function TorneosPage() {
               ].map((s) => (
                 <div key={s.label} className="bg-white rounded-xl p-4 shadow-sm text-center">
                   <div className="text-2xl mb-1">{s.icon}</div>
-                  <div className="text-3xl font-black text-tennis-green-dark">{s.value}</div>
+                  <div className="text-3xl font-black text-[#2D2D2D]">{s.value}</div>
                   <div className="text-xs text-gray-500 font-medium uppercase tracking-wide mt-1">{s.label}</div>
                 </div>
               ))}
@@ -233,8 +233,8 @@ export default function TorneosPage() {
                   onClick={() => setFilterEstado(e)}
                   className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
                     filterEstado === e
-                      ? "bg-tennis-green text-white"
-                      : "bg-white border border-gray-200 text-gray-600 hover:border-tennis-green hover:text-tennis-green"
+                      ? "bg-[#E8450A] text-white"
+                      : "bg-white border border-gray-200 text-gray-600 hover:border-[#E8450A] hover:text-[#E8450A]"
                   }`}
                 >
                   {e}
@@ -268,7 +268,7 @@ export default function TorneosPage() {
                             {t.superfice}
                           </span>
                         </div>
-                        <h3 className="font-bold text-tennis-green-dark text-base mb-1">
+                        <h3 className="font-bold text-[#2D2D2D] text-base mb-1">
                           {t.nombre}
                         </h3>
                         <div className="flex flex-wrap gap-4 text-xs text-gray-500">
@@ -294,7 +294,7 @@ export default function TorneosPage() {
                       {t.ganador && (
                         <div className="text-right hidden sm:block">
                           <div className="text-xs text-gray-400 mb-0.5">Campeón</div>
-                          <div className="text-sm font-bold text-tennis-green truncate max-w-32">
+                          <div className="text-sm font-bold text-[#E8450A] truncate max-w-32">
                             {t.ganador}
                           </div>
                         </div>
@@ -316,7 +316,7 @@ export default function TorneosPage() {
                         {selectedT.categoria}
                       </span>
                     </div>
-                    <h3 className="font-bold text-tennis-green-dark text-lg mt-2 mb-3">
+                    <h3 className="font-bold text-[#2D2D2D] text-lg mt-2 mb-3">
                       {selectedT.nombre}
                     </h3>
                     <p className="text-sm text-gray-600 mb-4 leading-relaxed">
@@ -336,7 +336,7 @@ export default function TorneosPage() {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-500">Premio:</span>
-                        <span className="font-medium text-tennis-green">{selectedT.premio}</span>
+                        <span className="font-medium text-[#E8450A]">{selectedT.premio}</span>
                       </div>
                       {selectedT.participantes > 0 && (
                         <div className="flex justify-between">
@@ -346,14 +346,14 @@ export default function TorneosPage() {
                       )}
                     </div>
                     {selectedT.ganador && (
-                      <div className="mt-4 bg-tennis-yellow/20 rounded-xl p-4">
+                      <div className="mt-4 bg-orange-100 rounded-xl p-4">
                         <div className="text-xs font-semibold text-gray-500 uppercase mb-2">
                           Resultados
                         </div>
                         <div className="space-y-1 text-sm">
                           <div className="flex items-center gap-2">
                             <span>🥇</span>
-                            <span className="font-bold text-tennis-green-dark">
+                            <span className="font-bold text-[#2D2D2D]">
                               {selectedT.ganador}
                             </span>
                           </div>
@@ -368,7 +368,7 @@ export default function TorneosPage() {
                     )}
                     {(selectedT.estado === "Inscripciones Abiertas" ||
                       selectedT.estado === "Próximo") && (
-                      <button className="w-full mt-4 bg-tennis-green text-white py-2.5 rounded-xl text-sm font-bold hover:bg-tennis-green-dark transition-colors">
+                      <button className="w-full mt-4 bg-[#E8450A] text-white py-2.5 rounded-xl text-sm font-bold hover:bg-[#2D2D2D] transition-colors">
                         Inscribirme
                       </button>
                     )}
@@ -388,7 +388,7 @@ export default function TorneosPage() {
           <div>
             <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
               <div>
-                <h2 className="text-2xl font-bold text-tennis-green-dark">
+                <h2 className="text-2xl font-bold text-[#2D2D2D]">
                   Ranking de Jugadores
                 </h2>
                 <p className="text-gray-500 text-sm mt-1">
@@ -400,7 +400,7 @@ export default function TorneosPage() {
                   })}
                 </p>
               </div>
-              <div className="bg-tennis-green-pale rounded-xl px-4 py-2 text-sm text-tennis-green-dark font-medium">
+              <div className="bg-orange-50 rounded-xl px-4 py-2 text-sm text-[#2D2D2D] font-medium">
                 🎾 Temporada 2024-2025
               </div>
             </div>
@@ -418,7 +418,7 @@ export default function TorneosPage() {
                   >
                     <div className="text-center mb-2">
                       <div className="text-2xl mb-1">{medals[idx]}</div>
-                      <div className="font-bold text-tennis-green-dark text-sm leading-tight">
+                      <div className="font-bold text-[#2D2D2D] text-sm leading-tight">
                         {player.nombre.split(" ")[0]}
                       </div>
                       <div className="text-xs text-gray-500">{player.puntos} pts</div>
@@ -426,7 +426,7 @@ export default function TorneosPage() {
                     <div
                       className={`w-full ${heights[idx]} rounded-t-xl flex items-center justify-center text-3xl font-black text-white ${
                         podiumPos === 1
-                          ? "bg-tennis-yellow text-tennis-green-dark"
+                          ? "bg-[#E8450A] text-[#2D2D2D]"
                           : podiumPos === 2
                           ? "bg-gray-400"
                           : "bg-orange-400"
@@ -487,7 +487,7 @@ export default function TorneosPage() {
                             <span
                               className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold ${
                                 player.pos === 1
-                                  ? "bg-tennis-yellow text-tennis-green-dark"
+                                  ? "bg-[#E8450A] text-[#2D2D2D]"
                                   : player.pos === 2
                                   ? "bg-gray-300 text-gray-700"
                                   : player.pos === 3
@@ -501,7 +501,7 @@ export default function TorneosPage() {
                           <td className="px-4 py-3">
                             <span className="text-gray-800">{player.nombre}</span>
                           </td>
-                          <td className="text-center px-4 py-3 font-bold text-tennis-green">
+                          <td className="text-center px-4 py-3 font-bold text-[#E8450A]">
                             {player.puntos.toLocaleString("es-CL")}
                           </td>
                           <td className="text-center px-4 py-3 text-gray-600 hidden sm:table-cell">
@@ -516,7 +516,7 @@ export default function TorneosPage() {
                             <div className="flex items-center gap-2 justify-center">
                               <div className="flex-1 bg-gray-100 rounded-full h-2 w-16">
                                 <div
-                                  className="bg-tennis-green h-2 rounded-full"
+                                  className="bg-[#E8450A] h-2 rounded-full"
                                   style={{ width: `${winRate}%` }}
                                 />
                               </div>
