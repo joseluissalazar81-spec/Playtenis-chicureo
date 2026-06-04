@@ -214,8 +214,8 @@ export default function App() {
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
               <div className="avatar" style={{ background: "#E8450A", width: 52, height: 52, fontSize: 18, flexShrink: 0 }}>PT</div>
               <div>
-                <div style={{ fontWeight: 800, fontSize: 16 }}>Equipo PlayTenis</div>
-                <div style={{ fontSize: 12, color: "var(--suave)" }}>Profesores certificados · Chicureo</div>
+                <div style={{ fontWeight: 800, fontSize: 16 }}>Patricio Escalona</div>
+                <div style={{ fontSize: 12, color: "var(--suave)" }}>Director Deportivo · PlayTenis Chicureo</div>
               </div>
             </div>
             <div className="section-title" style={{ marginTop: 4 }}>Certificaciones</div>
