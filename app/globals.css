@@ -314,3 +314,13 @@ header p { font-size: 11px; color: rgba(255,255,255,0.6); }
 .toast.show { opacity: 1; }
 
 .foot { text-align: center; font-size: 11px; color: var(--suave); margin-top: 16px; font-style: italic; }
+
+/* ─── RESPONSIVE: móvil vs desktop ─── */
+.mobile-only { display: flex; flex-direction: column; }
+.desktop-only { display: none; }
+
+@media (min-width: 768px) {
+  .mobile-only { display: none !important; }
+  .desktop-only { display: block; }
+  body { background: #fff; justify-content: flex-start; }
+}
