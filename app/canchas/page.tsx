@@ -81,7 +81,7 @@ const surfaceColors: Record<string, string> = {
   Sintética: "bg-purple-100 text-purple-700",
 };
 
-export default function CanchasPage() {
+function DesktopPage() {
   const [selectedCourt, setSelectedCourt] = useState<number | null>(null);
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -406,6 +406,15 @@ export default function CanchasPage() {
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+
+export default function Page() {
+  return (
+    <div className="desktop-only">
+      <DesktopPage />
     </div>
   );
 }

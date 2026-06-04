@@ -152,7 +152,7 @@ const tendenciaColor: Record<string, string> = {
   same: "text-gray-400",
 };
 
-export default function TorneosPage() {
+function DesktopPage() {
   const [tab, setTab] = useState<"torneos" | "ranking">("torneos");
   const [filterEstado, setFilterEstado] = useState("Todos");
   const [selectedTorneo, setSelectedTorneo] = useState<number | null>(null);
@@ -554,6 +554,15 @@ export default function TorneosPage() {
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+
+export default function Page() {
+  return (
+    <div className="desktop-only">
+      <DesktopPage />
     </div>
   );
 }

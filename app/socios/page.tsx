@@ -179,7 +179,7 @@ const nivelColors: Record<string, string> = {
   Avanzado: "bg-purple-100 text-purple-700",
 };
 
-export default function SociosPage() {
+function DesktopPage() {
   const [search, setSearch] = useState("");
   const [filterPlan, setFilterPlan] = useState("Todos");
   const [filterEstado, setFilterEstado] = useState("Todos");
@@ -467,6 +467,15 @@ export default function SociosPage() {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+
+export default function Page() {
+  return (
+    <div className="desktop-only">
+      <DesktopPage />
     </div>
   );
 }

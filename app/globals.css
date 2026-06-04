@@ -324,3 +324,10 @@ header p { font-size: 11px; color: rgba(255,255,255,0.6); }
   .desktop-only { display: block; }
   body { background: #fff; justify-content: flex-start; }
 }
+
+/* desktop-main: solo agrega padding-top en desktop */
+.desktop-main { display: contents; }
+@media (min-width: 768px) {
+  .desktop-main { display: block; padding-top: 64px; flex-grow: 1; min-height: 100vh; }
+  body { flex-direction: column; min-height: 100vh; }
+}
