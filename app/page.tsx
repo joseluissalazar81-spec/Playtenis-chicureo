@@ -5,7 +5,7 @@ import { useState } from "react";
 const PAGO = {
   nombre: "Patricio Escalona",
   banco: "Transferencia / Mercado Pago",
-  email: "info@playtenis.cl",
+  email: "info@playtenis.cl · San Vicente de Lo Arcaya 1, Colina",
 };
 
 const jugadores = [
@@ -73,7 +73,7 @@ export default function App() {
         <Image src="/logo.jpeg" alt="PlayTenis" width={44} height={44} style={{ borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
         <div>
           <h1>PlayTenis · Chicureo</h1>
-          <p>Academia de Tenis · Colina 🇨🇱</p>
+          <p>Tenis · Clases y Arriendos · Colina 🇨🇱</p>
         </div>
       </header>
 
@@ -204,7 +204,7 @@ export default function App() {
           </div>
           <button className="btn" onClick={() => openModal("cancha")}>📅 Reservar cancha</button>
           <button className="btn wa" onClick={() => window.open("https://wa.me/56981588218", "_blank")}>💬 WhatsApp PlayTenis</button>
-          <p className="foot">Av. Chicureo 1250, Colina</p>
+          <p className="foot">San Vicente de Lo Arcaya 1, Colina</p>
         </section>
 
         {/* ACADEMIA */}
@@ -234,7 +234,7 @@ export default function App() {
           <div className="lcard"><div className="ic">🎾</div><div style={{ flex: 1 }}><div className="nm">Clases individuales</div><div className="ds">Horario a convenir con Patricio</div></div><button className="mini" onClick={() => openModal("clase")}>Inscribir</button></div>
           <div className="lcard"><div className="ic">🏆</div><div style={{ flex: 1 }}><div className="nm">Escalerilla</div><div className="ds">Ranking y competencia interna del club</div></div><button className="mini" onClick={() => openModal("clase")}>Inscribir</button></div>
           <button className="btn wa" onClick={() => window.open("https://wa.me/56981588218?text=" + encodeURIComponent("Hola! Quiero agendar mi clase de prueba GRATIS en PlayTenis Chicureo."), "_blank")}>💬 Agendar clase de prueba GRATIS</button>
-          <p className="foot">@playtenis.cl · +56 9 8158 8218</p>
+          <p className="foot">@playtenis.cl · San Vicente de Lo Arcaya 1, Colina · +56 9 8158 8218</p>
         </section>
 
       </div>
