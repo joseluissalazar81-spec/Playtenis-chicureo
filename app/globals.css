@@ -33,10 +33,11 @@ body {
 .phone {
   width: 100%;
   max-width: 430px;
-  min-height: 100vh;
+  height: 100vh;
   background: var(--gris);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 header {
@@ -49,6 +50,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 10;
+  flex-shrink: 0;
 }
 
 header h1 { font-size: 15px; font-weight: 800; color: #fff; }
