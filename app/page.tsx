@@ -122,7 +122,7 @@ export default function HomePage() {
             </span>
           </h1>
           <p className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-            El club de tenis más exclusivo de Lo Barnechea. Canchas de primera
+            La academia de tenis en Chicureo, Colina. Canchas de primera
             clase, comunidad apasionada y el mejor ambiente para jugar en la
             precordillera de Santiago.
           </p>
@@ -184,8 +184,8 @@ export default function HomePage() {
               </h2>
               <p className="text-gray-600 mb-4 leading-relaxed">
                 Fundado en 2009 en el corazón de Chicureo, PlayTenis nació con la
-                visión de crear una comunidad deportiva de excelencia en Lo
-                Barnechea. Contamos con infraestructura de clase mundial rodeada
+                visión de crear una comunidad deportiva de excelencia en Colina.
+                Contamos con infraestructura de clase mundial rodeada
                 del impresionante paisaje de la precordillera andina.
               </p>
               <p className="text-gray-600 mb-8 leading-relaxed">
@@ -357,9 +357,8 @@ export default function HomePage() {
               </span>
               <h2 className="section-title mt-2">Encuéntranos en Chicureo</h2>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                Estamos ubicados en el exclusivo sector de Chicureo, en la
-                comuna de Lo Barnechea. Fácil acceso desde la Autopista del
-                Sol y Colina.
+                Estamos ubicados en el sector de Chicureo, Colina.
+                Fácil acceso desde la Autopista del Sol y Las Condes.
               </p>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
@@ -369,7 +368,7 @@ export default function HomePage() {
                       Dirección
                     </div>
                     <div className="text-gray-600">
-                      Av. Chicureo 1250, Lo Barnechea, Santiago
+                      San Vicente de Lo Arcaya 1, Colina, Santiago
                     </div>
                   </div>
                 </div>
@@ -407,7 +406,7 @@ export default function HomePage() {
             <div className="bg-orange-50 rounded-2xl p-8 text-center">
               <div className="text-6xl mb-4">🗻️</div>
               <h3 className="text-[#2D2D2D] font-bold text-xl mb-2">
-                Chicureo, Lo Barnechea
+                Chicureo, Colina
               </h3>
               <p className="text-gray-600 text-sm mb-6">
                 A 25 minutos del centro de Santiago, rodeado del paisaje
@@ -420,7 +419,7 @@ export default function HomePage() {
                 </p>
                 <p>
                   <strong>Desde Las Condes:</strong> Av. El Rodeo hacia
-                  Colina, sector Chicureo
+                  Colina, sector Chicureo (San Vicente de Lo Arcaya)
                 </p>
                 <p>
                   <strong>Transporte público:</strong> Micro 422 desde
