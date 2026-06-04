@@ -84,8 +84,8 @@ export default function App() {
         <section className={`screen ${screen === "inicio" ? "active" : ""}`} id="inicio">
           <div className="hero">
             <div className="ball" />
-            <h2>¡Tu pasión,<br />nuestro compromiso!</h2>
-            <p>Academia, reservas y torneos en un solo lugar.</p>
+            <h2>No solo enseñamos<br />a golpear la pelota 🎾</h2>
+            <p>Enseñamos a amar el juego y disfrutar del proceso ✨</p>
           </div>
           <div className="grid2">
             <button className="acc" onClick={() => go("ranking")}><div className="ic">🏆</div><div className="t">Ranking</div><div className="s">Posiciones del club</div></button>
@@ -226,20 +226,15 @@ export default function App() {
               <span className="cupos">Alto Rendimiento</span>
             </div>
           </div>
-          <div className="section-title">Academia · Todos los niveles</div>
-          <div className="chips">
-            <span className="chip" style={{ cursor: "pointer" }} onClick={() => openModal("nivel", 0)}>Iniciación</span>
-            <span className="chip" style={{ cursor: "pointer" }} onClick={() => openModal("nivel", 1)}>Intermedio</span>
-            <span className="chip" style={{ cursor: "pointer" }} onClick={() => openModal("nivel", 2)}>Avanzado</span>
-            <span className="chip" style={{ cursor: "pointer" }} onClick={() => openModal("nivel", 3)}>Alto rendimiento</span>
-          </div>
-          <div className="lcard"><div className="ic">👶</div><div style={{ flex: 1 }}><div className="nm">Iniciación · 3 a 8 años</div><div className="ds">Sábados · grupales</div></div><button className="mini" onClick={() => openModal("clase")}>Inscribir</button></div>
-          <div className="lcard"><div className="ic">👥</div><div style={{ flex: 1 }}><div className="nm">Clases grupales</div><div className="ds">Lun / Mié / Sáb</div></div><button className="mini" onClick={() => openModal("clase")}>Inscribir</button></div>
-          <div className="lcard"><div className="ic">🎾</div><div style={{ flex: 1 }}><div className="nm">Clases individuales</div><div className="ds">Horario a convenir</div></div><button className="mini" onClick={() => openModal("clase")}>Inscribir</button></div>
-          <div className="section-title">Servicios 🔧</div>
-          <div className="lcard"><div className="ic">🛠️</div><div style={{ flex: 1 }}><div className="nm">Encordado profesional</div><div className="ds">Control · Potencia · Híbrido</div></div><button className="mini" onClick={() => openModal("encordado")}>Solicitar</button></div>
-          <div className="lcard"><div className="ic">✊</div><div style={{ flex: 1 }}><div className="nm">Cambio de grip</div><div className="ds">Mayor comodidad y agarre</div></div><button className="mini" onClick={() => openModal("encordado")}>Solicitar</button></div>
-          <p className="foot">@PlayTenis_Chicureo · Lo Barnechea, Santiago</p>
+          <div className="aviso">🎾 <strong>1 clase de prueba GRATIS</strong> en clases grupales. ¡Agenda tu cupo!</div>
+          <div className="section-title">Programas · Todos los niveles</div>
+          <div className="lcard"><div className="ic">👶</div><div style={{ flex: 1 }}><div className="nm">Kinder Tenis</div><div className="ds">Para quienes inician su vida en este hermoso mundo</div></div><button className="mini" onClick={() => openModal("clase")}>Inscribir</button></div>
+          <div className="lcard"><div className="ic">🧒</div><div style={{ flex: 1 }}><div className="nm">Niños</div><div className="ds">Clases grupales · técnica y diversión</div></div><button className="mini" onClick={() => openModal("clase")}>Inscribir</button></div>
+          <div className="lcard"><div className="ic">👥</div><div style={{ flex: 1 }}><div className="nm">Adultos · Grupales</div><div className="ds">Clases grupales · todos los niveles</div></div><button className="mini" onClick={() => openModal("clase")}>Inscribir</button></div>
+          <div className="lcard"><div className="ic">🎾</div><div style={{ flex: 1 }}><div className="nm">Clases individuales</div><div className="ds">Horario a convenir con Patricio</div></div><button className="mini" onClick={() => openModal("clase")}>Inscribir</button></div>
+          <div className="lcard"><div className="ic">🏆</div><div style={{ flex: 1 }}><div className="nm">Escalerilla</div><div className="ds">Ranking y competencia interna del club</div></div><button className="mini" onClick={() => openModal("clase")}>Inscribir</button></div>
+          <button className="btn wa" onClick={() => window.open("https://wa.me/56981588218?text=" + encodeURIComponent("Hola! Quiero agendar mi clase de prueba GRATIS en PlayTenis Chicureo."), "_blank")}>💬 Agendar clase de prueba GRATIS</button>
+          <p className="foot">@playtenis.cl · +56 9 8158 8218</p>
         </section>
 
       </div>
