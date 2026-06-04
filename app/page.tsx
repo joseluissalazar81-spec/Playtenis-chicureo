@@ -123,7 +123,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/canchas"
-              className="bg-[#B8E4C9] text-[#2D2D2D] px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#93d4ae] transition-colors shadow-lg hover:shadow-xl"
+              className="bg-[#E8450A] text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#b33408] transition-colors shadow-lg hover:shadow-xl"
             >
               Reservar Cancha
             </Link>
@@ -445,7 +445,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/canchas"
-              className="bg-[#B8E4C9] text-[#2D2D2D] px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#93d4ae] transition-colors"
+              className="bg-[#E8450A] text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#b33408] transition-colors"
             >
               Reservar Cancha
             </Link>
