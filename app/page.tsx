@@ -73,7 +73,7 @@ export default function App() {
         <Image src="/logo.jpeg" alt="PlayTenis" width={44} height={44} style={{ borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
         <div>
           <h1>PlayTenis · Chicureo</h1>
-          <p>Academia de Tenis · Lo Barnechea 🇨🇱</p>
+          <p>Academia de Tenis · Colina 🇨🇱</p>
         </div>
       </header>
 
@@ -204,7 +204,7 @@ export default function App() {
           </div>
           <button className="btn" onClick={() => openModal("cancha")}>📅 Reservar cancha</button>
           <button className="btn wa" onClick={() => window.open("https://wa.me/56981588218", "_blank")}>💬 WhatsApp PlayTenis</button>
-          <p className="foot">Av. Chicureo 1250, Lo Barnechea</p>
+          <p className="foot">Av. Chicureo 1250, Colina</p>
         </section>
 
         {/* ACADEMIA */}
