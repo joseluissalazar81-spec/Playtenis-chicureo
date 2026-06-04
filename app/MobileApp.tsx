@@ -144,7 +144,7 @@ export default function MobileApp() {
           <div className="section-title">Director Deportivo</div>
           <div className="infobox" style={{ marginBottom: 14 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <div className="avatar" style={{ background: "#E8450A", width: 52, height: 52, fontSize: 18, flexShrink: 0 }}>PE</div>
+              <div className="avatar" style={{ background: "#1565C0", width: 52, height: 52, fontSize: 18, flexShrink: 0 }}>PE</div>
               <div><div style={{ fontWeight: 800, fontSize: 16 }}>Patricio Escalona</div><div style={{ fontSize: 12, color: "var(--suave)" }}>Director Deportivo · PlayTenis Chicureo</div></div>
             </div>
           </div>

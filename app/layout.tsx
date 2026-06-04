@@ -17,15 +17,15 @@ function Navbar() {
             <Image src="/logo.jpeg" alt="PlayTenis Chicureo" width={44} height={44} className="rounded-full group-hover:scale-105 transition-transform" />
             <div className="hidden sm:block">
               <span className="text-white font-bold text-lg leading-tight block">PlayTenis</span>
-              <span className="text-[#E8450A] text-xs font-medium tracking-wide">CHICUREO · COLINA</span>
+              <span className="text-[#1565C0] text-xs font-medium tracking-wide">CHICUREO · COLINA</span>
             </div>
           </Link>
           <div className="flex items-center gap-1 sm:gap-2">
-            <Link href="/" className="text-white/80 hover:text-[#E8450A] px-3 py-2 rounded-md text-sm font-medium transition-colors">Inicio</Link>
-            <Link href="/canchas" className="text-white/80 hover:text-[#E8450A] px-3 py-2 rounded-md text-sm font-medium transition-colors">Canchas</Link>
-            <Link href="/socios" className="text-white/80 hover:text-[#E8450A] px-3 py-2 rounded-md text-sm font-medium transition-colors">Socios</Link>
-            <Link href="/torneos" className="text-white/80 hover:text-[#E8450A] px-3 py-2 rounded-md text-sm font-medium transition-colors">Torneos</Link>
-            <a href="https://wa.me/56981588218?text=Hola!%20Quiero%20reservar%20una%20cancha%20en%20PlayTenis." target="_blank" className="ml-2 bg-[#E8450A] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#b33408] transition-colors hidden sm:inline-block">
+            <Link href="/" className="text-white/80 hover:text-[#1565C0] px-3 py-2 rounded-md text-sm font-medium transition-colors">Inicio</Link>
+            <Link href="/canchas" className="text-white/80 hover:text-[#1565C0] px-3 py-2 rounded-md text-sm font-medium transition-colors">Canchas</Link>
+            <Link href="/socios" className="text-white/80 hover:text-[#1565C0] px-3 py-2 rounded-md text-sm font-medium transition-colors">Socios</Link>
+            <Link href="/torneos" className="text-white/80 hover:text-[#1565C0] px-3 py-2 rounded-md text-sm font-medium transition-colors">Torneos</Link>
+            <a href="https://wa.me/56981588218?text=Hola!%20Quiero%20reservar%20una%20cancha%20en%20PlayTenis." target="_blank" className="ml-2 bg-[#1565C0] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#0D47A1] transition-colors hidden sm:inline-block">
               Reservar
             </a>
           </div>
@@ -45,13 +45,13 @@ function Footer() {
               <Image src="/logo.jpeg" alt="PlayTenis" width={40} height={40} className="rounded-full" />
               <div>
                 <span className="text-white font-bold text-lg block">PlayTenis</span>
-                <span className="text-[#E8450A] text-xs font-medium tracking-wide">CHICUREO · COLINA</span>
+                <span className="text-[#1565C0] text-xs font-medium tracking-wide">CHICUREO · COLINA</span>
               </div>
             </div>
             <p className="text-white/70 text-sm leading-relaxed">Academia de tenis en Chicureo, Colina. Clases, canchas y torneos todo el año.</p>
           </div>
           <div>
-            <h3 className="font-semibold text-[#E8450A] mb-4">Navegación</h3>
+            <h3 className="font-semibold text-[#1565C0] mb-4">Navegación</h3>
             <ul className="space-y-2 text-white/70 text-sm">
               <li><Link href="/" className="hover:text-white transition-colors">Inicio</Link></li>
               <li><Link href="/canchas" className="hover:text-white transition-colors">Reserva de Canchas</Link></li>
@@ -60,7 +60,7 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold text-[#E8450A] mb-4">Contacto</h3>
+            <h3 className="font-semibold text-[#1565C0] mb-4">Contacto</h3>
             <ul className="space-y-2 text-white/70 text-sm">
               <li>📍 San Vicente de Lo Arcaya 1, Colina</li>
               <li>📞 +56 9 8158 8218</li>

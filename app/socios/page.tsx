@@ -163,7 +163,7 @@ const socios = [
 
 const planColors: Record<string, string> = {
   Básico: "bg-gray-100 text-gray-700",
-  Premium: "bg-orange-50 text-[#2D2D2D]",
+  Premium: "bg-blue-50 text-[#2D2D2D]",
   Familiar: "bg-blue-100 text-blue-700",
 };
 
@@ -210,7 +210,7 @@ function DesktopPage() {
       <div
         className="py-16 text-center text-white"
         style={{
-          background: "linear-gradient(135deg, #1b4332 0%, #40916c 100%)",
+          background: "linear-gradient(135deg, #0D47A1 0%, #1976D2 100%)",
         }}
       >
         <h1 className="text-4xl md:text-5xl font-black mb-3">
@@ -228,7 +228,7 @@ function DesktopPage() {
           {[
             { label: "Total Socios", value: stats.total, icon: "👥", color: "bg-white" },
             { label: "Activos", value: stats.activos, icon: "✅", color: "bg-green-50" },
-            { label: "Plan Premium", value: stats.premium, icon: "⭐", color: "bg-orange-50" },
+            { label: "Plan Premium", value: stats.premium, icon: "⭐", color: "bg-blue-50" },
             { label: "Plan Familiar", value: stats.familiar, icon: "👨‍👩‍👧‍👦", color: "bg-blue-50" },
           ].map((stat) => (
             <div
@@ -262,7 +262,7 @@ function DesktopPage() {
                 onClick={() => setFilterPlan(p)}
                 className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
                   filterPlan === p
-                    ? "bg-[#E8450A] text-white"
+                    ? "bg-[#1565C0] text-white"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                 }`}
               >
@@ -328,7 +328,7 @@ function DesktopPage() {
                         }
                         className={`border-b border-gray-50 cursor-pointer transition-colors ${
                           selectedSocio === socio.id
-                            ? "bg-orange-50"
+                            ? "bg-blue-50"
                             : "hover:bg-gray-50"
                         }`}
                       >
@@ -447,7 +447,7 @@ function DesktopPage() {
                   </div>
                 </div>
                 <div className="mt-6 space-y-2">
-                  <button className="w-full bg-[#E8450A] text-white py-2 rounded-lg text-sm font-semibold hover:bg-[#2D2D2D] transition-colors">
+                  <button className="w-full bg-[#1565C0] text-white py-2 rounded-lg text-sm font-semibold hover:bg-[#0D47A1] transition-colors">
                     Editar Socio
                   </button>
                   <button className="w-full border border-gray-200 text-gray-600 py-2 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors">

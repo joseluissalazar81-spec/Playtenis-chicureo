@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --naranja: #E8450A;
-  --naranja-osc: #b33408;
-  --naranja-mid: #d03d09;
-  --naranja-claro: #fde8e0;
+  --naranja: #1565C0;
+  --naranja-osc: #0D47A1;
+  --naranja-mid: #1048A0;
+  --naranja-claro: #E3F2FD;
   --gris: #f4f5f7;
   --gris-osc: #2D2D2D;
   --texto: #1d2433;
@@ -80,7 +80,7 @@ header p { font-size: 11px; color: rgba(255,255,255,0.6); }
   color: #fff;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 6px 20px rgba(232,69,10,.35);
+  box-shadow: 0 6px 20px rgba(21,101,192,.35);
   margin-bottom: 14px;
 }
 
@@ -89,7 +89,7 @@ header p { font-size: 11px; color: rgba(255,255,255,0.6); }
 .hero .ball {
   position: absolute; right: -20px; top: -20px;
   width: 110px; height: 110px; border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #f5a623, var(--naranja));
+  background: radial-gradient(circle at 35% 35%, #42A5F5, var(--naranja));
   opacity: .2;
 }
 
@@ -217,7 +217,7 @@ header p { font-size: 11px; color: rgba(255,255,255,0.6); }
   display: block; width: 100%; background: var(--naranja); color: #fff;
   border: none; padding: 15px; border-radius: 14px; font-size: 16px;
   font-weight: 700; margin-top: 8px;
-  box-shadow: 0 4px 12px rgba(232,69,10,.3); cursor: pointer;
+  box-shadow: 0 4px 12px rgba(21,101,192,.3); cursor: pointer;
 }
 .btn.dark { background: var(--negro); }
 .btn.sec { background: #fff; color: var(--texto); border: 1px solid var(--linea); box-shadow: none; }
