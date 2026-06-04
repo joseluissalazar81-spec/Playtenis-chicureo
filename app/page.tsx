@@ -1,463 +1,366 @@
-import Link from "next/link";
+"use client";
 import Image from "next/image";
+import { useState } from "react";
 
-const features = [
-  {
-    icon: "🎾",
-    title: "8 Canchas Profesionales",
-    description:
-      "Canchas de arcilla y cemento con iluminación LED de última generación para jugar de día y de noche.",
-  },
-  {
-    icon: "🏆",
-    title: "Torneos Todo el Año",
-    description:
-      "Participá en torneos internos, regionales y nacionales. Compite y mejora tu ranking ATP/WTA amateur.",
-  },
-  {
-    icon: "👨‍🏫",
-    title: "Profesores Certificados",
-    description:
-      "Clases para todos los niveles, desde principiantes hasta jugadores avanzados. Escuela infantil y adultos.",
-  },
-  {
-    icon: "🏊",
-    title: "Instalaciones Premium",
-    description:
-      "Camarines modernos, piscina, gimnasio, restaurante y estacionamiento gratuito para socios.",
-  },
+const PAGO = {
+  nombre: "José Luis Salazar",
+  banco: "Transferencia / Mercado Pago",
+  email: "info@playtenis.cl",
+};
+
+const jugadores = [
+  ["Carlos Muñoz", 72, 15, 14, 1, 93.3],
+  ["Rodrigo Vega", 65, 14, 12, 2, 85.7],
+  ["Andrés Torres", 58, 13, 11, 2, 84.6],
+  ["Felipe Rivas", 52, 12, 10, 2, 83.3],
+  ["Matías Cortés", 48, 11, 9, 2, 81.8],
+  ["Sebastián Núñez", 43, 10, 8, 2, 80.0],
+  ["Pablo Herrera", 38, 12, 7, 5, 58.3],
+  ["Diego Soto", 35, 10, 6, 4, 60.0],
+  ["Javier Pinto", 30, 9, 5, 4, 55.6],
+  ["Nicolás Lagos", 25, 8, 4, 4, 50.0],
 ];
 
-const stats = [
-  { value: "500+", label: "Socios Activos" },
-  { value: "8", label: "Canchas" },
-  { value: "15+", label: "Años de Historia" },
-  { value: "20+", label: "Torneos al Año" },
+const torneos = [
+  { n: "Torneo Apertura Chicureo 🏆", f: "15 julio 2026 · 16:00 y 18:00", p: "$25.000", c: "8 cupos", monto: 25000 },
+  { n: "Copa PlayTenis Verano", f: "20 agosto 2026 · Desde las 10:00", p: "$20.000", c: "12 cupos", monto: 20000 },
+  { n: "Escalerilla Jul–Sep 2026 🎾", f: "Partidos durante el trimestre", p: "$30.000", c: "5 cupos", monto: 30000 },
 ];
 
-const plans = [
-  {
-    name: "Básico",
-    price: "$85.000",
-    period: "/ mes",
-    features: [
-      "2 horas de cancha por semana",
-      "Acceso a camarines",
-      "Descuento 10% en clases",
-      "Newsletter del club",
-    ],
-    highlight: false,
-  },
-  {
-    name: "Premium",
-    price: "$145.000",
-    period: "/ mes",
-    features: [
-      "Canchas ilimitadas",
-      "1 clase grupal semanal",
-      "Acceso a gimnasio",
-      "Piscina y sauna",
-      "Prioridad en torneos",
-    ],
-    highlight: true,
-  },
-  {
-    name: "Familiar",
-    price: "$220.000",
-    period: "/ mes",
-    features: [
-      "Todo lo de Premium",
-      "Hasta 4 integrantes",
-      "Escuela infantil incluida",
-      "Eventos familiares",
-      "Estacionamiento VIP",
-    ],
-    highlight: false,
-  },
-];
+const avatarColors = ["#e74c3c","#e67e22","#f39c12","#2ecc71","#1abc9c","#3498db","#9b59b6","#e91e63","#00bcd4","#4caf50"];
 
-export default function HomePage() {
+function initials(n: string) {
+  return n.split(" ").slice(0, 2).map((x: string) => x[0]).join("").toUpperCase();
+}
+function avatarColor(n: string) {
+  let h = 0;
+  for (const c of n) h = (h * 31 + c.charCodeAt(0)) % avatarColors.length;
+  return avatarColors[h];
+}
+
+type ModalData = { tipo: string; idx?: number } | null;
+
+export default function App() {
+  const [screen, setScreen] = useState("inicio");
+  const [modal, setModal] = useState<ModalData>(null);
+  const [toast, setToast] = useState("");
+  const [toastVisible, setToastVisible] = useState(false);
+
+  function showToast(msg: string) {
+    setToast(msg);
+    setToastVisible(true);
+    setTimeout(() => setToastVisible(false), 2800);
+  }
+
+  function go(s: string) {
+    setScreen(s);
+  }
+
+  function openModal(tipo: string, idx?: number) {
+    setModal({ tipo, idx });
+  }
+
+  function closeModal() {
+    setModal(null);
+  }
+
+  const maxPts = Math.max(...jugadores.map(p => p[1] as number));
+
   return (
-    <>
-      {/* Hero */}
-      <section
-        className="relative min-h-[90vh] flex items-center justify-center overflow-hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, #1a1a1a 0%, #2D2D2D 50%, #E8450A 100%)",
-        }}
-      >
-        {/* Decorative tennis court lines */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-white transform -translate-y-1/2" />
-          <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-white transform -translate-x-1/2" />
-          <div className="absolute top-[20%] left-[15%] right-[15%] h-0.5 bg-white" />
-          <div className="absolute bottom-[20%] left-[15%] right-[15%] h-0.5 bg-white" />
-          <div className="absolute top-[20%] bottom-[20%] left-[15%] w-0.5 bg-white" />
-          <div className="absolute top-[20%] bottom-[20%] right-[15%] w-0.5 bg-white" />
-          <div className="absolute top-[20%] bottom-[20%] left-[43%] right-[43%] border-2 border-white rounded-full" />
+    <div className="phone">
+      {/* Header */}
+      <header>
+        <Image src="/logo.jpeg" alt="PlayTenis" width={44} height={44} style={{ borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
+        <div>
+          <h1>PlayTenis · Chicureo</h1>
+          <p>Academia de Tenis · Lo Barnechea 🇨🇱</p>
         </div>
+      </header>
 
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <div className="flex justify-center mb-6">
-            <Image
-              src="/logo.jpeg"
-              alt="PlayTenis Chicureo"
-              width={120}
-              height={120}
-              className="rounded-full shadow-2xl border-4 border-white/30"
-            />
+      {/* Content */}
+      <div className="content">
+
+        {/* INICIO */}
+        <section className={`screen ${screen === "inicio" ? "active" : ""}`} id="inicio">
+          <div className="hero">
+            <div className="ball" />
+            <h2>¡Tu pasión,<br />nuestro compromiso!</h2>
+            <p>Academia, reservas y torneos en un solo lugar.</p>
           </div>
-          <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
-            Play<span className="text-[#E8450A]">Tenis</span>
-            <br />
-            <span className="text-3xl md:text-4xl font-light text-white/80">
-              Chicureo
-            </span>
-          </h1>
-          <p className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-            El club de tenis más exclusivo de Lo Barnechea. Canchas de primera
-            clase, comunidad apasionada y el mejor ambiente para jugar en la
-            precordillera de Santiago.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/canchas"
-              className="bg-[#E8450A] text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#b33408] transition-colors shadow-lg hover:shadow-xl"
-            >
-              Reservar Cancha
-            </Link>
-            <Link
-              href="#nosotros"
-              className="border-2 border-white text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10 transition-colors"
-            >
-              Conocer el Club
-            </Link>
+          <div className="grid2">
+            <button className="acc" onClick={() => go("ranking")}><div className="ic">🏆</div><div className="t">Ranking</div><div className="s">Posiciones del club</div></button>
+            <button className="acc" onClick={() => go("torneos")}><div className="ic">🎯</div><div className="t">Torneos</div><div className="s">Inscríbete ahora</div></button>
+            <button className="acc" onClick={() => go("canchas")}><div className="ic">📅</div><div className="t">Reservar cancha</div><div className="s">Elige tu horario</div></button>
+            <button className="acc" onClick={() => go("academia")}><div className="ic">🎾</div><div className="t">Academia</div><div className="s">Clases y servicios</div></button>
           </div>
-        </div>
-
-        {/* Bottom wave */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M0 80L60 66.7C120 53.3 240 26.7 360 20C480 13.3 600 26.7 720 33.3C840 40 960 40 1080 33.3C1200 26.7 1320 13.3 1380 6.7L1440 0V80H0Z"
-              fill="#f9fafb"
-            />
-          </svg>
-        </div>
-      </section>
-
-      {/* Stats */}
-      <section className="bg-gray-50 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {stats.map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-4xl font-black text-[#E8450A] mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-gray-600 text-sm font-medium uppercase tracking-wide">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
+          <div className="aviso">⚠️ <strong>Solo zapatillas de arcilla</strong> en las canchas.</div>
+          <div className="stats">
+            <div className="stat"><div className="n">8</div><div className="l">Canchas</div></div>
+            <div className="stat"><div className="n">500+</div><div className="l">Socios</div></div>
+            <div className="stat"><div className="n">20+</div><div className="l">Torneos/año</div></div>
           </div>
-        </div>
-      </section>
-
-      {/* About */}
-      <section id="nosotros" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <span className="text-[#E8450A] font-semibold text-sm uppercase tracking-wider">
-                Sobre Nosotros
-              </span>
-              <h2 className="section-title mt-2">
-                El Tenis en su Máxima Expresión
-              </h2>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                Fundado en 2009 en el corazón de Chicureo, PlayTenis nació con la
-                visión de crear una comunidad deportiva de excelencia en Lo
-                Barnechea. Contamos con infraestructura de clase mundial rodeada
-                del impresionante paisaje de la precordillera andina.
-              </p>
-              <p className="text-gray-600 mb-8 leading-relaxed">
-                Nuestro club es hogar de familias, profesionales y competidores
-                que comparten la pasión por el tenis. Con más de 500 socios
-                activos, ofrecemos un ambiente inclusivo donde cada pelotazo
-                cuenta.
-              </p>
-              <div className="flex gap-4">
-                <Link href="/socios" className="btn-primary">
-                  Hacerse Socio
-                </Link>
-                <Link href="/canchas" className="btn-secondary">
-                  Ver Canchas
-                </Link>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-orange-50 rounded-2xl p-6 text-center">
-                <div className="text-4xl mb-2">🌿</div>
-                <div className="font-bold text-[#2D2D2D]">
-                  Entorno Natural
-                </div>
-                <p className="text-sm text-gray-600 mt-1">
-                  Vistas a la precordillera
-                </p>
-              </div>
-              <div className="bg-orange-100 rounded-2xl p-6 text-center mt-8">
-                <div className="text-4xl mb-2">🏅</div>
-                <div className="font-bold text-[#2D2D2D]">
-                  Campeones
-                </div>
-                <p className="text-sm text-gray-600 mt-1">
-                  +50 títulos regionales
-                </p>
-              </div>
-              <div className="bg-blue-50 rounded-2xl p-6 text-center">
-                <div className="text-4xl mb-2">👶</div>
-                <div className="font-bold text-[#2D2D2D]">
-                  Escuela Infantil
-                </div>
-                <p className="text-sm text-gray-600 mt-1">Desde 5 años</p>
-              </div>
-              <div className="bg-orange-50 rounded-2xl p-6 text-center mt-8">
-                <div className="text-4xl mb-2">💪</div>
-                <div className="font-bold text-[#2D2D2D]">
-                  Fitness
-                </div>
-                <p className="text-sm text-gray-600 mt-1">
-                  Gym y piscina incluidos
-                </p>
-              </div>
+          <div className="section-title">Próximo torneo</div>
+          <div className="tcard">
+            <div className="tn">Torneo Apertura Chicureo 🏆</div>
+            <div className="tm">15 julio 2026 · turnos 16:00 y 18:00</div>
+            <div className="trow">
+              <span className="price">$25.000</span>
+              <span className="cupos">8 cupos</span>
+              <button className="mini" onClick={() => go("torneos")}>Ver más</button>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Features */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="text-[#E8450A] font-semibold text-sm uppercase tracking-wider">
-            Por Qué Elegirnos
-          </span>
-          <h2 className="section-title mt-2">Todo lo que Necesitas</h2>
-          <p className="section-subtitle max-w-2xl mx-auto">
-            En PlayTenis Chicureo encontrarás las mejores instalaciones y
-            servicios para disfrutar el tenis al máximo.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((f) => (
-              <div key={f.title} className="card text-left">
-                <div className="text-4xl mb-4">{f.icon}</div>
-                <h3 className="font-bold text-[#2D2D2D] text-lg mb-2">
-                  {f.title}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {f.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="text-[#E8450A] font-semibold text-sm uppercase tracking-wider">
-            Membersías
-          </span>
-          <h2 className="section-title mt-2">Planes para Todos</h2>
-          <p className="section-subtitle max-w-xl mx-auto">
-            Elige el plan que mejor se adapte a ti y tu familia. Todos los
-            precios en pesos chilenos (CLP).
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`rounded-2xl p-8 relative ${
-                  plan.highlight
-                    ? "bg-[#E8450A] text-white shadow-2xl scale-105"
-                    : "bg-gray-50 text-gray-800 shadow-md"
-                }`}
-              >
-                {plan.highlight && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[#E8450A] text-[#2D2D2D] text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wide">
-                    Más Popular
-                  </div>
-                )}
-                <h3
-                  className={`text-xl font-bold mb-2 ${
-                    plan.highlight ? "text-white" : "text-[#2D2D2D]"
-                  }`}
-                >
-                  {plan.name}
-                </h3>
-                <div className="mb-6">
-                  <span className="text-4xl font-black">{plan.price}</span>
-                  <span
-                    className={`text-sm ${
-                      plan.highlight ? "text-white/70" : "text-gray-500"
-                    }`}
-                  >
-                    {plan.period}
-                  </span>
-                </div>
-                <ul className="space-y-3 mb-8 text-left">
-                  {plan.features.map((feat) => (
-                    <li key={feat} className="flex items-start gap-2 text-sm">
-                      <span
-                        className={`mt-0.5 ${
-                          plan.highlight ? "text-[#E8450A]" : "text-[#E8450A]"
-                        }`}
-                      >
-                        ✓
-                      </span>
-                      <span
-                        className={plan.highlight ? "text-white/90" : "text-gray-600"}
-                      >
-                        {feat}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href="/socios"
-                  className={`block text-center py-3 rounded-xl font-bold transition-colors ${
-                    plan.highlight
-                      ? "bg-[#E8450A] text-[#2D2D2D] hover:bg-[#b33408]"
-                      : "bg-[#E8450A] text-white hover:bg-[#2D2D2D]"
-                  }`}
-                >
-                  Comenzar
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Location */}
-      <section id="contacto" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <span className="text-[#E8450A] font-semibold text-sm uppercase tracking-wider">
-                Ubicación y Contacto
-              </span>
-              <h2 className="section-title mt-2">Encuéntranos en Chicureo</h2>
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                Estamos ubicados en el exclusivo sector de Chicureo, en la
-                comuna de Lo Barnechea. Fácil acceso desde la Autopista del
-                Sol y Colina.
-              </p>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl">📍</span>
-                  <div>
-                    <div className="font-semibold text-[#2D2D2D]">
-                      Dirección
-                    </div>
-                    <div className="text-gray-600">
-                      Av. Chicureo 1250, Lo Barnechea, Santiago
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl">📞</span>
-                  <div>
-                    <div className="font-semibold text-[#2D2D2D]">
-                      Teléfono
-                    </div>
-                    <div className="text-gray-600">+56 2 2345 6789</div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl">✉️</span>
-                  <div>
-                    <div className="font-semibold text-[#2D2D2D]">
-                      Email
-                    </div>
-                    <div className="text-gray-600">info@playtenis.cl</div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl">🕐</span>
-                  <div>
-                    <div className="font-semibold text-[#2D2D2D]">
-                      Horario
-                    </div>
-                    <div className="text-gray-600">
-                      Lunes a Domingo: 07:00 – 22:00 hrs
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="bg-orange-50 rounded-2xl p-8 text-center">
-              <div className="text-6xl mb-4">🗻️</div>
-              <h3 className="text-[#2D2D2D] font-bold text-xl mb-2">
-                Chicureo, Lo Barnechea
-              </h3>
-              <p className="text-gray-600 text-sm mb-6">
-                A 25 minutos del centro de Santiago, rodeado del paisaje
-                natural de la precordillera andina.
-              </p>
-              <div className="bg-white rounded-xl p-4 text-left text-sm text-gray-600 space-y-1">
-                <p>
-                  <strong>Desde Autopista del Sol:</strong> Salida Chicureo,
-                  luego 5 km norte
-                </p>
-                <p>
-                  <strong>Desde Las Condes:</strong> Av. El Rodeo hacia
-                  Colina, sector Chicureo
-                </p>
-                <p>
-                  <strong>Transporte público:</strong> Micro 422 desde
-                  Bilbao con Lo Encañado
-                </p>
-              </div>
+        {/* RANKING */}
+        <section className={`screen ${screen === "ranking" ? "active" : ""}`} id="ranking">
+          <div className="mycard">
+            <div className="pos">Líder · Escalerilla Jun–Ago 2026</div>
+            <div className="name">#1 · Carlos Muñoz</div>
+            <div className="row">
+              <div><span className="big">72</span><span className="cap">Puntos</span></div>
+              <div><span className="big">15</span><span className="cap">Jugados</span></div>
+              <div><span className="big">93.3%</span><span className="cap">Rendimiento</span></div>
             </div>
           </div>
-        </div>
-      </section>
+          <button className="btn" onClick={() => openModal("partido")}>+ Registrar partido</button>
+          <div className="section-title">Ranking del club</div>
+          {jugadores.map((p, i) => {
+            const cls = i === 0 ? "top1" : i === 1 ? "top2" : i === 2 ? "top3" : "";
+            const col = avatarColor(p[0] as string);
+            const ini = initials(p[0] as string);
+            const pct = Math.round(((p[1] as number) / maxPts) * 100);
+            return (
+              <div key={i} className={`rank-item ${cls}`}>
+                <div className="rank-pos">{i + 1}</div>
+                <div className="avatar" style={{ background: col }}>{ini}</div>
+                <div className="rank-info">
+                  <div className="nm">{p[0] as string}</div>
+                  <div className="sub">{p[3] as number}G · {p[4] as number}P · {p[2] as number} jugados</div>
+                  <div className="bar"><i style={{ width: `${pct}%` }} /></div>
+                </div>
+                <div className="rank-pts">
+                  <div className="p">{p[1] as number}</div>
+                  <div className="pct">{p[5] as number}%</div>
+                </div>
+              </div>
+            );
+          })}
+          <p className="foot">PlayTenis Chicureo · Academia de Tenis 🎾</p>
+        </section>
 
-      {/* CTA */}
-      <section
-        className="py-20"
-        style={{
-          background:
-            "linear-gradient(135deg, #1a1a1a 0%, #2D2D2D 100%)",
-        }}
-      >
-        <div className="max-w-3xl mx-auto text-center px-4">
-          <h2 className="text-4xl font-black text-white mb-4">
-            ¿Listo para Jugar?
-          </h2>
-          <p className="text-white/80 text-lg mb-8">
-            Reserva tu cancha en minutos o únete como socio y disfruta de
-            todos los beneficios de PlayTenis Chicureo.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/canchas"
-              className="bg-[#E8450A] text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#b33408] transition-colors"
-            >
-              Reservar Cancha
-            </Link>
-            <Link
-              href="/socios"
-              className="border-2 border-white text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10 transition-colors"
-            >
-              Ser Socio
-            </Link>
+        {/* TORNEOS */}
+        <section className={`screen ${screen === "torneos" ? "active" : ""}`} id="torneos">
+          <div className="section-title">Inscripciones abiertas</div>
+          {torneos.map((t, i) => (
+            <div key={i} className="tcard">
+              <div className="tn">{t.n}</div>
+              <div className="tm">{t.f}</div>
+              <div className="trow">
+                <span className="price">{t.p}</span>
+                <span className="cupos">{t.c}</span>
+                <button className="mini wa" onClick={() => openModal("torneo", i)}>Inscribirme</button>
+              </div>
+            </div>
+          ))}
+          <div className="section-title">Jugadores inscritos · Apertura</div>
+          {["Carlos Muñoz","Rodrigo Vega","Andrés Torres","Felipe Rivas"].map((n, i) => (
+            <div key={i} className="lcard">
+              <div className="avatar" style={{ background: avatarColor(n), width: 32, height: 32, fontSize: 12, flexShrink: 0 }}>{initials(n)}</div>
+              <div style={{ flex: 1 }}><div className="nm">{n}</div></div>
+              <span style={{ fontSize: 18 }}>✅</span>
+            </div>
+          ))}
+          {[5,6,7,8].map(i => (
+            <div key={i} className="lcard">
+              <div style={{ width: 32, height: 32, borderRadius: "50%", background: "var(--gris)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, color: "var(--suave)" }}>{i}</div>
+              <div style={{ flex: 1 }}><div className="ds">Cupo disponible</div></div>
+              <button className="mini" onClick={() => openModal("torneo", 0)}>Unirme</button>
+            </div>
+          ))}
+        </section>
+
+        {/* CANCHAS */}
+        <section className={`screen ${screen === "canchas" ? "active" : ""}`} id="canchas">
+          <div className="section-title">Reserva de canchas</div>
+          <div className="aviso">🎾 <strong>Solo zapatillas de arcilla.</strong> Reprogramación con 24 hrs de anticipación.</div>
+          <div className="infobox">
+            <div className="hrow"><span className="dia">Lunes a Jueves</span><span className="hrs">09:00 – 23:00</span></div>
+            <div className="hrow"><span className="dia">Viernes</span><span className="hrs">09:00 – 22:00</span></div>
+            <div className="hrow"><span className="dia">Sábado</span><span className="hrs">09:00 – 21:00</span></div>
+            <div className="hrow"><span className="dia">Domingo</span><span className="hrs">08:00 – 22:00</span></div>
+          </div>
+          <div className="infobox">
+            <div className="hrow"><span className="dia">1 hora</span><span className="hrs">$15.000</span></div>
+            <div className="hrow"><span className="dia">2 horas</span><span className="hrs">$25.000</span></div>
+            <div className="hrow"><span className="dia">Socio Premium</span><span className="hrs">Descuento 20%</span></div>
+          </div>
+          <div className="lcard">
+            <div className="ic">🤝</div>
+            <div style={{ flex: 1 }}>
+              <div className="nm">¿No tienes con quién jugar?</div>
+              <div className="ds">PlayTenis te busca rival de tu nivel</div>
+            </div>
+            <button className="mini wa" onClick={() => window.open("https://wa.me/56912345678?text=" + encodeURIComponent("Hola PlayTenis! Busco rival de mi nivel para jugar."), "_blank")}>Pedir rival</button>
+          </div>
+          <button className="btn" onClick={() => openModal("cancha")}>📅 Reservar cancha</button>
+          <button className="btn wa" onClick={() => window.open("https://wa.me/56912345678", "_blank")}>💬 WhatsApp PlayTenis</button>
+          <p className="foot">Av. Chicureo 1250, Lo Barnechea</p>
+        </section>
+
+        {/* ACADEMIA */}
+        <section className={`screen ${screen === "academia" ? "active" : ""}`} id="academia">
+          <div className="section-title">Nuestro Equipo</div>
+          <div className="infobox" style={{ marginBottom: 14 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
+              <div className="avatar" style={{ background: "#E8450A", width: 52, height: 52, fontSize: 18, flexShrink: 0 }}>PT</div>
+              <div>
+                <div style={{ fontWeight: 800, fontSize: 16 }}>Equipo PlayTenis</div>
+                <div style={{ fontSize: 12, color: "var(--suave)" }}>Profesores certificados · Chicureo</div>
+              </div>
+            </div>
+            <div className="section-title" style={{ marginTop: 4 }}>Certificaciones</div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 10 }}>
+              <span className="cupos">PTR Nivel 1</span>
+              <span className="cupos">PTR Nivel 2</span>
+              <span className="cupos">ITF Play & Stay</span>
+              <span className="cupos">Alto Rendimiento</span>
+            </div>
+          </div>
+          <div className="section-title">Academia · Todos los niveles</div>
+          <div className="chips">
+            <span className="chip" style={{ cursor: "pointer" }} onClick={() => openModal("nivel", 0)}>Iniciación</span>
+            <span className="chip" style={{ cursor: "pointer" }} onClick={() => openModal("nivel", 1)}>Intermedio</span>
+            <span className="chip" style={{ cursor: "pointer" }} onClick={() => openModal("nivel", 2)}>Avanzado</span>
+            <span className="chip" style={{ cursor: "pointer" }} onClick={() => openModal("nivel", 3)}>Alto rendimiento</span>
+          </div>
+          <div className="lcard"><div className="ic">👶</div><div style={{ flex: 1 }}><div className="nm">Iniciación · 3 a 8 años</div><div className="ds">Sábados · grupales</div></div><button className="mini" onClick={() => openModal("clase")}>Inscribir</button></div>
+          <div className="lcard"><div className="ic">👥</div><div style={{ flex: 1 }}><div className="nm">Clases grupales</div><div className="ds">Lun / Mié / Sáb</div></div><button className="mini" onClick={() => openModal("clase")}>Inscribir</button></div>
+          <div className="lcard"><div className="ic">🎾</div><div style={{ flex: 1 }}><div className="nm">Clases individuales</div><div className="ds">Horario a convenir</div></div><button className="mini" onClick={() => openModal("clase")}>Inscribir</button></div>
+          <div className="section-title">Servicios 🔧</div>
+          <div className="lcard"><div className="ic">🛠️</div><div style={{ flex: 1 }}><div className="nm">Encordado profesional</div><div className="ds">Control · Potencia · Híbrido</div></div><button className="mini" onClick={() => openModal("encordado")}>Solicitar</button></div>
+          <div className="lcard"><div className="ic">✊</div><div style={{ flex: 1 }}><div className="nm">Cambio de grip</div><div className="ds">Mayor comodidad y agarre</div></div><button className="mini" onClick={() => openModal("encordado")}>Solicitar</button></div>
+          <p className="foot">@PlayTenis_Chicureo · Lo Barnechea, Santiago</p>
+        </section>
+
+      </div>
+
+      {/* Tab Bar */}
+      <div className="tabbar">
+        <button className={`tab ${screen === "inicio" ? "active" : ""}`} data-s="inicio" onClick={() => go("inicio")}><span className="ic">🏠</span>Inicio</button>
+        <button className={`tab ${screen === "ranking" ? "active" : ""}`} data-s="ranking" onClick={() => go("ranking")}><span className="ic">🏆</span>Ranking</button>
+        <button className={`tab ${screen === "torneos" ? "active" : ""}`} data-s="torneos" onClick={() => go("torneos")}><span className="ic">🎯</span>Torneos</button>
+        <button className={`tab ${screen === "canchas" ? "active" : ""}`} data-s="canchas" onClick={() => go("canchas")}><span className="ic">📅</span>Cancha</button>
+        <button className={`tab ${screen === "academia" ? "active" : ""}`} data-s="academia" onClick={() => go("academia")}><span className="ic">🎾</span>Academia</button>
+      </div>
+
+      {/* Modal */}
+      {modal && (
+        <div className="modal show" onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}>
+          <div className="sheet">
+            {modal.tipo === "torneo" && modal.idx !== undefined && (
+              <>
+                <h3>Inscripción · {torneos[modal.idx].n}</h3>
+                <div className="field"><label>Tu nombre</label><input placeholder="Ej: Juan Pérez" /></div>
+                <div className="field"><label>Teléfono</label><input type="tel" placeholder="+569 XXXX XXXX" /></div>
+                <div className="pagobox">
+                  <h4>💳 Transferencia</h4>
+                  <div className="row"><span className="k">Nombre</span><span className="v">{PAGO.nombre}</span></div>
+                  <div className="row"><span className="k">Banco</span><span className="v">{PAGO.banco}</span></div>
+                  <div className="row"><span className="k">Email</span><span className="v" style={{ fontSize: 11 }}>{PAGO.email}</span></div>
+                  <div className="row"><span className="k">Monto</span><span className="v" style={{ color: "var(--naranja-osc)", fontSize: 16 }}>${torneos[modal.idx].monto.toLocaleString("es-CL")}</span></div>
+                </div>
+                <button className="btn wa" onClick={() => { closeModal(); window.open("https://wa.me/56912345678?text=" + encodeURIComponent("Hola PlayTenis! Quiero inscribirme en: " + torneos[modal.idx!].n), "_blank"); }}>💬 Confirmar por WhatsApp</button>
+                <button className="btn sec" style={{ marginTop: 8 }} onClick={closeModal}>Cancelar</button>
+              </>
+            )}
+            {modal.tipo === "cancha" && (
+              <>
+                <h3>Reservar cancha</h3>
+                <div className="field"><label>Fecha</label><input type="date" defaultValue={new Date().toISOString().split("T")[0]} /></div>
+                <div className="field"><label>Hora</label>
+                  <select>
+                    {Array.from({ length: 14 }, (_, i) => i + 9).map(h => (
+                      <option key={h}>{String(h).padStart(2, "0")}:00</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="field"><label>Cancha</label>
+                  <select><option>Sin preferencia</option>{[1,2,3,4,5,6,7,8].map(n => <option key={n}>Cancha {n}</option>)}</select>
+                </div>
+                <div className="field"><label>Duración</label>
+                  <select><option value="15000">1 hora · $15.000</option><option value="25000">2 horas · $25.000</option></select>
+                </div>
+                <div className="field"><label>Tu nombre</label><input placeholder="Ej: Juan Pérez" /></div>
+                <div className="field"><label>Teléfono</label><input type="tel" placeholder="+569 XXXX XXXX" /></div>
+                <button className="btn wa" onClick={() => { closeModal(); showToast("✅ Reserva enviada"); window.open("https://wa.me/56912345678", "_blank"); }}>💬 Confirmar por WhatsApp</button>
+                <button className="btn sec" style={{ marginTop: 8 }} onClick={closeModal}>Cancelar</button>
+              </>
+            )}
+            {modal.tipo === "partido" && (
+              <>
+                <h3>Registrar partido</h3>
+                <div className="field"><label>Oponente</label>
+                  <select>{jugadores.map((p, i) => <option key={i}>{p[0] as string}</option>)}</select>
+                </div>
+                <div className="field"><label>Cancha</label>
+                  <select>{[1,2,3,4,5,6,7,8].map(n => <option key={n}>Cancha {n}</option>)}</select>
+                </div>
+                <div className="field"><label>Fecha</label><input type="date" defaultValue={new Date().toISOString().split("T")[0]} /></div>
+                <div className="field"><label>Resultado</label><input placeholder="Ej: 6-3, 7-5" /></div>
+                <button className="btn" onClick={() => { closeModal(); showToast("✅ Partido registrado"); }}>Guardar</button>
+                <button className="btn sec" style={{ marginTop: 8 }} onClick={closeModal}>Cancelar</button>
+              </>
+            )}
+            {modal.tipo === "clase" && (
+              <>
+                <h3>Inscripción · Academia PlayTenis</h3>
+                <div className="field"><label>Nombre del alumno</label><input placeholder="Ej: Juan Pérez" /></div>
+                <div className="field"><label>Teléfono</label><input type="tel" placeholder="+569 XXXX XXXX" /></div>
+                <div className="field"><label>Nivel</label>
+                  <select><option>Iniciación (3–8 años)</option><option>Intermedio</option><option>Avanzado</option><option>Alto rendimiento</option></select>
+                </div>
+                <div className="field"><label>Tipo</label>
+                  <select><option>Grupal</option><option>Individual</option></select>
+                </div>
+                <button className="btn wa" onClick={() => { closeModal(); window.open("https://wa.me/56912345678?text=" + encodeURIComponent("Hola PlayTenis! Quiero inscribirme en la academia."), "_blank"); }}>💬 Coordinar por WhatsApp</button>
+                <button className="btn sec" style={{ marginTop: 8 }} onClick={closeModal}>Cancelar</button>
+              </>
+            )}
+            {modal.tipo === "encordado" && (
+              <>
+                <h3>Encordado · PlayTenis</h3>
+                <div className="field"><label>Tu nombre</label><input placeholder="Ej: Juan Pérez" /></div>
+                <div className="field"><label>Tipo de encordado</label>
+                  <select><option>Control</option><option>Potencia</option><option>Híbrido</option><option>Competencia</option></select>
+                </div>
+                <div className="field"><label>¿Cambio de grip también?</label>
+                  <select><option>No, solo encordado</option><option>Sí, grip también</option></select>
+                </div>
+                <button className="btn wa" onClick={() => { closeModal(); window.open("https://wa.me/56912345678?text=" + encodeURIComponent("Hola PlayTenis! Quiero solicitar un encordado."), "_blank"); }}>💬 Coordinar por WhatsApp</button>
+                <button className="btn sec" style={{ marginTop: 8 }} onClick={closeModal}>Cancelar</button>
+              </>
+            )}
+            {modal.tipo === "nivel" && (
+              <>
+                <h3>{["Iniciación 👶","Intermedio 👥","Avanzado 🎾","Alto Rendimiento 🏆"][modal.idx ?? 0]}</h3>
+                <p style={{ fontSize: 14, color: "var(--texto)", marginBottom: 16 }}>
+                  {[
+                    "Para niños de 3 a 8 años. Aprenden las bases del tenis en ambiente divertido.",
+                    "Para jugadores con base que quieren mejorar técnica y consistencia.",
+                    "Para jugadores con buena base técnica que buscan el siguiente nivel.",
+                    "Para competidores que buscan perfeccionar cada aspecto de su juego."
+                  ][modal.idx ?? 0]}
+                </p>
+                <button className="btn wa" onClick={() => { closeModal(); window.open("https://wa.me/56912345678", "_blank"); }}>💬 Inscribirme por WhatsApp</button>
+                <button className="btn sec" style={{ marginTop: 8 }} onClick={closeModal}>Cerrar</button>
+              </>
+            )}
           </div>
         </div>
-      </section>
-    </>
+      )}
+
+      {/* Toast */}
+      <div className={`toast ${toastVisible ? "show" : ""}`}>{toast}</div>
+    </div>
   );
 }
