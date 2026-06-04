@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 const PAGO = {
-  nombre: "José Luis Salazar",
+  nombre: "Patricio Escalona",
   banco: "Transferencia / Mercado Pago",
   email: "info@playtenis.cl",
 };
@@ -200,10 +200,10 @@ export default function App() {
               <div className="nm">¿No tienes con quién jugar?</div>
               <div className="ds">PlayTenis te busca rival de tu nivel</div>
             </div>
-            <button className="mini wa" onClick={() => window.open("https://wa.me/56912345678?text=" + encodeURIComponent("Hola PlayTenis! Busco rival de mi nivel para jugar."), "_blank")}>Pedir rival</button>
+            <button className="mini wa" onClick={() => window.open("https://wa.me/56981588218?text=" + encodeURIComponent("Hola PlayTenis! Busco rival de mi nivel para jugar."), "_blank")}>Pedir rival</button>
           </div>
           <button className="btn" onClick={() => openModal("cancha")}>📅 Reservar cancha</button>
-          <button className="btn wa" onClick={() => window.open("https://wa.me/56912345678", "_blank")}>💬 WhatsApp PlayTenis</button>
+          <button className="btn wa" onClick={() => window.open("https://wa.me/56981588218", "_blank")}>💬 WhatsApp PlayTenis</button>
           <p className="foot">Av. Chicureo 1250, Lo Barnechea</p>
         </section>
 
@@ -269,7 +269,7 @@ export default function App() {
                   <div className="row"><span className="k">Email</span><span className="v" style={{ fontSize: 11 }}>{PAGO.email}</span></div>
                   <div className="row"><span className="k">Monto</span><span className="v" style={{ color: "var(--naranja-osc)", fontSize: 16 }}>${torneos[modal.idx].monto.toLocaleString("es-CL")}</span></div>
                 </div>
-                <button className="btn wa" onClick={() => { closeModal(); window.open("https://wa.me/56912345678?text=" + encodeURIComponent("Hola PlayTenis! Quiero inscribirme en: " + torneos[modal.idx!].n), "_blank"); }}>💬 Confirmar por WhatsApp</button>
+                <button className="btn wa" onClick={() => { closeModal(); window.open("https://wa.me/56981588218?text=" + encodeURIComponent("Hola PlayTenis! Quiero inscribirme en: " + torneos[modal.idx!].n), "_blank"); }}>💬 Confirmar por WhatsApp</button>
                 <button className="btn sec" style={{ marginTop: 8 }} onClick={closeModal}>Cancelar</button>
               </>
             )}
@@ -292,7 +292,7 @@ export default function App() {
                 </div>
                 <div className="field"><label>Tu nombre</label><input placeholder="Ej: Juan Pérez" /></div>
                 <div className="field"><label>Teléfono</label><input type="tel" placeholder="+569 XXXX XXXX" /></div>
-                <button className="btn wa" onClick={() => { closeModal(); showToast("✅ Reserva enviada"); window.open("https://wa.me/56912345678", "_blank"); }}>💬 Confirmar por WhatsApp</button>
+                <button className="btn wa" onClick={() => { closeModal(); showToast("✅ Reserva enviada"); window.open("https://wa.me/56981588218", "_blank"); }}>💬 Confirmar por WhatsApp</button>
                 <button className="btn sec" style={{ marginTop: 8 }} onClick={closeModal}>Cancelar</button>
               </>
             )}
@@ -322,7 +322,7 @@ export default function App() {
                 <div className="field"><label>Tipo</label>
                   <select><option>Grupal</option><option>Individual</option></select>
                 </div>
-                <button className="btn wa" onClick={() => { closeModal(); window.open("https://wa.me/56912345678?text=" + encodeURIComponent("Hola PlayTenis! Quiero inscribirme en la academia."), "_blank"); }}>💬 Coordinar por WhatsApp</button>
+                <button className="btn wa" onClick={() => { closeModal(); window.open("https://wa.me/56981588218?text=" + encodeURIComponent("Hola PlayTenis! Quiero inscribirme en la academia."), "_blank"); }}>💬 Coordinar por WhatsApp</button>
                 <button className="btn sec" style={{ marginTop: 8 }} onClick={closeModal}>Cancelar</button>
               </>
             )}
@@ -336,7 +336,7 @@ export default function App() {
                 <div className="field"><label>¿Cambio de grip también?</label>
                   <select><option>No, solo encordado</option><option>Sí, grip también</option></select>
                 </div>
-                <button className="btn wa" onClick={() => { closeModal(); window.open("https://wa.me/56912345678?text=" + encodeURIComponent("Hola PlayTenis! Quiero solicitar un encordado."), "_blank"); }}>💬 Coordinar por WhatsApp</button>
+                <button className="btn wa" onClick={() => { closeModal(); window.open("https://wa.me/56981588218?text=" + encodeURIComponent("Hola PlayTenis! Quiero solicitar un encordado."), "_blank"); }}>💬 Coordinar por WhatsApp</button>
                 <button className="btn sec" style={{ marginTop: 8 }} onClick={closeModal}>Cancelar</button>
               </>
             )}
@@ -351,7 +351,7 @@ export default function App() {
                     "Para competidores que buscan perfeccionar cada aspecto de su juego."
                   ][modal.idx ?? 0]}
                 </p>
-                <button className="btn wa" onClick={() => { closeModal(); window.open("https://wa.me/56912345678", "_blank"); }}>💬 Inscribirme por WhatsApp</button>
+                <button className="btn wa" onClick={() => { closeModal(); window.open("https://wa.me/56981588218", "_blank"); }}>💬 Inscribirme por WhatsApp</button>
                 <button className="btn sec" style={{ marginTop: 8 }} onClick={closeModal}>Cerrar</button>
               </>
             )}
