@@ -316,6 +316,31 @@ header p { font-size: 11px; color: rgba(0,0,0,0.55); }
 
 .foot { text-align: center; font-size: 11px; color: var(--suave); margin-top: 16px; font-style: italic; }
 
+.cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.cal-nav button { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--suave); padding: 4px 10px; }
+.cal-month { font-size: 15px; font-weight: 700; color: var(--texto); }
+.cal-days-header { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; margin-bottom: 4px; }
+.cal-days-header span { font-size: 11px; font-weight: 700; color: var(--suave); padding: 4px 0; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-bottom: 14px; }
+.cal-day {
+  aspect-ratio: 1; border-radius: 8px; display: flex; align-items: center;
+  justify-content: center; font-size: 13px; font-weight: 500; cursor: pointer;
+  border: none; background: none; color: var(--texto);
+}
+.cal-day:disabled { color: var(--linea); cursor: default; }
+.cal-day.today { background: var(--naranja-claro); color: var(--naranja-osc); font-weight: 700; }
+.cal-day.sel { background: var(--naranja); color: #fff; font-weight: 800; }
+.step-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.step-header button { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--suave); }
+.step-header h3 { font-size: 16px; font-weight: 800; }
+.dur-toggle { display: flex; gap: 8px; margin-bottom: 14px; }
+.dur-btn { flex: 1; padding: 10px; border-radius: 10px; border: 2px solid var(--linea); background: #fff; font-weight: 700; font-size: 13px; cursor: pointer; }
+.dur-btn.active { border-color: var(--naranja); background: var(--naranja-claro); color: var(--naranja-osc); }
+.resumen-box { background: var(--naranja-claro); border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; border-left: 4px solid var(--naranja); }
+.resumen-box .r-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; }
+.resumen-box .r-row .rk { color: var(--suave); }
+.resumen-box .r-row .rv { font-weight: 700; }
+
 /* ─── RESPONSIVE: móvil vs desktop ─── */
 .mobile-only { display: flex; flex-direction: column; width: 100%; }
 .desktop-only { display: none; }
