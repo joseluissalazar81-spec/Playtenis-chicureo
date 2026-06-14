@@ -6,6 +6,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  signInWithPopup,
+  GoogleAuthProvider,
   User,
 } from "firebase/auth";
 import {
@@ -55,13 +57,33 @@ type ModalData = { tipo: string; idx?: number } | null;
 
 /* ─── LOGIN / REGISTER ─── */
 function AuthScreen({ onAuth }: { onAuth: () => void }) {
-  const [mode, setMode]       = useState<'login'|'register'>('login');
+  const [mode, setMode]       = useState<'options'|'login'|'register'>('options');
   const [email, setEmail]     = useState('');
   const [password, setPass]   = useState('');
   const [nombre, setNombre]   = useState('');
   const [rut, setRut]         = useState('');
   const [error, setError]     = useState('');
   const [loading, setLoading] = useState(false);
+
+  async function handleGoogle() {
+    setError(''); setLoading(true);
+    try {
+      const cred = await signInWithPopup(auth, new GoogleAuthProvider());
+      const snap = await getDoc(doc(db, 'users', cred.user.uid));
+      if (!snap.exists()) {
+        await setDoc(doc(db, 'users', cred.user.uid), {
+          nombre: cred.user.displayName || '', rut: '', email: cred.user.email || '',
+          telefono: '', nacimiento: '', estilo: '', golpe: '', superficie: '', socio: false,
+          createdAt: serverTimestamp(),
+        });
+      }
+      onAuth();
+    } catch (e: unknown) {
+      const msg = (e as { code?: string })?.code || '';
+      if (msg !== 'auth/popup-closed-by-user') setError('Error con Google. Intenta con email.');
+    }
+    setLoading(false);
+  }
 
   async function handleSubmit() {
     setError(''); setLoading(true);
@@ -93,25 +115,46 @@ function AuthScreen({ onAuth }: { onAuth: () => void }) {
 
   return (
     <div className="auth-screen">
-      <div className="auth-box">
-        <Image src="/logo.jpeg" alt="PlayTenis" width={72} height={72} style={{ borderRadius:'50%', marginBottom:12 }} />
-        <h2 className="auth-title">PlayTenis Academia</h2>
-        <p className="auth-sub">Tenis · Colina 🇨🇱</p>
-        <div className="auth-tabs">
-          <button className={mode==='login'?'on':''} onClick={()=>{setMode('login');setError('');}}>Iniciar sesión</button>
-          <button className={mode==='register'?'on':''} onClick={()=>{setMode('register');setError('');}}>Registrarse</button>
-        </div>
-        {mode==='register' && (<>
-          <div className="field"><label>Nombre completo</label><input placeholder="Juan Pérez" value={nombre} onChange={e=>setNombre(e.target.value)} /></div>
-          <div className="field"><label>RUT</label><input placeholder="12.345.678-9" value={rut} onChange={e=>setRut(e.target.value)} /></div>
-        </>)}
-        <div className="field"><label>Email</label><input type="email" placeholder="tu@email.com" value={email} onChange={e=>setEmail(e.target.value)} /></div>
-        <div className="field"><label>Contraseña</label><input type="password" placeholder="Mínimo 6 caracteres" value={password} onChange={e=>setPass(e.target.value)} /></div>
-        {error && <div className="auth-error">{error}</div>}
-        <button className="btn" style={{opacity:loading?.6:1}} onClick={handleSubmit} disabled={loading}>
-          {loading ? 'Cargando...' : mode==='login' ? 'Entrar' : 'Crear cuenta'}
-        </button>
+      <div className="auth-logo-area">
+        <Image src="/logo.jpeg" alt="PlayTenis" width={84} height={84} style={{ borderRadius:'50%', border:'3px solid rgba(255,255,255,0.25)', marginBottom:14 }} />
+        <div className="auth-app-title">PlayTenis Academia</div>
+        <div className="auth-app-sub">Academia de Tenis · Colina 🇨🇱</div>
       </div>
+
+      <div className="auth-box">
+        {mode === 'options' ? (<>
+          <div className="auth-title">Bienvenido/a! 🎾</div>
+          <div className="auth-sub">Elige cómo ingresar</div>
+          <button className="btn google" style={{marginBottom:10,marginTop:4}} onClick={handleGoogle} disabled={loading}>
+            <span style={{marginRight:8}}>G</span> Entrar con Google
+          </button>
+          <div className="auth-divider">o con email</div>
+          <button className="btn sec" style={{marginBottom:10}} onClick={()=>{setMode('login');setError('');}}>
+            Entrar con Email
+          </button>
+          {error && <div className="auth-error">{error}</div>}
+          <div className="auth-divider">¿Primera vez en el club?</div>
+          <button className="btn dark" onClick={()=>{setMode('register');setError('');}}>
+            Crear mi perfil
+          </button>
+        </>) : (<>
+          <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:16}}>
+            <button onClick={()=>{setMode('options');setError('');}} style={{background:'none',border:'none',fontSize:22,cursor:'pointer',color:'var(--suave)',lineHeight:1}}>←</button>
+            <div className="auth-title" style={{marginBottom:0}}>{mode==='login'?'Iniciar sesión':'Crear perfil'}</div>
+          </div>
+          {mode==='register' && (<>
+            <div className="field"><label>Nombre completo</label><input placeholder="Juan Pérez" value={nombre} onChange={e=>setNombre(e.target.value)} /></div>
+            <div className="field"><label>RUT</label><input placeholder="12.345.678-9" value={rut} onChange={e=>setRut(e.target.value)} /></div>
+          </>)}
+          <div className="field"><label>Email</label><input type="email" placeholder="tu@email.com" value={email} onChange={e=>setEmail(e.target.value)} /></div>
+          <div className="field"><label>Contraseña</label><input type="password" placeholder="Mínimo 6 caracteres" value={password} onChange={e=>setPass(e.target.value)} /></div>
+          {error && <div className="auth-error">{error}</div>}
+          <button className="btn" style={{opacity:loading?.6:1,marginTop:4}} onClick={handleSubmit} disabled={loading}>
+            {loading ? 'Cargando...' : mode==='login' ? 'Entrar' : 'Crear cuenta'}
+          </button>
+        </>)}
+      </div>
+      <p className="auth-safe">Tus datos se guardan de forma segura · PlayTenis</p>
     </div>
   );
 }
