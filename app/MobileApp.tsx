@@ -41,6 +41,18 @@ export default function MobileApp() {
   const [resNombre, setResNombre] = useState('');
   const [resTel, setResTel] = useState('');
   const [resCancha, setResCancha] = useState('Sin preferencia');
+  const [perfil, setPerfil] = useState(() => {
+    try {
+      const s = typeof window !== 'undefined' && localStorage.getItem('pt_perfil');
+      return s ? JSON.parse(s) : { nombre: '', rut: '', telefono: '', nacimiento: '', estilo: [] as string[], socio: false, ok: false };
+    } catch { return { nombre: '', rut: '', telefono: '', nacimiento: '', estilo: [] as string[], socio: false, ok: false }; }
+  });
+  const [editPerfil, setEditPerfil] = useState(false);
+  const [partidos, setPartidos] = useState<Array<{rival:string,fecha:string,resultado:string,ganado:boolean}>>([]);
+  const [reservas, setReservas] = useState<Array<{fecha:string,hora:string,dur:number,cancha:string}>>([]);
+  const [pendientes, setPendientes] = useState<Array<{rival:string,fecha:string,resultado:string,id:number}>>([
+    { rival: 'Carlos Muñoz', fecha: '10 jun 2026', resultado: '6-3, 7-5', id: 1 },
+  ]);
 
   function showToast(msg: string) { setToast(msg); setToastVisible(true); setTimeout(() => setToastVisible(false), 2800); }
   function openModal(tipo: string, idx?: number) { setModal({ tipo, idx }); }
@@ -68,6 +80,12 @@ export default function MobileApp() {
     return cells;
   }
   const precioReserva = duracion === 1 ? 15000 : 25000;
+
+  function savePerfil(data: typeof perfil) {
+    setPerfil(data);
+    if (typeof window !== 'undefined') localStorage.setItem('pt_perfil', JSON.stringify(data));
+  }
+  const estilosDisp = ['Derecha','Zurdo','Baseline','Red','Saque y volea','Defensor','Agresivo','Todo terreno'];
 
   return (
     <div className="phone">
@@ -265,6 +283,7 @@ export default function MobileApp() {
             </div>
             <button className="btn wa" onClick={() => {
               const msg = `Hola PlayTenis! Quiero reservar una cancha:\n📅 ${fmtDate(selectedDate!)}\n⏰ ${selectedHora} (${duracion}hr)\n🎾 ${resCancha}\n👤 ${resNombre}\n📞 ${resTel}\nTotal: $${precioReserva.toLocaleString('es-CL')}`;
+              setReservas(prev => [...prev, {fecha: fmtDate(selectedDate!), hora: selectedHora!, dur: duracion, cancha: resCancha}]);
               setCanchaStep('calendar');
               setSelectedDate(null); setSelectedHora(null); setResNombre(''); setResTel(''); setResCancha('Sin preferencia');
               showToast('✅ Reserva enviada');
@@ -295,11 +314,131 @@ export default function MobileApp() {
           <button className="btn wa" onClick={() => window.open(waUrl("Hola! Quiero agendar mi clase de prueba GRATIS en PlayTenis Chicureo."), "_blank")}>💬 Clase de prueba GRATIS</button>
           <p className="foot">@playtenis.cl · +56 9 8158 8218</p>
         </section>
+
+        {/* PERFIL */}
+        <section className={`screen ${screen === "perfil" ? "active" : ""}`}>
+          {/* Setup inicial si no tiene perfil */}
+          {!perfil.ok && !editPerfil && (
+            <div style={{ textAlign: 'center', padding: '30px 0' }}>
+              <div style={{ fontSize: 48, marginBottom: 12 }}>👤</div>
+              <div style={{ fontWeight: 800, fontSize: 18, marginBottom: 6 }}>Crea tu perfil</div>
+              <div style={{ fontSize: 13, color: 'var(--suave)', marginBottom: 20 }}>Guarda tus datos y lleva el registro de tus partidos</div>
+              <button className="btn" onClick={() => setEditPerfil(true)}>Crear mi perfil</button>
+            </div>
+          )}
+
+          {/* Formulario de edición */}
+          {(editPerfil || (!perfil.ok)) && editPerfil && (
+            <>
+              <div className="step-header">
+                {perfil.ok && <button onClick={() => setEditPerfil(false)}>←</button>}
+                <h3>{perfil.ok ? 'Editar perfil' : 'Nuevo perfil'}</h3>
+              </div>
+              <div className="field"><label>Nombre completo</label><input placeholder="Ej: Juan Pérez" defaultValue={perfil.nombre} id="pf-nombre" /></div>
+              <div className="field"><label>RUT</label><input placeholder="12.345.678-9" defaultValue={perfil.rut} id="pf-rut" /></div>
+              <div className="field"><label>Teléfono</label><input type="tel" placeholder="+569 XXXX XXXX" defaultValue={perfil.telefono} id="pf-tel" /></div>
+              <div className="field"><label>Fecha de nacimiento</label><input type="date" defaultValue={perfil.nacimiento} id="pf-nac" /></div>
+              <div className="section-title">Estilo de juego</div>
+              <div className="estilo-grid">
+                {estilosDisp.map(e => (
+                  <button key={e} className={`estilo-chip${perfil.estilo.includes(e)?' sel':''}`}
+                    onClick={() => {
+                      const ne = perfil.estilo.includes(e) ? perfil.estilo.filter((x:string)=>x!==e) : [...perfil.estilo, e];
+                      setPerfil({...perfil, estilo: ne});
+                    }}>{e}</button>
+                ))}
+              </div>
+              <button className="btn" onClick={() => {
+                const nombre = (document.getElementById('pf-nombre') as HTMLInputElement)?.value || perfil.nombre;
+                const rut = (document.getElementById('pf-rut') as HTMLInputElement)?.value || perfil.rut;
+                const tel = (document.getElementById('pf-tel') as HTMLInputElement)?.value || perfil.telefono;
+                const nac = (document.getElementById('pf-nac') as HTMLInputElement)?.value || perfil.nacimiento;
+                savePerfil({...perfil, nombre, rut, telefono: tel, nacimiento: nac, ok: true});
+                setEditPerfil(false);
+                showToast('✅ Perfil guardado');
+              }}>Guardar perfil</button>
+            </>
+          )}
+
+          {/* Perfil completo */}
+          {perfil.ok && !editPerfil && (<>
+            <div className="perfil-header">
+              <div className="perfil-top">
+                <div className="perfil-av" style={{ background: avatarColor(perfil.nombre || 'U') }}>{initials(perfil.nombre || 'Usuario')}</div>
+                <div style={{ flex: 1 }}>
+                  <div className="perfil-name">{perfil.nombre}</div>
+                  <div className="perfil-sub">RUT: {perfil.rut || '—'}</div>
+                  <div className="perfil-sub">{perfil.telefono || '—'}</div>
+                  <span className={`socio-badge ${perfil.socio ? 'activo' : 'inactivo'}`}>{perfil.socio ? '✓ SOCIO ACTIVO' : 'Sin membresía'}</span>
+                </div>
+                <button onClick={() => setEditPerfil(true)} style={{ background: 'none', border: 'none', fontSize: 18, cursor: 'pointer', color: 'var(--suave)' }}>✏️</button>
+              </div>
+              {perfil.estilo.length > 0 && (
+                <div style={{ marginTop: 10, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {perfil.estilo.map((e:string) => <span key={e} className="cupos" style={{ fontSize: 11 }}>{e}</span>)}
+                </div>
+              )}
+            </div>
+
+            <div className="section-title">Mis últimos partidos</div>
+            {partidos.length === 0
+              ? <div className="aviso" style={{ fontSize: 12 }}>Aún no tienes partidos registrados. ¡Registra tu primer partido!</div>
+              : partidos.slice(-5).reverse().map((p,i) => (
+                <div key={i} className="match-row">
+                  <div><div className="mr-rival">vs {p.rival}</div><div className="mr-res">{p.fecha} · {p.resultado}</div></div>
+                  <span className={`badge ${p.ganado?'win':'loss'}`}>{p.ganado?'Victoria':'Derrota'}</span>
+                </div>
+              ))
+            }
+            <button className="btn" style={{ marginBottom: 14 }} onClick={() => openModal("partido")}>+ Registrar partido</button>
+
+            {pendientes.length > 0 && (<>
+              <div className="section-title">Partidos pendientes de confirmación</div>
+              {pendientes.map(p => (
+                <div key={p.id} className="pend-card">
+                  <div className="pc-title">vs {p.rival}</div>
+                  <div style={{ fontSize: 12, color: 'var(--suave)', marginTop: 2 }}>{p.fecha} · {p.resultado}</div>
+                  <div className="pc-btns">
+                    <button className="pc-ok" onClick={() => {
+                      setPartidos(prev => [...prev, {rival: p.rival, fecha: p.fecha, resultado: p.resultado, ganado: true}]);
+                      setPendientes(prev => prev.filter(x => x.id !== p.id));
+                      showToast('✅ Partido confirmado');
+                    }}>✓ Confirmar victoria</button>
+                    <button className="pc-no" onClick={() => {
+                      setPartidos(prev => [...prev, {rival: p.rival, fecha: p.fecha, resultado: p.resultado, ganado: false}]);
+                      setPendientes(prev => prev.filter(x => x.id !== p.id));
+                      showToast('Partido registrado');
+                    }}>✗ Marcar derrota</button>
+                  </div>
+                </div>
+              ))}
+            </>)}
+
+            <div className="section-title">Mis próximas reservas</div>
+            {reservas.length === 0
+              ? <div style={{ fontSize: 13, color: 'var(--suave)', marginBottom: 14 }}>No tienes reservas próximas.</div>
+              : reservas.map((r,i) => (
+                <div key={i} className="res-card">
+                  <div className="rc-title">📅 {r.fecha}</div>
+                  <div className="rc-sub">⏰ {r.hora} · {r.dur}hr · {r.cancha}</div>
+                </div>
+              ))
+            }
+            <button className="btn sec" onClick={() => setScreen('canchas')}>📅 Reservar cancha</button>
+
+            <div className="section-title">Membresía</div>
+            <button className="btn dark" onClick={() => {
+              savePerfil({...perfil, socio: !perfil.socio});
+              showToast(perfil.socio ? 'Membresía desactivada' : '✅ ¡Bienvenido SOCIO PlayTenis!');
+            }}>{perfil.socio ? '✓ Membresía activa · Renovar' : '🏆 Activar Membresía PlayTenis'}</button>
+            <p className="foot">@playtenis.cl · +56 9 8158 8218</p>
+          </>)}
+        </section>
       </div>
 
       {/* Tab Bar */}
       <div className="tabbar">
-        {[["inicio","🏠","Inicio"],["ranking","🏆","Ranking"],["torneos","🎯","Torneos"],["canchas","📅","Cancha"],["academia","🎾","Academia"]].map(([s,ic,lb]) => (
+        {[["inicio","🏠","Inicio"],["ranking","🏆","Ranking"],["torneos","🎯","Torneos"],["canchas","📅","Cancha"],["academia","🎾","Academia"],["perfil","👤","Perfil"]].map(([s,ic,lb]) => (
           <button key={s} className={`tab ${screen === s ? "active" : ""}`} onClick={() => { setScreen(s); if (s !== 'canchas') setCanchaStep('calendar'); }}>
             <span className="ic">{ic}</span>{lb}
           </button>
@@ -337,7 +476,16 @@ export default function MobileApp() {
               <div className="field"><label>Oponente</label><select>{jugadores.map((p,i)=><option key={i}>{p[0] as string}</option>)}</select></div>
               <div className="field"><label>Fecha</label><input type="date" defaultValue={new Date().toISOString().split("T")[0]} /></div>
               <div className="field"><label>Resultado</label><input placeholder="Ej: 6-3, 7-5" /></div>
-              <button className="btn" onClick={() => { closeModal(); showToast("✅ Partido registrado"); }}>Guardar</button>
+              <button className="btn" onClick={() => {
+                const rivalEl = document.querySelector('.sheet select') as HTMLSelectElement;
+                const resEl = document.querySelector('.sheet input[placeholder="Ej: 6-3, 7-5"]') as HTMLInputElement;
+                const rival = rivalEl?.value || 'Rival';
+                const resultado = resEl?.value || '';
+                const ganado = resultado.length > 0 && parseInt(resultado[0]) > parseInt(resultado[resultado.indexOf('-')+1] || '0');
+                setPartidos(prev => [...prev, {rival, fecha: new Date().toLocaleDateString('es-CL'), resultado, ganado}]);
+                closeModal();
+                showToast("✅ Partido registrado");
+              }}>Guardar</button>
               <button className="btn sec" style={{ marginTop: 8 }} onClick={closeModal}>Cancelar</button>
             </>)}
             {modal.tipo === "clase" && (<>
