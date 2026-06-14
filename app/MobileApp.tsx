@@ -150,7 +150,6 @@ export default function MobileApp() {
   const [misReservas, setMisReservas] = useState<Array<{id:string,canchaId:number,fecha:string,hora:string,duracion:number,monto:number,estado:string}>>([]);
 
   // Admin
-  const [isAdmin,        setIsAdmin]        = useState(false);
   const [adminLogged,    setAdminLogged]    = useState(false);
   const [adminPinInput,  setAdminPinInput]  = useState('');
   const [inscripciones,  setInscripciones]  = useState<Array<{id:number,nombre:string,torneo:string,tel:string,estado:'pendiente'|'aprobado'|'rechazado'}>>([
@@ -172,12 +171,7 @@ export default function MobileApp() {
       setUser(u);
       if (u) {
         const snap = await getDoc(doc(db, 'users', u.uid));
-        if (snap.exists()) {
-          setPerfil({ ...snap.data() as typeof perfil, ok: true });
-          setIsAdmin((snap.data() as { role?: string }).role === 'admin');
-        }
-      } else {
-        setIsAdmin(false);
+        if (snap.exists()) setPerfil({ ...snap.data() as typeof perfil, ok: true });
       }
     });
     return unsub;
@@ -647,10 +641,10 @@ export default function MobileApp() {
               {perfil.socio?'✓ Membresía activa · Renovar':'🏆 Membresía PlayTenis'}
             </button>
             <button className="btn sec" style={{marginBottom:8}} onClick={()=>setScreen('canchas')}>Reservar cancha</button>
-            <button className="btn sec" onClick={async()=>{await signOut(auth);setPerfil({nombre:'',rut:'',telefono:'',nacimiento:'',estilo:'',golpe:'',superficie:'',socio:false,ok:false});setIsAdmin(false);showToast('Sesión cerrada');}}>
+            <button className="btn sec" onClick={async()=>{await signOut(auth);setPerfil({nombre:'',rut:'',telefono:'',nacimiento:'',estilo:'',golpe:'',superficie:'',socio:false,ok:false});showToast('Sesión cerrada');}}>
               Cerrar sesión
             </button>
-            {isAdmin && <button className="admin-link" onClick={()=>setScreen('admin')}>🔐 Administración</button>}
+            {perfil.rut === PAGO.rut && <button className="admin-link" onClick={()=>setScreen('admin')}>🔐 Administración</button>}
             <p className="foot">@playtenis.cl · +56 9 8158 8218</p>
           </>)}
         </section>
