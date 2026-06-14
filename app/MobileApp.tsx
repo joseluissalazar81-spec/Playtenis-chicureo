@@ -139,7 +139,7 @@ function AuthScreen({ onAuth }: { onAuth: () => void }) {
           </button>
         </>) : (<>
           <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:16}}>
-            <button onClick={()=>{setMode('options');setError('');}} style={{background:'none',border:'none',fontSize:22,cursor:'pointer',color:'var(--suave)',lineHeight:1}}>←</button>
+            <button onClick={()=>{setMode('options');setError('');}} style={{background:'none',border:'none',fontSize:22,cursor:'pointer',color:'#999',lineHeight:1}}>←</button>
             <div className="auth-title" style={{marginBottom:0}}>{mode==='login'?'Iniciar sesión':'Crear perfil'}</div>
           </div>
           {mode==='register' && (<>
