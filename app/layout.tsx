@@ -10,22 +10,22 @@ export const metadata: Metadata = {
 
 function Navbar() {
   return (
-    <header className="desktop-only fixed top-0 left-0 right-0 z-50 bg-[#2D2D2D]/95 backdrop-blur-sm shadow-lg">
+    <header className="desktop-only fixed top-0 left-0 right-0 z-50 bg-[#1B5E20]/95 backdrop-blur-sm shadow-lg">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2 group">
             <Image src="/logo.jpeg" alt="PlayTenis Chicureo" width={44} height={44} className="rounded-full group-hover:scale-105 transition-transform" />
             <div className="hidden sm:block">
               <span className="text-white font-bold text-lg leading-tight block">PlayTenis</span>
-              <span className="text-[#993D00] text-xs font-medium tracking-wide">CHICUREO · COLINA</span>
+              <span className="text-[#C1440E] text-xs font-medium tracking-wide">CHICUREO · COLINA</span>
             </div>
           </Link>
           <div className="flex items-center gap-1 sm:gap-2">
-            <Link href="/" className="text-white/80 hover:text-[#993D00] px-3 py-2 rounded-md text-sm font-medium transition-colors">Inicio</Link>
-            <Link href="/canchas" className="text-white/80 hover:text-[#993D00] px-3 py-2 rounded-md text-sm font-medium transition-colors">Canchas</Link>
-            <Link href="/socios" className="text-white/80 hover:text-[#993D00] px-3 py-2 rounded-md text-sm font-medium transition-colors">Socios</Link>
-            <Link href="/torneos" className="text-white/80 hover:text-[#993D00] px-3 py-2 rounded-md text-sm font-medium transition-colors">Torneos</Link>
-            <a href="https://wa.me/56981588218?text=Hola!%20Quiero%20reservar%20una%20cancha%20en%20PlayTenis." target="_blank" className="ml-2 bg-[#CC5500] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#7B2D00] transition-colors hidden sm:inline-block">
+            <Link href="/" className="text-white/80 hover:text-[#C1440E] px-3 py-2 rounded-md text-sm font-medium transition-colors">Inicio</Link>
+            <Link href="/canchas" className="text-white/80 hover:text-[#C1440E] px-3 py-2 rounded-md text-sm font-medium transition-colors">Canchas</Link>
+            <Link href="/socios" className="text-white/80 hover:text-[#C1440E] px-3 py-2 rounded-md text-sm font-medium transition-colors">Socios</Link>
+            <Link href="/torneos" className="text-white/80 hover:text-[#C1440E] px-3 py-2 rounded-md text-sm font-medium transition-colors">Torneos</Link>
+            <a href="https://wa.me/56981588218?text=Hola!%20Quiero%20reservar%20una%20cancha%20en%20PlayTenis." target="_blank" className="ml-2 bg-[#C1440E] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#8B2E05] transition-colors hidden sm:inline-block">
               Reservar
             </a>
           </div>
@@ -37,7 +37,7 @@ function Navbar() {
 
 function Footer() {
   return (
-    <footer className="desktop-only bg-[#2D2D2D] text-white">
+    <footer className="desktop-only bg-[#1B5E20] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
@@ -45,13 +45,13 @@ function Footer() {
               <Image src="/logo.jpeg" alt="PlayTenis" width={40} height={40} className="rounded-full" />
               <div>
                 <span className="text-white font-bold text-lg block">PlayTenis</span>
-                <span className="text-[#993D00] text-xs font-medium tracking-wide">CHICUREO · COLINA</span>
+                <span className="text-[#C1440E] text-xs font-medium tracking-wide">CHICUREO · COLINA</span>
               </div>
             </div>
             <p className="text-white/70 text-sm leading-relaxed">Academia de tenis en Chicureo, Colina. Clases, canchas y torneos todo el año.</p>
           </div>
           <div>
-            <h3 className="font-semibold text-[#993D00] mb-4">Navegación</h3>
+            <h3 className="font-semibold text-[#C1440E] mb-4">Navegación</h3>
             <ul className="space-y-2 text-white/70 text-sm">
               <li><Link href="/" className="hover:text-white transition-colors">Inicio</Link></li>
               <li><Link href="/canchas" className="hover:text-white transition-colors">Reserva de Canchas</Link></li>
@@ -60,7 +60,7 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold text-[#993D00] mb-4">Contacto</h3>
+            <h3 className="font-semibold text-[#C1440E] mb-4">Contacto</h3>
             <ul className="space-y-2 text-white/70 text-sm">
               <li>📍 San Vicente de Lo Arcaya 1, Colina</li>
               <li>📞 +56 9 8158 8218</li>
@@ -85,7 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="PlayTenis" />
-        <meta name="theme-color" content="#2D2D2D" />
+        <meta name="theme-color" content="#1B5E20" />
       </head>
       <body>
         <Navbar />
