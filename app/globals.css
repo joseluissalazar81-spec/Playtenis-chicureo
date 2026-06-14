@@ -3,16 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --naranja: #C1440E;
-  --naranja-osc: #8B2E05;
-  --naranja-mid: #A33A08;
-  --naranja-claro: #FBE9E0;
-  --gris: #f4f5f7;
-  --gris-osc: #CCE226;
-  --texto: #1d2433;
-  --suave: #6b7280;
-  --linea: #e5e7eb;
-  --negro: #1d2433;
+  --naranja: #E06030;
+  --naranja-osc: #B04820;
+  --naranja-mid: #C85428;
+  --naranja-claro: #FFF0E8;
+  --gris: #FFF5EE;
+  --gris-osc: #FFCBA8;
+  --texto: #2D2D2D;
+  --suave: #8B7870;
+  --linea: #F0E8E0;
+  --negro: #2D2D2D;
 }
 
 * {
@@ -52,8 +52,8 @@ header {
   flex-shrink: 0;
 }
 
-header h1 { font-size: 15px; font-weight: 800; color: #1d2433; }
-header p { font-size: 11px; color: rgba(0,0,0,0.55); }
+header h1 { font-size: 15px; font-weight: 800; color: #2D2D2D; }
+header p { font-size: 11px; color: rgba(45,45,45,0.55); }
 
 .content { flex: 1; overflow-y: auto; padding: 16px 16px 92px; }
 
@@ -75,13 +75,13 @@ header p { font-size: 11px; color: rgba(0,0,0,0.55); }
 }
 
 .hero {
-  background: linear-gradient(135deg, #5C1A02, #8B2E05, #C1440E);
+  background: linear-gradient(135deg, #9B3A18, #C05030, #E06030);
   border-radius: 20px;
   padding: 20px;
   color: #fff;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 6px 20px rgba(193,68,14,.35);
+  box-shadow: 0 6px 20px rgba(224,96,48,.3);
   margin-bottom: 14px;
 }
 
