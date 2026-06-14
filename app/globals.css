@@ -8,11 +8,11 @@
   --naranja-mid: #A33A08;
   --naranja-claro: #FBE9E0;
   --gris: #f4f5f7;
-  --gris-osc: #C5D629;
+  --gris-osc: #ffffff;
   --texto: #1d2433;
   --suave: #6b7280;
   --linea: #e5e7eb;
-  --negro: #3B4A00;
+  --negro: #1d2433;
 }
 
 * {
@@ -42,7 +42,7 @@ body {
 header {
   background: var(--gris-osc);
   padding: 13px 18px 10px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
   display: flex;
   align-items: center;
   gap: 11px;
@@ -271,7 +271,7 @@ header p { font-size: 11px; color: rgba(0,0,0,0.55); }
 .tabbar {
   position: fixed; bottom: 0; left: 0; right: 0;
   width: 100%; background: var(--gris-osc);
-  display: flex; border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex; border-top: 1px solid rgba(0,0,0,0.08);
   padding: 8px 0 12px;
 }
 .tab {
