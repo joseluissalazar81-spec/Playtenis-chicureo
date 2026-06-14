@@ -6,8 +6,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  signInWithRedirect,
-  getRedirectResult,
+  signInWithPopup,
   GoogleAuthProvider,
   User,
 } from "firebase/auth";
@@ -69,12 +68,21 @@ function AuthScreen({ onAuth }: { onAuth: () => void }) {
   async function handleGoogle() {
     setError(''); setLoading(true);
     try {
-      await signInWithRedirect(auth, new GoogleAuthProvider());
+      const cred = await signInWithPopup(auth, new GoogleAuthProvider());
+      const snap = await getDoc(doc(db, 'users', cred.user.uid));
+      if (!snap.exists()) {
+        await setDoc(doc(db, 'users', cred.user.uid), {
+          nombre: cred.user.displayName || '', rut: '', email: cred.user.email || '',
+          telefono: '', nacimiento: '', estilo: '', golpe: '', superficie: '', socio: false,
+          createdAt: serverTimestamp(),
+        });
+      }
+      onAuth();
     } catch (e: unknown) {
       const code = (e as { code?: string })?.code || String(e);
-      setError(`Error Google: ${code}`);
-      setLoading(false);
+      if (code !== 'auth/popup-closed-by-user') setError(`Error Google: ${code}`);
     }
+    setLoading(false);
   }
 
   async function handleSubmit() {
@@ -212,20 +220,6 @@ export default function MobileApp() {
 
   /* ── Auth listener ── */
   useEffect(() => {
-    // Handle Google redirect result (create Firestore doc for new users)
-    getRedirectResult(auth).then(async (cred) => {
-      if (cred) {
-        const snap = await getDoc(doc(db, 'users', cred.user.uid));
-        if (!snap.exists()) {
-          await setDoc(doc(db, 'users', cred.user.uid), {
-            nombre: cred.user.displayName || '', rut: '', email: cred.user.email || '',
-            telefono: '', nacimiento: '', estilo: '', golpe: '', superficie: '', socio: false,
-            createdAt: serverTimestamp(),
-          });
-        }
-      }
-    }).catch(() => {});
-
     const unsub = onAuthStateChanged(auth, async (u) => {
       setUser(u);
       if (u) {
