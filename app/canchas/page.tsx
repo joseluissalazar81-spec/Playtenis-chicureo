@@ -77,7 +77,7 @@ const timeSlots = [
 
 const surfaceColors: Record<string, string> = {
   Arcilla: "bg-orange-100 text-orange-700",
-  Cemento: "bg-blue-100 text-blue-700",
+  Cemento: "bg-sky-100 text-blue-700",
   Sintética: "bg-purple-100 text-purple-700",
 };
 
@@ -128,7 +128,7 @@ function DesktopPage() {
       <div
         className="py-16 text-center text-white"
         style={{
-          background: "linear-gradient(135deg, #0D47A1 0%, #1976D2 100%)",
+          background: "linear-gradient(135deg, #0288D1 0%, #039BE5 100%)",
         }}
       >
         <h1 className="text-4xl md:text-5xl font-black mb-3">
@@ -153,7 +153,7 @@ function DesktopPage() {
                 Tu reserva ha sido recibida. Recibirás un correo de confirmación
                 en <strong>{email}</strong>.
               </p>
-              <div className="bg-blue-50 rounded-xl p-4 text-left text-sm space-y-2 mb-6">
+              <div className="bg-sky-50 rounded-xl p-4 text-left text-sm space-y-2 mb-6">
                 <p>
                   <strong>Cancha:</strong> {selectedCourtData?.name}
                 </p>
@@ -196,7 +196,7 @@ function DesktopPage() {
                         onClick={() => setFilterType(t)}
                         className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
                           filterType === t
-                            ? "bg-[#1565C0] text-white"
+                            ? "bg-[#29B6F6] text-white"
                             : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                         }`}
                       >
@@ -214,8 +214,8 @@ function DesktopPage() {
                     onClick={() => setSelectedCourt(court.id)}
                     className={`text-left p-4 rounded-xl border-2 transition-all duration-200 ${
                       selectedCourt === court.id
-                        ? "border-[#1565C0] bg-blue-50 shadow-md"
-                        : "border-gray-200 bg-white hover:border-[#1565C0] hover:shadow-sm"
+                        ? "border-[#29B6F6] bg-sky-50 shadow-md"
+                        : "border-gray-200 bg-white hover:border-[#29B6F6] hover:shadow-sm"
                     }`}
                   >
                     <div className="flex items-start justify-between mb-2">
@@ -223,7 +223,7 @@ function DesktopPage() {
                         {court.name}
                       </h3>
                       {selectedCourt === court.id && (
-                        <span className="text-[#1565C0] text-lg">✓</span>
+                        <span className="text-[#29B6F6] text-lg">✓</span>
                       )}
                     </div>
                     <div className="flex gap-2 mb-2">
@@ -243,7 +243,7 @@ function DesktopPage() {
                     <p className="text-xs text-gray-500 mb-2">
                       {court.description}
                     </p>
-                    <p className="text-sm font-bold text-[#1565C0]">
+                    <p className="text-sm font-bold text-[#29B6F6]">
                       ${court.pricePerHour.toLocaleString("es-CL")}{" "}
                       <span className="font-normal text-gray-500">/ hora</span>
                     </p>
@@ -271,8 +271,8 @@ function DesktopPage() {
                             blocked
                               ? "bg-gray-100 text-gray-400 cursor-not-allowed line-through"
                               : time === slot
-                              ? "bg-[#1565C0] text-white shadow-md"
-                              : "bg-white border border-gray-200 text-gray-700 hover:border-[#1565C0] hover:text-[#1565C0]"
+                              ? "bg-[#29B6F6] text-white shadow-md"
+                              : "bg-white border border-gray-200 text-gray-700 hover:border-[#29B6F6] hover:text-[#29B6F6]"
                           }`}
                         >
                           {slot}
@@ -361,7 +361,7 @@ function DesktopPage() {
                   </div>
 
                   {/* Summary */}
-                  <div className="bg-blue-50 rounded-xl p-4 text-sm space-y-1">
+                  <div className="bg-sky-50 rounded-xl p-4 text-sm space-y-1">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Cancha:</span>
                       <span className="font-medium">
@@ -378,9 +378,9 @@ function DesktopPage() {
                         {duration} hora{duration > 1 ? "s" : ""}
                       </span>
                     </div>
-                    <div className="border-t border-[#1565C0]/20 mt-2 pt-2 flex justify-between font-bold">
+                    <div className="border-t border-[#29B6F6]/20 mt-2 pt-2 flex justify-between font-bold">
                       <span>Total:</span>
-                      <span className="text-[#1565C0]">
+                      <span className="text-[#29B6F6]">
                         {selectedCourtData
                           ? `$${totalPrice.toLocaleString("es-CL")} CLP`
                           : "—"}
@@ -391,7 +391,7 @@ function DesktopPage() {
                   <button
                     type="submit"
                     disabled={!selectedCourt || !date || !time}
-                    className="w-full bg-[#1565C0] text-white py-3 rounded-xl font-bold hover:bg-[#0D47A1] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-[#29B6F6] text-white py-3 rounded-xl font-bold hover:bg-[#0288D1] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Confirmar Reserva
                   </button>
