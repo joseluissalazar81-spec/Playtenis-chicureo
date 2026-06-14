@@ -6,7 +6,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   GoogleAuthProvider,
   User,
 } from "firebase/auth";
@@ -68,21 +69,11 @@ function AuthScreen({ onAuth }: { onAuth: () => void }) {
   async function handleGoogle() {
     setError(''); setLoading(true);
     try {
-      const cred = await signInWithPopup(auth, new GoogleAuthProvider());
-      const snap = await getDoc(doc(db, 'users', cred.user.uid));
-      if (!snap.exists()) {
-        await setDoc(doc(db, 'users', cred.user.uid), {
-          nombre: cred.user.displayName || '', rut: '', email: cred.user.email || '',
-          telefono: '', nacimiento: '', estilo: '', golpe: '', superficie: '', socio: false,
-          createdAt: serverTimestamp(),
-        });
-      }
-      onAuth();
-    } catch (e: unknown) {
-      const msg = (e as { code?: string })?.code || '';
-      if (msg !== 'auth/popup-closed-by-user') setError('Error con Google. Intenta con email.');
+      await signInWithRedirect(auth, new GoogleAuthProvider());
+    } catch {
+      setError('Error iniciando Google. Intenta con email.');
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   async function handleSubmit() {
@@ -220,6 +211,20 @@ export default function MobileApp() {
 
   /* ── Auth listener ── */
   useEffect(() => {
+    // Handle Google redirect result (create Firestore doc for new users)
+    getRedirectResult(auth).then(async (cred) => {
+      if (cred) {
+        const snap = await getDoc(doc(db, 'users', cred.user.uid));
+        if (!snap.exists()) {
+          await setDoc(doc(db, 'users', cred.user.uid), {
+            nombre: cred.user.displayName || '', rut: '', email: cred.user.email || '',
+            telefono: '', nacimiento: '', estilo: '', golpe: '', superficie: '', socio: false,
+            createdAt: serverTimestamp(),
+          });
+        }
+      }
+    }).catch(() => {});
+
     const unsub = onAuthStateChanged(auth, async (u) => {
       setUser(u);
       if (u) {
