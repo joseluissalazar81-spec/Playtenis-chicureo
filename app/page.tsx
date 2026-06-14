@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import MobileApp from "./MobileApp";
+import dynamic from "next/dynamic";
+const MobileApp = dynamic(() => import("./MobileApp"), { ssr: false });
 
 const features = [
   {
