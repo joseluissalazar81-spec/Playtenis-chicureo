@@ -44,8 +44,8 @@ export default function MobileApp() {
   const [perfil, setPerfil] = useState(() => {
     try {
       const s = typeof window !== 'undefined' && localStorage.getItem('pt_perfil');
-      return s ? JSON.parse(s) : { nombre: '', rut: '', telefono: '', nacimiento: '', estilo: [] as string[], socio: false, ok: false };
-    } catch { return { nombre: '', rut: '', telefono: '', nacimiento: '', estilo: [] as string[], socio: false, ok: false }; }
+      return s ? JSON.parse(s) : { nombre: '', rut: '', telefono: '', nacimiento: '', estilo: '', golpe: '', superficie: '', socio: false, ok: false };
+    } catch { return { nombre: '', rut: '', telefono: '', nacimiento: '', estilo: '', golpe: '', superficie: '', socio: false, ok: false }; }
   });
   const [editPerfil, setEditPerfil] = useState(false);
   const [partidos, setPartidos] = useState<Array<{rival:string,fecha:string,resultado:string,ganado:boolean}>>([]);
@@ -85,7 +85,6 @@ export default function MobileApp() {
     setPerfil(data);
     if (typeof window !== 'undefined') localStorage.setItem('pt_perfil', JSON.stringify(data));
   }
-  const estilosDisp = ['Derecha','Zurdo','Baseline','Red','Saque y volea','Defensor','Agresivo','Todo terreno'];
 
   return (
     <div className="phone">
@@ -338,15 +337,29 @@ export default function MobileApp() {
               <div className="field"><label>RUT</label><input placeholder="12.345.678-9" defaultValue={perfil.rut} id="pf-rut" /></div>
               <div className="field"><label>Teléfono</label><input type="tel" placeholder="+569 XXXX XXXX" defaultValue={perfil.telefono} id="pf-tel" /></div>
               <div className="field"><label>Fecha de nacimiento</label><input type="date" defaultValue={perfil.nacimiento} id="pf-nac" /></div>
-              <div className="section-title">Estilo de juego</div>
-              <div className="estilo-grid">
-                {estilosDisp.map(e => (
-                  <button key={e} className={`estilo-chip${perfil.estilo.includes(e)?' sel':''}`}
-                    onClick={() => {
-                      const ne = perfil.estilo.includes(e) ? perfil.estilo.filter((x:string)=>x!==e) : [...perfil.estilo, e];
-                      setPerfil({...perfil, estilo: ne});
-                    }}>{e}</button>
-                ))}
+              <div className="section-title">Mi estilo de juego</div>
+              <div className="field">
+                <label>Estilo</label>
+                <select value={perfil.estilo} onChange={e => setPerfil({...perfil, estilo: e.target.value})}>
+                  <option value="">-- Elige --</option>
+                  <option>Derecha</option><option>Zurdo</option><option>Baseline</option>
+                  <option>Red</option><option>Agresivo</option><option>Defensor</option><option>Todo terreno</option>
+                </select>
+              </div>
+              <div className="field">
+                <label>Golpe favorito</label>
+                <select value={perfil.golpe} onChange={e => setPerfil({...perfil, golpe: e.target.value})}>
+                  <option value="">-- Elige --</option>
+                  <option>Derecha</option><option>Revés</option><option>Saque</option>
+                  <option>Volea</option><option>Smash</option><option>Drop shot</option><option>Globo</option>
+                </select>
+              </div>
+              <div className="field">
+                <label>Superficie preferida</label>
+                <select value={perfil.superficie} onChange={e => setPerfil({...perfil, superficie: e.target.value})}>
+                  <option value="">-- Elige --</option>
+                  <option>Arcilla</option><option>Cemento</option><option>Hierba</option><option>Dura</option>
+                </select>
               </div>
               <button className="btn" onClick={() => {
                 const nombre = (document.getElementById('pf-nombre') as HTMLInputElement)?.value || perfil.nombre;
@@ -373,9 +386,11 @@ export default function MobileApp() {
                 </div>
                 <button onClick={() => setEditPerfil(true)} style={{ background: 'none', border: 'none', fontSize: 18, cursor: 'pointer', color: 'var(--suave)' }}>✏️</button>
               </div>
-              {perfil.estilo.length > 0 && (
+              {(perfil.estilo || perfil.golpe || perfil.superficie) && (
                 <div style={{ marginTop: 10, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                  {perfil.estilo.map((e:string) => <span key={e} className="cupos" style={{ fontSize: 11 }}>{e}</span>)}
+                  {perfil.estilo && <span className="cupos" style={{ fontSize: 11 }}>{perfil.estilo}</span>}
+                  {perfil.golpe && <span className="cupos" style={{ fontSize: 11 }}>🎯 {perfil.golpe}</span>}
+                  {perfil.superficie && <span className="cupos" style={{ fontSize: 11 }}>🎾 {perfil.superficie}</span>}
                 </div>
               )}
             </div>
