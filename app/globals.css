@@ -234,8 +234,8 @@ header p { font-size: 11px; color: rgba(255,255,255,0.55); }
 .field { margin-bottom: 13px; }
 .field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--suave); }
 .field select, .field input {
-  width: 100%; padding: 13px; border: 1px solid var(--linea);
-  border-radius: 12px; font-size: 15px; background: #fff; color: var(--texto);
+  width: 100%; padding: 13px; border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 12px; font-size: 15px; background: #fff; color: #2D2D2D;
 }
 
 .aviso {
