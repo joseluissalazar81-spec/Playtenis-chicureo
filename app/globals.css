@@ -3,16 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --naranja: #C1440E;
-  --naranja-osc: #8B2E05;
-  --naranja-mid: #A33A08;
-  --naranja-claro: #FBE9E0;
-  --gris: #f4f5f7;
-  --gris-osc: #CCE226;
-  --texto: #1d2433;
-  --suave: #6b7280;
-  --linea: #e5e7eb;
-  --negro: #1d2433;
+  --naranja: #E06030;
+  --naranja-osc: #B04820;
+  --naranja-mid: #C85428;
+  --naranja-claro: #FFF0E8;
+  --gris: #FFF5EE;
+  --gris-osc: #FFCBA8;
+  --texto: #2D2D2D;
+  --suave: #8B7870;
+  --linea: #F0E8E0;
+  --negro: #2D2D2D;
 }
 
 * {
@@ -52,8 +52,8 @@ header {
   flex-shrink: 0;
 }
 
-header h1 { font-size: 15px; font-weight: 800; color: #1d2433; }
-header p { font-size: 11px; color: rgba(0,0,0,0.55); }
+header h1 { font-size: 15px; font-weight: 800; color: #2D2D2D; }
+header p { font-size: 11px; color: rgba(45,45,45,0.55); }
 
 .content { flex: 1; overflow-y: auto; padding: 16px 16px 92px; }
 
@@ -75,13 +75,13 @@ header p { font-size: 11px; color: rgba(0,0,0,0.55); }
 }
 
 .hero {
-  background: linear-gradient(135deg, #5C1A02, #8B2E05, #C1440E);
+  background: linear-gradient(135deg, #9B3A18, #C05030, #E06030);
   border-radius: 20px;
   padding: 20px;
   color: #fff;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 6px 20px rgba(193,68,14,.35);
+  box-shadow: 0 6px 20px rgba(224,96,48,.3);
   margin-bottom: 14px;
 }
 
@@ -366,13 +366,13 @@ header p { font-size: 11px; color: rgba(0,0,0,0.55); }
 .estilo-chip.sel { border-color: var(--naranja); background: var(--naranja-claro); color: var(--naranja-osc); }
 
 /* ─── ADMIN ─── */
-.admin-nav { display: flex; gap: 6px; overflow-x: auto; padding: 2px 0 12px; scrollbar-width: none; }
-.admin-nav::-webkit-scrollbar { display: none; }
-.admin-chip { flex-shrink: 0; padding: 7px 13px; border-radius: 20px; border: 1.5px solid var(--linea); background: #fff; font-size: 12px; font-weight: 600; color: var(--suave); cursor: pointer; transition: all .15s; }
-.admin-chip.active { background: var(--naranja); border-color: var(--naranja); color: #fff; }
-.stat-admin { background: #fff; border-radius: 12px; padding: 16px 10px; text-align: center; border: 1px solid var(--linea); }
-.stat-admin .n { font-size: 30px; font-weight: 900; color: var(--naranja); line-height: 1; }
-.stat-admin .l { font-size: 11px; color: var(--suave); margin-top: 4px; }
+.admin-card { background: linear-gradient(135deg, #2D2D2D, #4A4A4A); border-radius: 18px; padding: 18px; color: #fff; margin-bottom: 16px; box-shadow: 0 6px 18px rgba(45,45,45,.35); }
+.admin-card-top { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.admin-badge { background: rgba(255,255,255,0.2); color: #fff; font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 20px; letter-spacing: 1px; flex-shrink: 0; }
+.admin-stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.admin-stat-item { background: rgba(255,255,255,0.12); border-radius: 12px; padding: 10px 6px; text-align: center; }
+.admin-stat-item .n { font-size: 20px; font-weight: 800; }
+.admin-stat-item .l { font-size: 10px; opacity: 0.75; margin-top: 3px; }
 .insc-card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 10px; border: 1px solid var(--linea); box-shadow: 0 1px 3px rgba(0,0,0,.05); }
 .insc-card .insc-nombre { font-weight: 700; font-size: 15px; }
 .insc-card .insc-torneo { font-size: 12px; color: var(--naranja-osc); font-weight: 600; margin: 4px 0 2px; }
