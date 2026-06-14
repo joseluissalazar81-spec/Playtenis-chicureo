@@ -66,6 +66,8 @@ export default function MobileApp() {
   const [nuevoPuntosRk, setNuevoPuntosRk] = useState('');
   const [ganadorTorneoIdx, setGanadorTorneoIdx] = useState(0);
   const [ganadorNombreInput, setGanadorNombreInput] = useState('');
+  const [showAddPlayer, setShowAddPlayer] = useState(false);
+  const [showAddWinner, setShowAddWinner] = useState(false);
 
   function showToast(msg: string) { setToast(msg); setToastVisible(true); setTimeout(() => setToastVisible(false), 2800); }
   function openModal(tipo: string, idx?: number) { setModal({ tipo, idx }); }
@@ -484,94 +486,96 @@ export default function MobileApp() {
               <button className="btn sec" style={{ marginTop: 8 }} onClick={() => { setScreen('perfil'); setAdminPinInput(''); }}>Cancelar</button>
             </div>
           ) : (<>
-            <div className="step-header">
-              <button onClick={() => { setAdminLogged(false); setScreen('perfil'); setAdminView('home'); }}>←</button>
-              <h3>🔐 Admin · PlayTenis</h3>
-            </div>
-            <div className="admin-nav">
-              {([['home','📊 Inicio'],['inscripciones','📋 Inscripciones'],['reservas','📅 Reservas'],['ganadores','🏆 Ganadores'],['jugadores','👤 Jugadores']] as const).map(([v,lb]) => (
-                <button key={v} className={`admin-chip${adminView===v?' active':''}`} onClick={() => setAdminView(v)}>{lb}</button>
-              ))}
-            </div>
-
-            {adminView === 'home' && (<>
-              <div className="section-title">Estadísticas generales</div>
-              <div className="grid2" style={{ gap: 10, marginBottom: 16 }}>
-                <div className="stat-admin"><div className="n">{allJugadores.length}</div><div className="l">Jugadores</div></div>
-                <div className="stat-admin"><div className="n">{reservas.length}</div><div className="l">Reservas</div></div>
-                <div className="stat-admin"><div className="n">{torneos.length}</div><div className="l">Torneos</div></div>
-                <div className="stat-admin"><div className="n">{inscripciones.filter(i=>i.estado==='pendiente').length}</div><div className="l">Pendientes</div></div>
-              </div>
-              <div className="aviso">✅ Sistema activo · Jun 2026</div>
-            </>)}
-
-            {adminView === 'inscripciones' && (<>
-              <div className="section-title">Inscripciones a torneos</div>
-              {inscripciones.map(ins => (
-                <div key={ins.id} className="insc-card">
-                  <div className="insc-nombre">{ins.nombre}</div>
-                  <div className="insc-torneo">{ins.torneo}</div>
-                  <div className="insc-tel">📞 {ins.tel}</div>
-                  {ins.estado === 'pendiente' ? (
-                    <div className="insc-btns">
-                      <button className="pc-ok" onClick={() => { setInscripciones(p => p.map(x => x.id===ins.id ? {...x,estado:'aprobado'} : x)); showToast('✅ Inscripción aprobada'); }}>✓ Aprobar</button>
-                      <button className="pc-no" onClick={() => { setInscripciones(p => p.map(x => x.id===ins.id ? {...x,estado:'rechazado'} : x)); showToast('Inscripción rechazada'); }}>✗ Rechazar</button>
-                    </div>
-                  ) : (
-                    <span className={`badge ${ins.estado==='aprobado'?'win':'loss'}`}>{ins.estado==='aprobado'?'✓ Aprobado':'✗ Rechazado'}</span>
-                  )}
+            {/* Tarjeta admin estilo ATMAS */}
+            <div className="admin-card">
+              <div className="admin-card-top">
+                <div className="avatar" style={{ background: 'rgba(255,255,255,0.2)', width: 48, height: 48, fontSize: 17, border: '2px solid rgba(255,255,255,0.3)' }}>ME</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 800, fontSize: 17 }}>Marcelo Escalona</div>
+                  <div style={{ fontSize: 12, opacity: 0.75, marginTop: 2 }}>Director · PlayTenis Academia</div>
                 </div>
-              ))}
-            </>)}
+                <span className="admin-badge">ADMIN</span>
+              </div>
+              <div className="admin-stats-row">
+                <div className="admin-stat-item">
+                  <div className="n">{reservas.length}</div>
+                  <div className="l">Reservas hoy</div>
+                </div>
+                <div className="admin-stat-item">
+                  <div className="n">{inscripciones.filter(i=>i.estado==='pendiente').length}</div>
+                  <div className="l">Inscripciones</div>
+                </div>
+                <div className="admin-stat-item">
+                  <div className="n">${(reservas.reduce((s,r)=>s+(r.dur===2?25:15),0))}K</div>
+                  <div className="l">Recaudado hoy</div>
+                </div>
+              </div>
+            </div>
 
-            {adminView === 'reservas' && (<>
-              <div className="section-title">Reservas de canchas</div>
-              {reservas.length === 0
-                ? <div className="aviso">No hay reservas registradas aún.</div>
-                : reservas.map((r,i) => (
-                  <div key={i} className="res-card">
-                    <div className="rc-title">📅 {r.fecha}</div>
-                    <div className="rc-sub">⏰ {r.hora} · {r.dur}hr · {r.cancha}</div>
+            {/* Proximas reservas */}
+            <div className="section-title">Próximas reservas</div>
+            {reservas.length === 0
+              ? <div style={{ fontSize: 13, color: 'var(--suave)', marginBottom: 14 }}>Sin reservas registradas aún.</div>
+              : reservas.map((r,i) => (
+                <div key={i} className="res-card">
+                  <div className="rc-title">📅 {r.fecha}</div>
+                  <div className="rc-sub">⏰ {r.hora} · {r.dur}hr · {r.cancha}</div>
+                </div>
+              ))
+            }
+
+            {/* Inscripciones torneos */}
+            <div className="section-title">Inscripciones torneos</div>
+            {inscripciones.map(ins => (
+              <div key={ins.id} className="insc-card">
+                <div className="insc-nombre">{ins.nombre}</div>
+                <div className="insc-torneo">{ins.torneo}</div>
+                <div className="insc-tel">📞 {ins.tel}</div>
+                {ins.estado === 'pendiente' ? (
+                  <div className="insc-btns">
+                    <button className="pc-ok" onClick={() => { setInscripciones(p => p.map(x => x.id===ins.id ? {...x,estado:'aprobado'} : x)); showToast('✅ Inscripción aprobada'); }}>✓ Aprobar</button>
+                    <button className="pc-no" onClick={() => { setInscripciones(p => p.map(x => x.id===ins.id ? {...x,estado:'rechazado'} : x)); showToast('Inscripción rechazada'); }}>✗ Rechazar</button>
                   </div>
-                ))
-              }
-            </>)}
+                ) : (
+                  <span className={`badge ${ins.estado==='aprobado'?'win':'loss'}`}>{ins.estado==='aprobado'?'✓ Aprobado':'✗ Rechazado'}</span>
+                )}
+              </div>
+            ))}
 
-            {adminView === 'ganadores' && (<>
-              <div className="section-title">Registrar ganador de torneo</div>
+            {/* Acciones */}
+            <div className="section-title" style={{ marginTop: 20 }}>Acciones</div>
+            <button className="btn" style={{ marginBottom: 8 }} onClick={() => openModal('partido')}>+ Registrar partido</button>
+            <button className="btn dark" style={{ marginBottom: 8 }} onClick={() => { setShowAddPlayer(p => !p); setShowAddWinner(false); }}>
+              👤 + Agregar jugador al ranking
+            </button>
+            {showAddPlayer && (<>
+              <div className="field"><label>Nombre completo</label><input placeholder="Ej: Juan Pérez" value={nuevoNombreRk} onChange={e => setNuevoNombreRk(e.target.value)} /></div>
+              <div className="field"><label>Puntos iniciales</label><input type="number" placeholder="Ej: 30" value={nuevoPuntosRk} onChange={e => setNuevoPuntosRk(e.target.value)} /></div>
+              <button className="btn" disabled={!nuevoNombreRk||!nuevoPuntosRk} style={{ opacity: nuevoNombreRk&&nuevoPuntosRk?1:0.4, marginBottom: 8 }}
+                onClick={() => { setExtraJugadores(prev => [...prev, [nuevoNombreRk, parseInt(nuevoPuntosRk)||0, 0, 0, 0, 0]]); setNuevoNombreRk(''); setNuevoPuntosRk(''); setShowAddPlayer(false); showToast(`✅ ${nuevoNombreRk} agregado`); }}>
+                Guardar jugador
+              </button>
+            </>)}
+            <button className="btn dark" style={{ marginBottom: 8 }} onClick={() => { setShowAddWinner(p => !p); setShowAddPlayer(false); }}>
+              🏆 Registrar ganador de torneo
+            </button>
+            {showAddWinner && (<>
               <div className="field"><label>Torneo</label>
                 <select value={ganadorTorneoIdx} onChange={e => setGanadorTorneoIdx(Number(e.target.value))}>
                   {torneos.map((t,i) => <option key={i} value={i}>{t.n}</option>)}
                 </select>
               </div>
-              <div className="field"><label>Nombre del ganador</label>
-                <input placeholder="Ej: Carlos Muñoz" value={ganadorNombreInput} onChange={e => setGanadorNombreInput(e.target.value)} />
+              <div className="field"><label>Ganador</label>
+                <input placeholder="Nombre del ganador" value={ganadorNombreInput} onChange={e => setGanadorNombreInput(e.target.value)} />
               </div>
-              <button className="btn" disabled={!ganadorNombreInput} style={{ opacity: ganadorNombreInput?1:0.4 }}
-                onClick={() => { showToast(`🏆 ${ganadorNombreInput} registrado como ganador`); setGanadorNombreInput(''); }}>
-                Registrar ganador
+              <button className="btn" disabled={!ganadorNombreInput} style={{ opacity: ganadorNombreInput?1:0.4, marginBottom: 8 }}
+                onClick={() => { showToast(`🏆 ${ganadorNombreInput} registrado como ganador`); setGanadorNombreInput(''); setShowAddWinner(false); }}>
+                Guardar ganador
               </button>
             </>)}
-
-            {adminView === 'jugadores' && (<>
-              <div className="section-title">Agregar jugador al ranking</div>
-              <div className="field"><label>Nombre completo</label><input placeholder="Ej: Juan Pérez" value={nuevoNombreRk} onChange={e => setNuevoNombreRk(e.target.value)} /></div>
-              <div className="field"><label>Puntos iniciales</label><input type="number" placeholder="Ej: 30" value={nuevoPuntosRk} onChange={e => setNuevoPuntosRk(e.target.value)} /></div>
-              <button className="btn" disabled={!nuevoNombreRk||!nuevoPuntosRk} style={{ opacity: nuevoNombreRk&&nuevoPuntosRk?1:0.4 }}
-                onClick={() => {
-                  setExtraJugadores(prev => [...prev, [nuevoNombreRk, parseInt(nuevoPuntosRk)||0, 0, 0, 0, 0]]);
-                  setNuevoNombreRk(''); setNuevoPuntosRk('');
-                  showToast(`✅ ${nuevoNombreRk} agregado al ranking`);
-                }}>Agregar al ranking</button>
-              <div className="section-title" style={{ marginTop: 16 }}>Jugadores actuales ({allJugadores.length})</div>
-              {allJugadores.map((p,i) => (
-                <div key={i} className="rank-item" style={{ padding: '10px 12px' }}>
-                  <div className="rank-pos">{i+1}</div>
-                  <div className="avatar" style={{ background: avatarColor(p[0] as string) }}>{initials(p[0] as string)}</div>
-                  <div className="rank-info"><div className="nm">{p[0] as string}</div><div className="sub">{p[1] as number} pts</div></div>
-                </div>
-              ))}
-            </>)}
+            <button className="btn sec" style={{ marginBottom: 8 }} onClick={() => setScreen('canchas')}>📅 Reservar cancha</button>
+            <button className="btn sec" onClick={() => { setAdminLogged(false); setScreen('perfil'); showToast('Sesión cerrada'); }}>Cerrar sesión</button>
+            <p className="foot">@playtenis.cl · PlayTenis Academia · Colina</p>
           </>)}
         </section>
       </div>
