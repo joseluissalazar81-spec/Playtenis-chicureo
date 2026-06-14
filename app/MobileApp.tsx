@@ -53,11 +53,25 @@ export default function MobileApp() {
   const [pendientes, setPendientes] = useState<Array<{rival:string,fecha:string,resultado:string,id:number}>>([
     { rival: 'Carlos Muñoz', fecha: '10 jun 2026', resultado: '6-3, 7-5', id: 1 },
   ]);
+  const [adminLogged, setAdminLogged] = useState(false);
+  const [adminPinInput, setAdminPinInput] = useState('');
+  const [adminView, setAdminView] = useState<'home'|'inscripciones'|'reservas'|'ganadores'|'jugadores'>('home');
+  const [inscripciones, setInscripciones] = useState<Array<{id:number,nombre:string,torneo:string,tel:string,estado:'pendiente'|'aprobado'|'rechazado'}>>([
+    { id: 1, nombre: 'Pedro González', torneo: 'Torneo Apertura Chicureo 🏆', tel: '+569 8765 4321', estado: 'pendiente' },
+    { id: 2, nombre: 'Luis Flores', torneo: 'Copa PlayTenis Verano', tel: '+569 9876 5432', estado: 'pendiente' },
+    { id: 3, nombre: 'Mario Saavedra', torneo: 'Escalerilla Jul–Sep 2026 🎾', tel: '+569 7654 3210', estado: 'pendiente' },
+  ]);
+  const [extraJugadores, setExtraJugadores] = useState<(string|number)[][]>([]);
+  const [nuevoNombreRk, setNuevoNombreRk] = useState('');
+  const [nuevoPuntosRk, setNuevoPuntosRk] = useState('');
+  const [ganadorTorneoIdx, setGanadorTorneoIdx] = useState(0);
+  const [ganadorNombreInput, setGanadorNombreInput] = useState('');
 
   function showToast(msg: string) { setToast(msg); setToastVisible(true); setTimeout(() => setToastVisible(false), 2800); }
   function openModal(tipo: string, idx?: number) { setModal({ tipo, idx }); }
   function closeModal() { setModal(null); }
-  const maxPts = Math.max(...jugadores.map(p => p[1] as number));
+  const allJugadores = [...jugadores, ...extraJugadores];
+  const maxPts = Math.max(...allJugadores.map(p => p[1] as number));
   const waUrl = (msg: string) => `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
 
   function getDaySlots(date: Date): number[] {
@@ -125,16 +139,16 @@ export default function MobileApp() {
         <section className={`screen ${screen === "ranking" ? "active" : ""}`}>
           <div className="mycard">
             <div className="pos">Líder · Escalerilla 2026</div>
-            <div className="name">#1 · {jugadores[0][0] as string}</div>
+            <div className="name">#1 · {allJugadores[0][0] as string}</div>
             <div className="row">
-              <div><span className="big">{jugadores[0][1] as number}</span><span className="cap">Puntos</span></div>
-              <div><span className="big">{jugadores[0][2] as number}</span><span className="cap">Jugados</span></div>
-              <div><span className="big">{jugadores[0][5] as number}%</span><span className="cap">Rend.</span></div>
+              <div><span className="big">{allJugadores[0][1] as number}</span><span className="cap">Puntos</span></div>
+              <div><span className="big">{allJugadores[0][2] as number}</span><span className="cap">Jugados</span></div>
+              <div><span className="big">{allJugadores[0][5] as number}%</span><span className="cap">Rend.</span></div>
             </div>
           </div>
           <button className="btn" onClick={() => openModal("partido")}>+ Registrar partido</button>
           <div className="section-title">Ranking del club</div>
-          {jugadores.map((p, i) => {
+          {allJugadores.map((p, i) => {
             const cls = i === 0 ? "top1" : i === 1 ? "top2" : i === 2 ? "top3" : "";
             const pct = Math.round(((p[1] as number) / maxPts) * 100);
             return (
@@ -448,13 +462,124 @@ export default function MobileApp() {
             }}>{perfil.socio ? '✓ Membresía activa · Renovar' : '🏆 Activar Membresía PlayTenis'}</button>
             <p className="foot">@playtenis.cl · +56 9 8158 8218</p>
           </>)}
+          <button className="admin-link" onClick={() => { setScreen('admin'); setAdminView('home'); }}>🔐 Administración</button>
+        </section>
+
+        {/* ADMIN */}
+        <section className={`screen ${screen === "admin" ? "active" : ""}`}>
+          {!adminLogged ? (
+            <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+              <div style={{ fontSize: 52, marginBottom: 8 }}>🔐</div>
+              <div style={{ fontWeight: 800, fontSize: 20, marginBottom: 4 }}>Acceso Admin</div>
+              <div style={{ fontSize: 13, color: 'var(--suave)', marginBottom: 24 }}>Solo Marcelo Escalona</div>
+              <div className="field" style={{ maxWidth: 220, margin: '0 auto 16px' }}>
+                <input type="password" inputMode="numeric" maxLength={4} placeholder="PIN (4 dígitos)"
+                  value={adminPinInput} onChange={e => setAdminPinInput(e.target.value)}
+                  style={{ textAlign: 'center', fontSize: 24, letterSpacing: 10 }} />
+              </div>
+              <button className="btn" onClick={() => {
+                if (adminPinInput === '2025') { setAdminLogged(true); setAdminPinInput(''); showToast('✅ Bienvenido, Marcelo'); }
+                else { showToast('PIN incorrecto'); setAdminPinInput(''); }
+              }}>Ingresar</button>
+              <button className="btn sec" style={{ marginTop: 8 }} onClick={() => { setScreen('perfil'); setAdminPinInput(''); }}>Cancelar</button>
+            </div>
+          ) : (<>
+            <div className="step-header">
+              <button onClick={() => { setAdminLogged(false); setScreen('perfil'); setAdminView('home'); }}>←</button>
+              <h3>🔐 Admin · PlayTenis</h3>
+            </div>
+            <div className="admin-nav">
+              {([['home','📊 Inicio'],['inscripciones','📋 Inscripciones'],['reservas','📅 Reservas'],['ganadores','🏆 Ganadores'],['jugadores','👤 Jugadores']] as const).map(([v,lb]) => (
+                <button key={v} className={`admin-chip${adminView===v?' active':''}`} onClick={() => setAdminView(v)}>{lb}</button>
+              ))}
+            </div>
+
+            {adminView === 'home' && (<>
+              <div className="section-title">Estadísticas generales</div>
+              <div className="grid2" style={{ gap: 10, marginBottom: 16 }}>
+                <div className="stat-admin"><div className="n">{allJugadores.length}</div><div className="l">Jugadores</div></div>
+                <div className="stat-admin"><div className="n">{reservas.length}</div><div className="l">Reservas</div></div>
+                <div className="stat-admin"><div className="n">{torneos.length}</div><div className="l">Torneos</div></div>
+                <div className="stat-admin"><div className="n">{inscripciones.filter(i=>i.estado==='pendiente').length}</div><div className="l">Pendientes</div></div>
+              </div>
+              <div className="aviso">✅ Sistema activo · Jun 2026</div>
+            </>)}
+
+            {adminView === 'inscripciones' && (<>
+              <div className="section-title">Inscripciones a torneos</div>
+              {inscripciones.map(ins => (
+                <div key={ins.id} className="insc-card">
+                  <div className="insc-nombre">{ins.nombre}</div>
+                  <div className="insc-torneo">{ins.torneo}</div>
+                  <div className="insc-tel">📞 {ins.tel}</div>
+                  {ins.estado === 'pendiente' ? (
+                    <div className="insc-btns">
+                      <button className="pc-ok" onClick={() => { setInscripciones(p => p.map(x => x.id===ins.id ? {...x,estado:'aprobado'} : x)); showToast('✅ Inscripción aprobada'); }}>✓ Aprobar</button>
+                      <button className="pc-no" onClick={() => { setInscripciones(p => p.map(x => x.id===ins.id ? {...x,estado:'rechazado'} : x)); showToast('Inscripción rechazada'); }}>✗ Rechazar</button>
+                    </div>
+                  ) : (
+                    <span className={`badge ${ins.estado==='aprobado'?'win':'loss'}`}>{ins.estado==='aprobado'?'✓ Aprobado':'✗ Rechazado'}</span>
+                  )}
+                </div>
+              ))}
+            </>)}
+
+            {adminView === 'reservas' && (<>
+              <div className="section-title">Reservas de canchas</div>
+              {reservas.length === 0
+                ? <div className="aviso">No hay reservas registradas aún.</div>
+                : reservas.map((r,i) => (
+                  <div key={i} className="res-card">
+                    <div className="rc-title">📅 {r.fecha}</div>
+                    <div className="rc-sub">⏰ {r.hora} · {r.dur}hr · {r.cancha}</div>
+                  </div>
+                ))
+              }
+            </>)}
+
+            {adminView === 'ganadores' && (<>
+              <div className="section-title">Registrar ganador de torneo</div>
+              <div className="field"><label>Torneo</label>
+                <select value={ganadorTorneoIdx} onChange={e => setGanadorTorneoIdx(Number(e.target.value))}>
+                  {torneos.map((t,i) => <option key={i} value={i}>{t.n}</option>)}
+                </select>
+              </div>
+              <div className="field"><label>Nombre del ganador</label>
+                <input placeholder="Ej: Carlos Muñoz" value={ganadorNombreInput} onChange={e => setGanadorNombreInput(e.target.value)} />
+              </div>
+              <button className="btn" disabled={!ganadorNombreInput} style={{ opacity: ganadorNombreInput?1:0.4 }}
+                onClick={() => { showToast(`🏆 ${ganadorNombreInput} registrado como ganador`); setGanadorNombreInput(''); }}>
+                Registrar ganador
+              </button>
+            </>)}
+
+            {adminView === 'jugadores' && (<>
+              <div className="section-title">Agregar jugador al ranking</div>
+              <div className="field"><label>Nombre completo</label><input placeholder="Ej: Juan Pérez" value={nuevoNombreRk} onChange={e => setNuevoNombreRk(e.target.value)} /></div>
+              <div className="field"><label>Puntos iniciales</label><input type="number" placeholder="Ej: 30" value={nuevoPuntosRk} onChange={e => setNuevoPuntosRk(e.target.value)} /></div>
+              <button className="btn" disabled={!nuevoNombreRk||!nuevoPuntosRk} style={{ opacity: nuevoNombreRk&&nuevoPuntosRk?1:0.4 }}
+                onClick={() => {
+                  setExtraJugadores(prev => [...prev, [nuevoNombreRk, parseInt(nuevoPuntosRk)||0, 0, 0, 0, 0]]);
+                  setNuevoNombreRk(''); setNuevoPuntosRk('');
+                  showToast(`✅ ${nuevoNombreRk} agregado al ranking`);
+                }}>Agregar al ranking</button>
+              <div className="section-title" style={{ marginTop: 16 }}>Jugadores actuales ({allJugadores.length})</div>
+              {allJugadores.map((p,i) => (
+                <div key={i} className="rank-item" style={{ padding: '10px 12px' }}>
+                  <div className="rank-pos">{i+1}</div>
+                  <div className="avatar" style={{ background: avatarColor(p[0] as string) }}>{initials(p[0] as string)}</div>
+                  <div className="rank-info"><div className="nm">{p[0] as string}</div><div className="sub">{p[1] as number} pts</div></div>
+                </div>
+              ))}
+            </>)}
+          </>)}
         </section>
       </div>
 
       {/* Tab Bar */}
       <div className="tabbar">
         {[["inicio","🏠","Inicio"],["ranking","🏆","Ranking"],["torneos","🎯","Torneos"],["canchas","📅","Cancha"],["academia","🎾","Academia"],["perfil","👤","Perfil"]].map(([s,ic,lb]) => (
-          <button key={s} className={`tab ${screen === s ? "active" : ""}`} onClick={() => { setScreen(s); if (s !== 'canchas') setCanchaStep('calendar'); }}>
+          <button key={s} className={`tab ${screen === s || (s === 'perfil' && screen === 'admin') ? "active" : ""}`} onClick={() => { setScreen(s); if (s !== 'canchas') setCanchaStep('calendar'); if (s !== 'admin') { setAdminLogged(false); setAdminPinInput(''); } }}>
             <span className="ic">{ic}</span>{lb}
           </button>
         ))}
@@ -488,7 +613,7 @@ export default function MobileApp() {
             </>)}
             {modal.tipo === "partido" && (<>
               <h3>Registrar partido</h3>
-              <div className="field"><label>Oponente</label><select>{jugadores.map((p,i)=><option key={i}>{p[0] as string}</option>)}</select></div>
+              <div className="field"><label>Oponente</label><select>{allJugadores.map((p,i)=><option key={i}>{p[0] as string}</option>)}</select></div>
               <div className="field"><label>Fecha</label><input type="date" defaultValue={new Date().toISOString().split("T")[0]} /></div>
               <div className="field"><label>Resultado</label><input placeholder="Ej: 6-3, 7-5" /></div>
               <button className="btn" onClick={() => {
