@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --naranja: #29B6F6;
-  --naranja-osc: #0288D1;
-  --naranja-mid: #039BE5;
-  --naranja-claro: #E1F5FE;
+  --naranja: #CC5500;
+  --naranja-osc: #993D00;
+  --naranja-mid: #B34A00;
+  --naranja-claro: #FBE9E0;
   --gris: #f4f5f7;
   --gris-osc: #2D2D2D;
   --texto: #1d2433;
@@ -75,13 +75,13 @@ header p { font-size: 11px; color: rgba(255,255,255,0.6); }
 }
 
 .hero {
-  background: linear-gradient(135deg, #0277BD, #0288D1, #29B6F6);
+  background: linear-gradient(135deg, #7B2D00, #993D00, #CC5500);
   border-radius: 20px;
   padding: 20px;
   color: #fff;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 6px 20px rgba(2,136,209,.35);
+  box-shadow: 0 6px 20px rgba(204,85,0,.35);
   margin-bottom: 14px;
 }
 
@@ -90,7 +90,7 @@ header p { font-size: 11px; color: rgba(255,255,255,0.6); }
 .hero .ball {
   position: absolute; right: -20px; top: -20px;
   width: 110px; height: 110px; border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #B3E5FC, var(--naranja));
+  background: radial-gradient(circle at 35% 35%, #FFCCAA, var(--naranja));
   opacity: .2;
 }
 
@@ -218,7 +218,7 @@ header p { font-size: 11px; color: rgba(255,255,255,0.6); }
   display: block; width: 100%; background: var(--naranja); color: #fff;
   border: none; padding: 15px; border-radius: 14px; font-size: 16px;
   font-weight: 700; margin-top: 8px;
-  box-shadow: 0 4px 12px rgba(2,136,209,.3); cursor: pointer;
+  box-shadow: 0 4px 12px rgba(204,85,0,.3); cursor: pointer;
 }
 .btn.dark { background: var(--negro); }
 .btn.sec { background: #fff; color: var(--texto); border: 1px solid var(--linea); box-shadow: none; }
@@ -265,7 +265,7 @@ header p { font-size: 11px; color: rgba(255,255,255,0.6); }
 .match .vs { font-weight: 700; font-size: 15px; margin: 4px 0; }
 
 .badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
-.badge.win { background: #E1F5FE; color: var(--naranja-osc); }
+.badge.win { background: #FBE9E0; color: var(--naranja-osc); }
 .badge.loss { background: #fee2e2; color: #b91c1c; }
 
 .tabbar {
