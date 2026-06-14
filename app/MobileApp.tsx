@@ -104,11 +104,19 @@ function AuthScreen({ onAuth }: { onAuth: () => void }) {
       if (msg === 'auth/user-not-found' || msg === 'auth/wrong-password' || msg === 'auth/invalid-credential')
         setError('Email o contraseña incorrectos.');
       else if (msg === 'auth/email-already-in-use')
-        setError('Este email ya está registrado. Inicia sesión.');
+        setError('Este email ya está registrado. Usa "Entrar con Email".');
+      else if (msg === 'auth/account-exists-with-different-credential')
+        setError('Este email ya está registrado con Google. Usa "Entrar con Google".');
       else if (msg === 'auth/weak-password')
         setError('Contraseña muy corta (mínimo 6 caracteres).');
+      else if (msg === 'auth/invalid-email')
+        setError('Email inválido.');
+      else if (msg === 'auth/network-request-failed')
+        setError('Sin conexión a internet.');
+      else if (msg === 'auth/too-many-requests')
+        setError('Demasiados intentos. Espera unos minutos.');
       else
-        setError('Error al conectar. Verifica tu conexión.');
+        setError(`Error: ${msg || 'Verifica tu conexión.'}`);
     }
     setLoading(false);
   }
