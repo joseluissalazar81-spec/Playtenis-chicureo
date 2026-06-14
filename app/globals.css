@@ -3,16 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --naranja: #CC5500;
-  --naranja-osc: #993D00;
-  --naranja-mid: #B34A00;
+  --naranja: #C1440E;
+  --naranja-osc: #8B2E05;
+  --naranja-mid: #A33A08;
   --naranja-claro: #FBE9E0;
   --gris: #f4f5f7;
-  --gris-osc: #2D2D2D;
+  --gris-osc: #1B5E20;
   --texto: #1d2433;
   --suave: #6b7280;
   --linea: #e5e7eb;
-  --negro: #121212;
+  --negro: #0A3D0A;
 }
 
 * {
@@ -75,13 +75,13 @@ header p { font-size: 11px; color: rgba(255,255,255,0.6); }
 }
 
 .hero {
-  background: linear-gradient(135deg, #7B2D00, #993D00, #CC5500);
+  background: linear-gradient(135deg, #5C1A02, #8B2E05, #C1440E);
   border-radius: 20px;
   padding: 20px;
   color: #fff;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 6px 20px rgba(204,85,0,.35);
+  box-shadow: 0 6px 20px rgba(193,68,14,.35);
   margin-bottom: 14px;
 }
 
@@ -218,7 +218,7 @@ header p { font-size: 11px; color: rgba(255,255,255,0.6); }
   display: block; width: 100%; background: var(--naranja); color: #fff;
   border: none; padding: 15px; border-radius: 14px; font-size: 16px;
   font-weight: 700; margin-top: 8px;
-  box-shadow: 0 4px 12px rgba(204,85,0,.3); cursor: pointer;
+  box-shadow: 0 4px 12px rgba(193,68,14,.3); cursor: pointer;
 }
 .btn.dark { background: var(--negro); }
 .btn.sec { background: #fff; color: var(--texto); border: 1px solid var(--linea); box-shadow: none; }
