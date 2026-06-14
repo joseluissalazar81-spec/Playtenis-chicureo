@@ -523,6 +523,9 @@ export default function MobileApp() {
               <div style={{fontWeight:800,fontSize:18,marginBottom:6}}>Completa tu perfil</div>
               <div style={{fontSize:13,color:'var(--suave)',marginBottom:20}}>Hola {(user as User).email} 👋</div>
               <button className="btn" onClick={()=>setEditPerfil(true)}>Completar perfil</button>
+              <button className="btn sec" style={{marginTop:10}} onClick={async()=>{await signOut(auth);setPerfil({nombre:'',rut:'',telefono:'',nacimiento:'',estilo:'',golpe:'',superficie:'',socio:false,ok:false});showToast('Sesión cerrada');}}>
+                Cerrar sesión
+              </button>
             </div>
           )}
           {editPerfil && (
