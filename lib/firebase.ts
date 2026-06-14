@@ -14,4 +14,4 @@ const firebaseConfig = {
 const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db   = getFirestore(app);
-// redeploy Sun Jun 14 23:36:00 UTC 2026
+// redeploy Sun Jun 14 23:39:00 UTC 2026
