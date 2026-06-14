@@ -10,15 +10,15 @@ const config: Config = {
     extend: {
       colors: {
         tennis: {
-          green: "#1565C0",
-          "green-light": "#1976D2",
-          "green-dark": "#0D47A1",
-          "green-pale": "#E3F2FD",
+          green: "#29B6F6",
+          "green-light": "#039BE5",
+          "green-dark": "#0288D1",
+          "green-pale": "#E1F5FE",
           yellow: "#d4e157",
           "yellow-dark": "#c6bb00",
           court: "#2D2D2D",
           gray: "#2D2D2D",
-          orange: "#1565C0",
+          orange: "#29B6F6",
         },
       },
       fontFamily: {

@@ -14,7 +14,7 @@ const socios = [
     fechaIngreso: "2019-03-15",
     nivel: "Avanzado",
     avatar: "CR",
-    color: "bg-blue-500",
+    color: "bg-sky-500",
   },
   {
     id: 2,
@@ -163,8 +163,8 @@ const socios = [
 
 const planColors: Record<string, string> = {
   Básico: "bg-gray-100 text-gray-700",
-  Premium: "bg-blue-50 text-[#2D2D2D]",
-  Familiar: "bg-blue-100 text-blue-700",
+  Premium: "bg-sky-50 text-[#2D2D2D]",
+  Familiar: "bg-sky-100 text-blue-700",
 };
 
 const estadoColors: Record<string, string> = {
@@ -210,7 +210,7 @@ function DesktopPage() {
       <div
         className="py-16 text-center text-white"
         style={{
-          background: "linear-gradient(135deg, #0D47A1 0%, #1976D2 100%)",
+          background: "linear-gradient(135deg, #0288D1 0%, #039BE5 100%)",
         }}
       >
         <h1 className="text-4xl md:text-5xl font-black mb-3">
@@ -228,8 +228,8 @@ function DesktopPage() {
           {[
             { label: "Total Socios", value: stats.total, icon: "👥", color: "bg-white" },
             { label: "Activos", value: stats.activos, icon: "✅", color: "bg-green-50" },
-            { label: "Plan Premium", value: stats.premium, icon: "⭐", color: "bg-blue-50" },
-            { label: "Plan Familiar", value: stats.familiar, icon: "👨‍👩‍👧‍👦", color: "bg-blue-50" },
+            { label: "Plan Premium", value: stats.premium, icon: "⭐", color: "bg-sky-50" },
+            { label: "Plan Familiar", value: stats.familiar, icon: "👨‍👩‍👧‍👦", color: "bg-sky-50" },
           ].map((stat) => (
             <div
               key={stat.label}
@@ -262,7 +262,7 @@ function DesktopPage() {
                 onClick={() => setFilterPlan(p)}
                 className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
                   filterPlan === p
-                    ? "bg-[#1565C0] text-white"
+                    ? "bg-[#29B6F6] text-white"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                 }`}
               >
@@ -328,7 +328,7 @@ function DesktopPage() {
                         }
                         className={`border-b border-gray-50 cursor-pointer transition-colors ${
                           selectedSocio === socio.id
-                            ? "bg-blue-50"
+                            ? "bg-sky-50"
                             : "hover:bg-gray-50"
                         }`}
                       >
@@ -447,7 +447,7 @@ function DesktopPage() {
                   </div>
                 </div>
                 <div className="mt-6 space-y-2">
-                  <button className="w-full bg-[#1565C0] text-white py-2 rounded-lg text-sm font-semibold hover:bg-[#0D47A1] transition-colors">
+                  <button className="w-full bg-[#29B6F6] text-white py-2 rounded-lg text-sm font-semibold hover:bg-[#0288D1] transition-colors">
                     Editar Socio
                   </button>
                   <button className="w-full border border-gray-200 text-gray-600 py-2 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors">

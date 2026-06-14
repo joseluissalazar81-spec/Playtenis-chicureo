@@ -128,13 +128,13 @@ const ranking = [
 const estadoColors: Record<string, string> = {
   "Finalizado": "bg-gray-100 text-gray-600",
   "En Curso": "bg-green-100 text-green-700",
-  "Inscripciones Abiertas": "bg-blue-100 text-blue-700",
+  "Inscripciones Abiertas": "bg-sky-100 text-blue-700",
   "Próximo": "bg-orange-100 text-orange-700",
 };
 
 const categoriaColors: Record<string, string> = {
   Open: "bg-purple-100 text-purple-700",
-  Amateur: "bg-blue-50 text-[#2D2D2D]",
+  Amateur: "bg-sky-50 text-[#2D2D2D]",
   Interclub: "bg-yellow-100 text-yellow-700",
   Categorías: "bg-pink-100 text-pink-700",
   Juvenil: "bg-sky-100 text-sky-700",
@@ -170,7 +170,7 @@ function DesktopPage() {
       <div
         className="py-16 text-center text-white"
         style={{
-          background: "linear-gradient(135deg, #0D47A1 0%, #1976D2 100%)",
+          background: "linear-gradient(135deg, #0288D1 0%, #039BE5 100%)",
         }}
       >
         <h1 className="text-4xl md:text-5xl font-black mb-3">
@@ -233,8 +233,8 @@ function DesktopPage() {
                   onClick={() => setFilterEstado(e)}
                   className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
                     filterEstado === e
-                      ? "bg-[#1565C0] text-white"
-                      : "bg-white border border-gray-200 text-gray-600 hover:border-[#1565C0] hover:text-[#1565C0]"
+                      ? "bg-[#29B6F6] text-white"
+                      : "bg-white border border-gray-200 text-gray-600 hover:border-[#29B6F6] hover:text-[#29B6F6]"
                   }`}
                 >
                   {e}
@@ -294,7 +294,7 @@ function DesktopPage() {
                       {t.ganador && (
                         <div className="text-right hidden sm:block">
                           <div className="text-xs text-gray-400 mb-0.5">Campeón</div>
-                          <div className="text-sm font-bold text-[#1565C0] truncate max-w-32">
+                          <div className="text-sm font-bold text-[#29B6F6] truncate max-w-32">
                             {t.ganador}
                           </div>
                         </div>
@@ -336,7 +336,7 @@ function DesktopPage() {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-500">Premio:</span>
-                        <span className="font-medium text-[#1565C0]">{selectedT.premio}</span>
+                        <span className="font-medium text-[#29B6F6]">{selectedT.premio}</span>
                       </div>
                       {selectedT.participantes > 0 && (
                         <div className="flex justify-between">
@@ -346,7 +346,7 @@ function DesktopPage() {
                       )}
                     </div>
                     {selectedT.ganador && (
-                      <div className="mt-4 bg-blue-100 rounded-xl p-4">
+                      <div className="mt-4 bg-sky-100 rounded-xl p-4">
                         <div className="text-xs font-semibold text-gray-500 uppercase mb-2">
                           Resultados
                         </div>
@@ -368,7 +368,7 @@ function DesktopPage() {
                     )}
                     {(selectedT.estado === "Inscripciones Abiertas" ||
                       selectedT.estado === "Próximo") && (
-                      <button className="w-full mt-4 bg-[#1565C0] text-white py-2.5 rounded-xl text-sm font-bold hover:bg-[#0D47A1] transition-colors">
+                      <button className="w-full mt-4 bg-[#29B6F6] text-white py-2.5 rounded-xl text-sm font-bold hover:bg-[#0288D1] transition-colors">
                         Inscribirme
                       </button>
                     )}
@@ -400,7 +400,7 @@ function DesktopPage() {
                   })}
                 </p>
               </div>
-              <div className="bg-blue-50 rounded-xl px-4 py-2 text-sm text-[#2D2D2D] font-medium">
+              <div className="bg-sky-50 rounded-xl px-4 py-2 text-sm text-[#2D2D2D] font-medium">
                 🎾 Temporada 2024-2025
               </div>
             </div>
@@ -426,7 +426,7 @@ function DesktopPage() {
                     <div
                       className={`w-full ${heights[idx]} rounded-t-xl flex items-center justify-center text-3xl font-black text-white ${
                         podiumPos === 1
-                          ? "bg-[#1565C0]"
+                          ? "bg-[#29B6F6]"
                           : podiumPos === 2
                           ? "bg-gray-400"
                           : "bg-orange-400"
@@ -487,7 +487,7 @@ function DesktopPage() {
                             <span
                               className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold ${
                                 player.pos === 1
-                                  ? "bg-[#1565C0] text-white"
+                                  ? "bg-[#29B6F6] text-white"
                                   : player.pos === 2
                                   ? "bg-gray-300 text-gray-700"
                                   : player.pos === 3
@@ -501,7 +501,7 @@ function DesktopPage() {
                           <td className="px-4 py-3">
                             <span className="text-gray-800">{player.nombre}</span>
                           </td>
-                          <td className="text-center px-4 py-3 font-bold text-[#1565C0]">
+                          <td className="text-center px-4 py-3 font-bold text-[#29B6F6]">
                             {player.puntos.toLocaleString("es-CL")}
                           </td>
                           <td className="text-center px-4 py-3 text-gray-600 hidden sm:table-cell">
@@ -516,7 +516,7 @@ function DesktopPage() {
                             <div className="flex items-center gap-2 justify-center">
                               <div className="flex-1 bg-gray-100 rounded-full h-2 w-16">
                                 <div
-                                  className="bg-[#1565C0] h-2 rounded-full"
+                                  className="bg-[#29B6F6] h-2 rounded-full"
                                   style={{ width: `${winRate}%` }}
                                 />
                               </div>
