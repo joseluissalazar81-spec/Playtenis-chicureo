@@ -317,7 +317,7 @@ header p { font-size: 11px; color: rgba(255,255,255,0.6); }
 .foot { text-align: center; font-size: 11px; color: var(--suave); margin-top: 16px; font-style: italic; }
 
 /* ─── RESPONSIVE: móvil vs desktop ─── */
-.mobile-only { display: flex; flex-direction: column; }
+.mobile-only { display: flex; flex-direction: column; width: 100%; }
 .desktop-only { display: none; }
 
 @media (min-width: 768px) {
