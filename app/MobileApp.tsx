@@ -116,7 +116,9 @@ function AuthScreen({ onAuth }: { onAuth: () => void }) {
   return (
     <div className="auth-screen">
       <div className="auth-logo-area">
-        <Image src="/logo.jpeg" alt="PlayTenis" width={84} height={84} style={{ borderRadius:'50%', border:'3px solid rgba(255,255,255,0.3)', marginBottom:14 }} />
+        <div style={{width:100,height:100,borderRadius:'50%',background:'#fff',display:'flex',alignItems:'center',justifyContent:'center',marginBottom:16,boxShadow:'0 4px 20px rgba(0,0,0,0.3)',overflow:'hidden'}}>
+          <Image src="/logo.jpeg" alt="PlayTenis" width={100} height={100} style={{objectFit:'cover'}} />
+        </div>
         <div className="auth-app-title">PlayTenis Academia</div>
         <div className="auth-app-sub">Academia de Tenis · Colina 🇨🇱</div>
       </div>
