@@ -275,11 +275,11 @@ header p { font-size: 11px; color: rgba(0,0,0,0.55); }
   padding: 8px 0 12px;
 }
 .tab {
-  flex: 1; text-align: center; font-size: 10px;
+  flex: 1; text-align: center; font-size: 9px;
   color: rgba(0,0,0,0.45); cursor: pointer; border: none; background: none;
 }
 .tab.active { color: var(--naranja-osc); font-weight: 700; }
-.tab .ic { font-size: 19px; display: block; margin-bottom: 2px; }
+.tab .ic { font-size: 18px; display: block; margin-bottom: 2px; }
 
 .modal {
   position: fixed; inset: 0; background: rgba(0,0,0,.55);
@@ -340,6 +340,30 @@ header p { font-size: 11px; color: rgba(0,0,0,0.55); }
 .resumen-box .r-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; }
 .resumen-box .r-row .rk { color: var(--suave); }
 .resumen-box .r-row .rv { font-weight: 700; }
+
+.perfil-header { background: #fff; border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+.perfil-top { display: flex; align-items: center; gap: 14px; }
+.perfil-av { width: 54px; height: 54px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px; color: #fff; flex-shrink: 0; }
+.perfil-name { font-size: 17px; font-weight: 800; }
+.perfil-sub { font-size: 12px; color: var(--suave); margin-top: 1px; }
+.socio-badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-top: 5px; }
+.socio-badge.activo { background: var(--naranja-claro); color: var(--naranja-osc); }
+.socio-badge.inactivo { background: #f3f4f6; color: var(--suave); }
+.match-row { background: #fff; border-radius: 10px; padding: 10px 13px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 2px rgba(0,0,0,.05); font-size: 13px; }
+.match-row .mr-rival { font-weight: 700; }
+.match-row .mr-res { font-size: 12px; color: var(--suave); }
+.res-card { background: #fff; border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; box-shadow: 0 1px 2px rgba(0,0,0,.05); border-left: 4px solid var(--naranja); }
+.res-card .rc-title { font-weight: 700; font-size: 14px; }
+.res-card .rc-sub { font-size: 12px; color: var(--suave); margin-top: 2px; }
+.pend-card { background: #fffbea; border: 1px solid #f5d020; border-radius: 10px; padding: 10px 13px; margin-bottom: 6px; font-size: 13px; }
+.pend-card .pc-title { font-weight: 700; }
+.pend-card .pc-btns { display: flex; gap: 8px; margin-top: 8px; }
+.pend-card .pc-btns button { flex: 1; padding: 7px; border-radius: 8px; border: none; font-weight: 700; font-size: 12px; cursor: pointer; }
+.pend-card .pc-btns .pc-ok { background: var(--naranja); color: #fff; }
+.pend-card .pc-btns .pc-no { background: #fee2e2; color: #b91c1c; }
+.estilo-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 14px; }
+.estilo-chip { padding: 8px 14px; border-radius: 20px; border: 2px solid var(--linea); background: #fff; font-size: 13px; font-weight: 600; cursor: pointer; }
+.estilo-chip.sel { border-color: var(--naranja); background: var(--naranja-claro); color: var(--naranja-osc); }
 
 /* ─── RESPONSIVE: móvil vs desktop ─── */
 .mobile-only { display: flex; flex-direction: column; width: 100%; }
