@@ -70,8 +70,9 @@ function AuthScreen({ onAuth }: { onAuth: () => void }) {
     setError(''); setLoading(true);
     try {
       await signInWithRedirect(auth, new GoogleAuthProvider());
-    } catch {
-      setError('Error iniciando Google. Intenta con email.');
+    } catch (e: unknown) {
+      const code = (e as { code?: string })?.code || String(e);
+      setError(`Error Google: ${code}`);
       setLoading(false);
     }
   }
