@@ -44,7 +44,7 @@ export default function MobileApp() {
     <div className="phone">
       <header>
         <Image src="/logo.jpeg" alt="PlayTenis" width={44} height={44} style={{ borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
-        <div><h1>PlayTenis · Chicureo</h1><p>Tenis · Clases y Arriendos · Colina 🇨🇱</p></div>
+        <div><h1>PlayTenis · Academia</h1><p>Tenis · Clases y Arriendos · Colina 🇨🇱</p></div>
       </header>
 
       <div className="content">
