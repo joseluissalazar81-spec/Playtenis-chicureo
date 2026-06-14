@@ -33,12 +33,41 @@ export default function MobileApp() {
   const [modal, setModal] = useState<ModalData>(null);
   const [toast, setToast] = useState("");
   const [toastVisible, setToastVisible] = useState(false);
+  const [canchaStep, setCanchaStep] = useState<'calendar'|'slots'|'form'|'pago'>('calendar');
+  const [calMonth, setCalMonth] = useState(() => { const d = new Date(); d.setDate(1); return d; });
+  const [selectedDate, setSelectedDate] = useState<Date|null>(null);
+  const [selectedHora, setSelectedHora] = useState<string|null>(null);
+  const [duracion, setDuracion] = useState<1|2>(1);
+  const [resNombre, setResNombre] = useState('');
+  const [resTel, setResTel] = useState('');
+  const [resCancha, setResCancha] = useState('Sin preferencia');
 
   function showToast(msg: string) { setToast(msg); setToastVisible(true); setTimeout(() => setToastVisible(false), 2800); }
   function openModal(tipo: string, idx?: number) { setModal({ tipo, idx }); }
   function closeModal() { setModal(null); }
   const maxPts = Math.max(...jugadores.map(p => p[1] as number));
   const waUrl = (msg: string) => `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+
+  function getDaySlots(date: Date): number[] {
+    const day = date.getDay();
+    if (day === 0) return Array.from({length: 14}, (_, i) => i + 8);  // Dom 8-21
+    if (day === 5) return Array.from({length: 13}, (_, i) => i + 9);  // Vie 9-21
+    if (day === 6) return Array.from({length: 12}, (_, i) => i + 9);  // Sab 9-20
+    return Array.from({length: 14}, (_, i) => i + 9);                 // Lun-Jue 9-22
+  }
+  function fmtDate(d: Date): string {
+    return d.toLocaleDateString('es-CL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  }
+  function getCalDays(): (Date|null)[] {
+    const year = calMonth.getFullYear(), month = calMonth.getMonth();
+    const firstDay = new Date(year, month, 1).getDay(); // 0=Sun
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const offset = firstDay === 0 ? 6 : firstDay - 1; // Mon-first offset
+    const cells: (Date|null)[] = Array(offset).fill(null);
+    for (let d = 1; d <= daysInMonth; d++) cells.push(new Date(year, month, d));
+    return cells;
+  }
+  const precioReserva = duracion === 1 ? 15000 : 25000;
 
   return (
     <div className="phone">
@@ -122,21 +151,127 @@ export default function MobileApp() {
 
         {/* CANCHAS */}
         <section className={`screen ${screen === "canchas" ? "active" : ""}`}>
-          <div className="section-title">Arriendo de canchas</div>
-          <div className="aviso">🎾 <strong>Solo zapatillas de arcilla.</strong> Reprogramación con 24 hrs.</div>
-          <div className="infobox">
-            <div className="hrow"><span className="dia">Lunes a Jueves</span><span className="hrs">09:00 – 23:00</span></div>
-            <div className="hrow"><span className="dia">Viernes</span><span className="hrs">09:00 – 22:00</span></div>
-            <div className="hrow"><span className="dia">Sábado</span><span className="hrs">09:00 – 21:00</span></div>
-            <div className="hrow"><span className="dia">Domingo</span><span className="hrs">08:00 – 22:00</span></div>
-          </div>
-          <div className="infobox">
-            <div className="hrow"><span className="dia">1 hora</span><span className="hrs">$15.000</span></div>
-            <div className="hrow"><span className="dia">2 horas</span><span className="hrs">$25.000</span></div>
-          </div>
-          <button className="btn" onClick={() => openModal("cancha")}>📅 Reservar cancha</button>
-          <button className="btn wa" style={{ marginTop: 8 }} onClick={() => window.open(`https://wa.me/${WA}`, "_blank")}>💬 WhatsApp PlayTenis</button>
-          <p className="foot">San Vicente de Lo Arcaya 1, Colina</p>
+          <div className="aviso">🎾 <strong>Solo zapatillas de arcilla.</strong> Reprogramación con 24 hrs de anticipación.</div>
+
+          {/* STEP 1: CALENDARIO */}
+          {canchaStep === 'calendar' && (<>
+            <div className="section-title">Selecciona una fecha</div>
+            <div className="infobox" style={{ marginBottom: 14 }}>
+              <div className="cal-nav">
+                <button onClick={() => setCalMonth(m => { const d = new Date(m); d.setMonth(d.getMonth()-1); return d; })}>‹</button>
+                <span className="cal-month">{calMonth.toLocaleDateString('es-CL', { month: 'long', year: 'numeric' }).replace(/^\w/, c => c.toUpperCase())}</span>
+                <button onClick={() => setCalMonth(m => { const d = new Date(m); d.setMonth(d.getMonth()+1); return d; })}>›</button>
+              </div>
+              <div className="cal-days-header">
+                {['L','M','M','J','V','S','D'].map((d,i) => <span key={i}>{d}</span>)}
+              </div>
+              <div className="cal-grid">
+                {getCalDays().map((d, i) => {
+                  if (!d) return <div key={i} />;
+                  const today = new Date(); today.setHours(0,0,0,0);
+                  const isPast = d < today;
+                  const isSel = selectedDate?.toDateString() === d.toDateString();
+                  const isToday = d.toDateString() === today.toDateString();
+                  return (
+                    <button key={i} className={`cal-day${isSel?' sel':isToday?' today':''}`} disabled={isPast}
+                      onClick={() => { setSelectedDate(d); setSelectedHora(null); setCanchaStep('slots'); }}>
+                      {d.getDate()}
+                    </button>
+                  );
+                })}
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--suave)', borderTop: '1px solid var(--linea)', paddingTop: 10 }}>
+                <span>1 hora · <strong style={{ color: 'var(--naranja-osc)' }}>$15.000</strong></span>
+                <span>2 horas · <strong style={{ color: 'var(--naranja-osc)' }}>$25.000</strong></span>
+                <span>8 canchas disponibles</span>
+              </div>
+            </div>
+            <button className="btn wa" onClick={() => window.open(`https://wa.me/${WA}`, "_blank")}>💬 Consultar por WhatsApp</button>
+            <p className="foot">San Vicente de Lo Arcaya 1, Colina</p>
+          </>)}
+
+          {/* STEP 2: HORARIOS */}
+          {canchaStep === 'slots' && selectedDate && (<>
+            <div className="step-header">
+              <button onClick={() => setCanchaStep('calendar')}>←</button>
+              <h3>{fmtDate(selectedDate).replace(/^\w/, c => c.toUpperCase())}</h3>
+            </div>
+            <div className="dur-toggle">
+              <button className={`dur-btn${duracion===1?' active':''}`} onClick={() => setDuracion(1)}>1 hora · $15.000</button>
+              <button className={`dur-btn${duracion===2?' active':''}`} onClick={() => setDuracion(2)}>2 horas · $25.000</button>
+            </div>
+            <div className="section-title">Elige tu horario</div>
+            <div className="slot-grid">
+              {getDaySlots(selectedDate).map(h => {
+                const label = `${String(h).padStart(2,'0')}:00`;
+                const isSel = selectedHora === label;
+                return (
+                  <button key={h} className={`slot${isSel?' sel':''}`} onClick={() => setSelectedHora(label)}>
+                    {label}
+                    <span className="sub">{duracion===2 ? `hasta ${String(h+2).padStart(2,'0')}:00` : `hasta ${String(h+1).padStart(2,'0')}:00`}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <button className="btn" disabled={!selectedHora} style={{ opacity: selectedHora ? 1 : 0.4 }}
+              onClick={() => { if (selectedHora) setCanchaStep('form'); }}>
+              Continuar →
+            </button>
+          </>)}
+
+          {/* STEP 3: FORMULARIO */}
+          {canchaStep === 'form' && selectedDate && selectedHora && (<>
+            <div className="step-header">
+              <button onClick={() => setCanchaStep('slots')}>←</button>
+              <h3>Datos de reserva</h3>
+            </div>
+            <div className="resumen-box">
+              <div className="r-row"><span className="rk">Fecha</span><span className="rv">{fmtDate(selectedDate).replace(/^\w/, c => c.toUpperCase())}</span></div>
+              <div className="r-row"><span className="rk">Hora</span><span className="rv">{selectedHora} · {duracion} hora{duracion>1?'s':''}</span></div>
+              <div className="r-row"><span className="rk">Total</span><span className="rv" style={{ color: 'var(--naranja-osc)', fontSize: 15 }}>${precioReserva.toLocaleString('es-CL')}</span></div>
+            </div>
+            <div className="field"><label>Tu nombre</label><input placeholder="Ej: Juan Pérez" value={resNombre} onChange={e => setResNombre(e.target.value)} /></div>
+            <div className="field"><label>Teléfono</label><input type="tel" placeholder="+569 XXXX XXXX" value={resTel} onChange={e => setResTel(e.target.value)} /></div>
+            <div className="field"><label>Cancha preferida</label>
+              <select value={resCancha} onChange={e => setResCancha(e.target.value)}>
+                <option>Sin preferencia</option>
+                {Array.from({length:8},(_,i)=><option key={i+1}>Cancha {i+1}</option>)}
+              </select>
+            </div>
+            <button className="btn" disabled={!resNombre || !resTel} style={{ opacity: resNombre && resTel ? 1 : 0.4 }}
+              onClick={() => { if (resNombre && resTel) setCanchaStep('pago'); }}>
+              Ver datos de pago →
+            </button>
+          </>)}
+
+          {/* STEP 4: PAGO */}
+          {canchaStep === 'pago' && selectedDate && selectedHora && (<>
+            <div className="step-header">
+              <button onClick={() => setCanchaStep('form')}>←</button>
+              <h3>Confirmar reserva</h3>
+            </div>
+            <div className="resumen-box">
+              <div className="r-row"><span className="rk">Nombre</span><span className="rv">{resNombre}</span></div>
+              <div className="r-row"><span className="rk">Fecha</span><span className="rv">{fmtDate(selectedDate).replace(/^\w/, c => c.toUpperCase())}</span></div>
+              <div className="r-row"><span className="rk">Hora</span><span className="rv">{selectedHora} · {duracion} hora{duracion>1?'s':''}</span></div>
+              <div className="r-row"><span className="rk">Cancha</span><span className="rv">{resCancha}</span></div>
+              <div className="r-row"><span className="rk">Total</span><span className="rv" style={{ color: 'var(--naranja-osc)', fontSize: 15 }}>${precioReserva.toLocaleString('es-CL')}</span></div>
+            </div>
+            <div className="pagobox">
+              <h4>💳 Datos de pago</h4>
+              <div className="row"><span className="k">Nombre</span><span className="v">{PAGO.nombre}</span></div>
+              <div className="row"><span className="k">Banco</span><span className="v">{PAGO.banco}</span></div>
+              <div className="row"><span className="k">Monto</span><span className="v" style={{ color: 'var(--naranja-osc)', fontSize: 15 }}>${precioReserva.toLocaleString('es-CL')}</span></div>
+            </div>
+            <button className="btn wa" onClick={() => {
+              const msg = `Hola PlayTenis! Quiero reservar una cancha:\n📅 ${fmtDate(selectedDate!)}\n⏰ ${selectedHora} (${duracion}hr)\n🎾 ${resCancha}\n👤 ${resNombre}\n📞 ${resTel}\nTotal: $${precioReserva.toLocaleString('es-CL')}`;
+              setCanchaStep('calendar');
+              setSelectedDate(null); setSelectedHora(null); setResNombre(''); setResTel(''); setResCancha('Sin preferencia');
+              showToast('✅ Reserva enviada');
+              window.open(waUrl(msg), '_blank');
+            }}>💬 Confirmar por WhatsApp</button>
+            <button className="btn sec" style={{ marginTop: 8 }} onClick={() => { setCanchaStep('calendar'); setSelectedDate(null); setSelectedHora(null); setResNombre(''); setResTel(''); }}>Cancelar</button>
+          </>)}
         </section>
 
         {/* ACADEMIA */}
@@ -165,7 +300,7 @@ export default function MobileApp() {
       {/* Tab Bar */}
       <div className="tabbar">
         {[["inicio","🏠","Inicio"],["ranking","🏆","Ranking"],["torneos","🎯","Torneos"],["canchas","📅","Cancha"],["academia","🎾","Academia"]].map(([s,ic,lb]) => (
-          <button key={s} className={`tab ${screen === s ? "active" : ""}`} onClick={() => setScreen(s)}>
+          <button key={s} className={`tab ${screen === s ? "active" : ""}`} onClick={() => { setScreen(s); if (s !== 'canchas') setCanchaStep('calendar'); }}>
             <span className="ic">{ic}</span>{lb}
           </button>
         ))}
