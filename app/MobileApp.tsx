@@ -16,7 +16,13 @@ import {
 import { auth, db } from "../lib/firebase";
 
 const WA   = "56981588218";
-const PAGO = { nombre: "Patricio Escalona", banco: "Transferencia / Mercado Pago" };
+const PAGO = {
+  nombre:       "Patricio Escalona",
+  rut:          "12.463.503-9",
+  banco:        "Santander",
+  tipoCuenta:   "Cuenta Corriente",
+  numCuenta:    "6551955",
+};
 const CANCHAS = [
   { id: 1, nombre: "Cancha 1", tipo: "Arcilla roja" },
   { id: 2, nombre: "Cancha 2", tipo: "Arcilla roja" },
@@ -477,7 +483,9 @@ export default function MobileApp() {
             <div className="pagobox">
               <h4>💳 Datos de pago</h4>
               <div className="row"><span className="k">Nombre</span><span className="v">{PAGO.nombre}</span></div>
+              <div className="row"><span className="k">RUT</span><span className="v">{PAGO.rut}</span></div>
               <div className="row"><span className="k">Banco</span><span className="v">{PAGO.banco}</span></div>
+              <div className="row"><span className="k">Cuenta</span><span className="v">{PAGO.tipoCuenta} {PAGO.numCuenta}</span></div>
               <div className="row"><span className="k">Monto</span><span className="v" style={{color:'var(--naranja-osc)',fontSize:15}}>${precioReserva.toLocaleString('es-CL')}</span></div>
             </div>
             <button className="btn wa" onClick={confirmarReserva}>💬 Confirmar por WhatsApp</button>
@@ -694,6 +702,7 @@ export default function MobileApp() {
             ))}
 
             <div className="section-title" style={{marginTop:20}}>Acciones</div>
+            <button className="btn dark" style={{marginBottom:8}} onClick={()=>setScreen('canchas')}>📅 Gestionar actividades del día</button>
             <button className="btn" style={{marginBottom:8}} onClick={()=>openModal('partido')}>+ Registrar partido</button>
             <button className="btn dark" style={{marginBottom:8}} onClick={()=>{setShowAddPlayer(p=>!p);setShowAddWinner(false);}}>👤 + Agregar jugador al ranking</button>
             {showAddPlayer&&(<>
@@ -747,7 +756,9 @@ export default function MobileApp() {
               <div className="pagobox">
                 <h4>💳 Datos de pago</h4>
                 <div className="row"><span className="k">Nombre</span><span className="v">{PAGO.nombre}</span></div>
+                <div className="row"><span className="k">RUT</span><span className="v">{PAGO.rut}</span></div>
                 <div className="row"><span className="k">Banco</span><span className="v">{PAGO.banco}</span></div>
+                <div className="row"><span className="k">Cuenta</span><span className="v">{PAGO.tipoCuenta} {PAGO.numCuenta}</span></div>
                 <div className="row"><span className="k">Monto</span><span className="v" style={{color:"var(--naranja-osc)",fontSize:16}}>${torneos[modal.idx].monto.toLocaleString("es-CL")}</span></div>
               </div>
               <button className="btn wa" onClick={()=>{closeModal();window.open(waUrl(`Hola PlayTenis! Quiero inscribirme en: ${torneos[modal.idx!].n}`),"_blank");}}>💬 Confirmar por WhatsApp</button>
